@@ -108,7 +108,9 @@ export const getById = createAsyncThunk("users/getById", async (id: string) => {
 
 export const getUserTransactions = createAsyncThunk("users/getTransactions", async (id: string) => {
   try {
-    const res = await axios.get(`${baseUrl}/user/all?identifier=${id}`);
+    const res = await axios.get(
+      `${baseUrl}/transactions/user/all?identifier=${id}`
+    );
     toast.success(res.data.message);
     return res.data.data.data;
   } catch (err) {
