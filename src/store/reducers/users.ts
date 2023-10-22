@@ -13,14 +13,23 @@ type InitialState = {
   next_page_url: null | string;
   per_page: number;
   prev_page_url: null | string;
-  current_page: null|number;
+  current_page: null | number;
   to: number;
   total: number;
+  this_week: number | null;
+  totalUsers: number | null;
+  last_week: number | null;
+};
+
+type Count = {
+  this_week: number | null;
+  total: number | null;
+  last_week: number | null;
 };
 
 type Response = {
   data: NormalUser[];
-  current_page: null| number;
+  current_page: null | number;
   next_page_url: null | string;
   per_page: number;
   prev_page_url: null | string;
@@ -38,6 +47,9 @@ const initialState: InitialState = {
   to: 0,
   total: 0,
   current_page: null,
+  this_week: null,
+  totalUsers: null,
+  last_week: null,
   error: [],
 };
 
@@ -48,6 +60,21 @@ export const get = createAsyncThunk("users/get", async (values: IGet) => {
   const queryString = new URLSearchParams(filter).toString();
   try {
     const res = await axios.get(`${baseUrl}/user/all?${queryString}`);
+    toast.success(res.data.message);
+    return res.data.data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      toast.error(err.message);
+    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+      err.response.data.message.map((err: string) => toast.error(err));
+      return err.response.data.message;
+    }
+  }
+});
+
+export const getCount = createAsyncThunk("users/getCount", async () => {
+  try {
+    const res = await axios.get(`${baseUrl}/user/count`);
     toast.success(res.data.message);
     return res.data.data;
   } catch (err: unknown) {
@@ -86,12 +113,12 @@ const Slice = createSlice({
     builder.addCase(get.fulfilled, (state, action: PayloadAction<Response>) => {
       state.loading = false;
       state.users = action.payload.data;
-      state.current_page = action.payload.current_page
-      state.next_page_url = action.payload.next_page_url
-      state.prev_page_url = action.payload.prev_page_url
-      state.per_page = action.payload.per_page
+      state.current_page = action.payload.current_page;
+      state.next_page_url = action.payload.next_page_url;
+      state.prev_page_url = action.payload.prev_page_url;
+      state.per_page = action.payload.per_page;
       state.to = action.payload.to;
-      state.total = action.payload.total
+      state.total = action.payload.total;
     });
     builder.addCase(get.rejected, (state, action: PayloadAction<unknown>) => {
       state.loading = false;
@@ -102,6 +129,26 @@ const Slice = createSlice({
         state.error = ["Something went wrong"];
       }
     });
+    builder.addCase(
+      getCount.fulfilled,
+      (state, action: PayloadAction<Count>) => {
+        state.this_week = action.payload.last_week;
+        state.totalUsers = action.payload.total;
+        state.last_week = action.payload.last_week;
+      }
+    );
+    builder.addCase(
+      getCount.rejected,
+      (state, action: PayloadAction<unknown>) => {
+        state.loading = false;
+        if (action?.payload) {
+          const error = action.payload as { message?: string[] | undefined };
+          state.error = error.message || ["Something went wrong"];
+        } else {
+          state.error = ["Something went wrong"];
+        }
+      }
+    );
     builder.addCase(getById.pending, (state) => {
       state.loading = true;
     });

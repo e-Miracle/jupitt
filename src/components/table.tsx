@@ -174,7 +174,7 @@ const Tables: React.FC<Props> = ({
                   </MenuButton>
                   <MenuList>
                     <MenuItem>
-                      <Link to={viewLink(row.id)}>View</Link>
+                      <Link className="block w-full" to={viewLink(row.id)}>View</Link>
                     </MenuItem>
                     <MenuItem onClick={() => onActionClick("delete", row.id)}>
                       Delete

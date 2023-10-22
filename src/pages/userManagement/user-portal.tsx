@@ -8,16 +8,25 @@ const Filter = lazy(() => import("../../components/filter"));
 import { results } from "../../constants";
 import { changeHandler } from "../../utils";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { get } from "../../store/reducers/users";
+import { get, getCount } from "../../store/reducers/users";
 import LoadingTable from "../../components/table-loader";
 import EmptyArrayMessage from "../../components/empty";
 export default function UserPortal() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(get({}));
+    dispatch(getCount());
   }, [dispatch]);
-  const { users, loading, total, prev_page_url, next_page_url, current_page } =
-    useAppSelector((state) => state.user);
+  const {
+    users,
+    loading,
+    total,
+    prev_page_url,
+    next_page_url,
+    current_page,
+    totalUsers,
+    this_week,
+  } = useAppSelector((state) => state.user);
   const [value, setValue] = useState("");
   const [searchResults, setSearchResults] = React.useState<Array<any>>([]);
   const handleToggle = () => {};
@@ -65,9 +74,9 @@ export default function UserPortal() {
         paddingRight={"1rem"}
       >
         <Box display={"flex"} alignItems={"center"}>
-          <Title title="User Portal" number={users?.length || 0} />
+          <Title title="User Portal" number={this_week || 0} />
           <Box className="lg:ml-[15rem] flex justify-end items-end text-secondary font-medium font-inter">
-            <Text fontSize="3xl">{users?.length || 0}</Text>
+            <Text fontSize="3xl">{totalUsers || 0}</Text>
             <Text fontSize="sm" className="ml-1">
               Total Users
             </Text>
