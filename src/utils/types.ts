@@ -101,7 +101,7 @@ export interface IRegisterUser {
 
 
 export interface IGet {
-  page?: string;
+  page?: number;
   per_page?: string;
   search_str?: string;
   from_date?: string;

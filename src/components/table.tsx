@@ -35,9 +35,11 @@ type Props = {
   data: TableData[];
   onActionClick: (type: "delete", id: number | string) => void;
   viewLink: (id: number | string) => string;
-  currentPage?: number;
-  next_page_url?: string;
-  prev_page_ur?: string;
+  change?: (page: number) => void;
+  total?: number;
+  currentPage?: number | null;
+  next_page_url?: null | string;
+  prev_page_url?: null | string;
 };
 
 const Tables: React.FC<Props> = ({
@@ -45,18 +47,14 @@ const Tables: React.FC<Props> = ({
   data,
   onActionClick,
   viewLink,
+  change,
+  total,
+  currentPage,
+  next_page_url,
+  prev_page_url,
 }) => {
   const [selectedRows, setSelectedRows] = useState<number[] | string[]>([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // You can adjust this number as needed
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-
-  const getCurrentPageData = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return data.slice(startIndex, endIndex);
-  };
 
   const handleRowClick = (id: number | string) => {
     if (selectedRows.includes(id)) {
@@ -93,7 +91,7 @@ const Tables: React.FC<Props> = ({
           </Tr>
         </Thead>
         <Tbody>
-          {getCurrentPageData().map((row) => (
+          {data.map((row) => (
             <Tr key={row.id}>
               <Td>
                 <Checkbox
@@ -189,29 +187,31 @@ const Tables: React.FC<Props> = ({
         </Tbody>
       </Table>
       <Box className="my-5 flex items-center flex-wrap justify-between">
-        <button
-          className="rounded-md p-2 text-gray outline-none border border-coincard hover:bg-coincard ml-5"
-          onClick={() => {
-            if (currentPage > 1) {
-              setCurrentPage(currentPage - 1);
-            }
-          }}
-        >
-          Previous
-        </button>
+        {prev_page_url && (
+          <button
+            className="rounded-md p-2 text-gray outline-none border border-coincard hover:bg-coincard ml-5"
+            onClick={() => {
+              if (currentPage && currentPage > 1)
+                change && change(currentPage - 1);
+            }}
+          >
+            Previous
+          </button>
+        )}
         <div className="font-inter text-xs">
-          Page {currentPage} of {totalPages}
+          Page {currentPage} of {total}
         </div>
-        <button
-          className="rounded-md p-2 text-gray outline-none border border-coincard hover:bg-coincard ml-5"
-          onClick={() => {
-            if (currentPage < totalPages) {
-              setCurrentPage(currentPage + 1);
-            }
-          }}
-        >
-          Next
-        </button>
+        {next_page_url && (
+          <button
+            className="rounded-md p-2 text-gray outline-none border border-coincard hover:bg-coincard ml-5"
+            onClick={() => {
+              if (currentPage && total && currentPage < total)
+                change && change(currentPage + 1);
+            }}
+          >
+            Next
+          </button>
+        )}
       </Box>
     </Box>
   );

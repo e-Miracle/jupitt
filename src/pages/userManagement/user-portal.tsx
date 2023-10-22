@@ -16,7 +16,8 @@ export default function UserPortal() {
   useEffect(() => {
     dispatch(get({}));
   }, [dispatch]);
-  const { users, loading } = useAppSelector((state) => state.user);
+  const { users, loading, total, prev_page_url, next_page_url, current_page } =
+    useAppSelector((state) => state.user);
   const [value, setValue] = useState("");
   const [searchResults, setSearchResults] = React.useState<Array<any>>([]);
   const handleToggle = () => {};
@@ -45,14 +46,16 @@ export default function UserPortal() {
     { key: "status", label: "Account Status" },
   ];
 
-  const handleActionClick = (type: "delete", id: number) => {
+  const handleActionClick = (type: "delete", id: number | string) => {
     if (type === "delete") {
       console.log(id);
       // Perform the delete operation here
     }
   };
 
-  const getViewLink = (id: number) => `/user-portal/user/${id}`;
+  const getViewLink = (id: number | string) => `/user-portal/user/${id}`;
+  const change = (page: number) => get({ page });
+
   return (
     <Suspense>
       <Box
@@ -97,10 +100,18 @@ export default function UserPortal() {
               identifier: item.identifier,
               phone: item.phone_number,
               time: item.updated_at,
-              status: item.email,
+              status:
+                item.is_suspended === true || item.is_blacklisted === true
+                  ? "inactive"
+                  : "active",
             }))}
             onActionClick={handleActionClick}
             viewLink={getViewLink}
+            change={change}
+            total={total}
+            currentPage={current_page}
+            next_page_url={next_page_url}
+            prev_page_url={prev_page_url}
           />
         ) : (
           <EmptyArrayMessage
