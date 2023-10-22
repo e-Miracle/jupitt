@@ -63,7 +63,7 @@ export default function UserPortal() {
   };
 
   const getViewLink = (id: number | string) => `/user-portal/user/${id}`;
-  const change = (page: number) => get({ page });
+  const change = (page: number) => get({ page: String(page) });
 
   return (
     <Suspense>

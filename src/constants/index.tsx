@@ -1,3 +1,4 @@
+import { Btc, Eth, USDT } from "../assets";
 import { Link } from "../utils";
 import {
   faCog,
@@ -243,8 +244,7 @@ export const steps = [
   { title: "KYC LEVEL 3" },
 ];
 
-
-export const reasons = ["testing", "testing", "testing"]
+export const reasons = ["testing", "testing", "testing"];
 
 export const USER_TOKEN = "token";
 
@@ -265,9 +265,32 @@ export const permissions = [
   "transaction history 6",
   "transaction history 7",
   "transaction history 8",
-  "transaction history 9"
+  "transaction history 9",
 ];
 
+export const genders = ["Male", "Female"];
+export const reports = ["you"];
 
-export const genders = ["Male", "Female"]
-export const reports = ["you" ];
+export const userDashboard = [
+  {
+    type: "crypto",
+    image: Btc,
+    coinName: "Bitcoin",
+    balance: 0.5034597,
+    amount: 3000000,
+  },
+  {
+    type: "crypto",
+    image: Eth,
+    coinName: "Ethereum",
+    balance: 0.5034597,
+    amount: 3000000,
+  },
+  {
+    type: "fiat",
+    image: USDT,
+    coinName: "USDT",
+    balance: 0.5034597,
+    amount: 3000000,
+  },
+];

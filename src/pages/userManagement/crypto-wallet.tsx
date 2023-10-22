@@ -12,16 +12,14 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import LiveSearch from "../../components/LiveSearch/LiveSearch";
-import { results } from "../../constants";
+import { results, userDashboard } from "../../constants";
 import Button from "../../components/Button/Button";
 import { faLockOpen, faShield } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserCard from "../../components/user-card";
-import { Wallet } from "../../assets";
 import User from "./user";
 import Fields from "./fields";
 import ConversionForm from "./conversion-form";
-
 
 const CryptoWallet = () => {
   const {
@@ -102,13 +100,14 @@ const CryptoWallet = () => {
             }}
             gridGap="1rem"
           >
-            {[1, 2, 3].map((item) => (
+            {userDashboard.map((item) => (
               <UserCard
-                key={`index-${item}`}
-                image={Wallet}
-                coinName="Bitcoin"
-                balance={0.5034597}
-                amount={Number(3000000).toLocaleString()}
+                key={`index-${item.coinName}`}
+                type={item.type}
+                image={item.image}
+                coinName={item.coinName}
+                balance={item.balance}
+                amount={Number(item.amount).toLocaleString()}
                 onOpenCredit={onModal1Open}
                 onOpenDebit={onModal2Open}
               />

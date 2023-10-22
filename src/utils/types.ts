@@ -17,7 +17,6 @@ export type TableHeaders = {
   label: string;
 };
 
-
 export interface MyError {
   message: string;
 }
@@ -44,8 +43,8 @@ export interface User {
 }
 
 type Admin = {
-  admin: User
-}
+  admin: User;
+};
 export interface Token {
   token: string;
 }
@@ -85,7 +84,7 @@ export interface ISuccess {
   title: string;
   description: string;
   name: string;
-  route:  string;
+  route: string;
 }
 
 export interface IRegisterUser {
@@ -99,9 +98,8 @@ export interface IRegisterUser {
   permissions: string[];
 }
 
-
 export interface IGet {
-  page?: number;
+  page?: string;
   per_page?: string;
   search_str?: string;
   from_date?: string;
@@ -128,7 +126,7 @@ export interface IKyc {
   level_two: null | string;
   level_three: null | string;
 }
-  
+
 export interface ICountry {
   id: number;
   name: string;
@@ -182,4 +180,38 @@ export interface NormalUser {
   total_qualified_referred: number;
   country: ICountry;
   kyc: IKyc;
+}
+
+export interface Icrypto {
+  amount: string;
+  asset: string;
+  identifier: string;
+}
+
+export interface IFiat {
+  amount: string;
+  country_id: number;
+  identifier: string;
+}
+
+export interface INormalUserTransactions {
+  id: string;
+  reference: string;
+  user_id: string;
+  asset: string;
+  date: string;
+  activity: string;
+  from: null | string;
+  to: null | string;
+  amount: string;
+  market_price: string;
+  usd_value: string;
+  rate: string;
+  fiat_value: string;
+  fiat_currency: string;
+  status: number;
+  transaction_type: string;
+  bank: string;
+  account_name: string;
+  account_number: string;
 }

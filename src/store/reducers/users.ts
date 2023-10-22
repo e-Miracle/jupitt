@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { baseUrl } from "../../constants";
 import { IGet } from "../../utils";
-import { NormalUser } from "../../utils";
+import { NormalUser, INormalUserTransactions } from "../../utils";
 
 type InitialState = {
   loading: boolean;
@@ -19,6 +19,8 @@ type InitialState = {
   this_week: number | null;
   totalUsers: number | null;
   last_week: number | null;
+  transactionLoader: boolean;
+  transactions: INormalUserTransactions[] | null;
 };
 
 type Count = {
@@ -50,6 +52,8 @@ const initialState: InitialState = {
   this_week: null,
   totalUsers: null,
   last_week: null,
+  transactionLoader: false,
+   transactions: null,
   error: [],
 };
 
@@ -92,6 +96,21 @@ export const getById = createAsyncThunk("users/getById", async (id: string) => {
     const res = await axios.get(`${baseUrl}/user/single/${id}`);
     toast.success(res.data.message);
     return res.data.data;
+  } catch (err) {
+    if (err instanceof Error) {
+      toast.error(err.message);
+    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+      err.response.data.message.map((err: string) => toast.error(err));
+      return err.response.data.message;
+    }
+  }
+});
+
+export const getUserTransactions = createAsyncThunk("users/getTransactions", async (id: string) => {
+  try {
+    const res = await axios.get(`${baseUrl}/user/all?identifier=${id}`);
+    toast.success(res.data.message);
+    return res.data.data.data;
   } catch (err) {
     if (err instanceof Error) {
       toast.error(err.message);
@@ -161,6 +180,28 @@ const Slice = createSlice({
     );
     builder.addCase(
       getById.rejected,
+      (state, action: PayloadAction<unknown>) => {
+        state.loading = false;
+        if (action?.payload) {
+          const error = action.payload as { message?: string[] | undefined };
+          state.error = error.message || ["Something went wrong"];
+        } else {
+          state.error = ["Something went wrong"];
+        }
+      }
+    );
+    builder.addCase(getUserTransactions.pending, (state) => {
+      state.transactionLoader = true;
+    });
+    builder.addCase(
+      getUserTransactions.fulfilled,
+      (state, action: PayloadAction<INormalUserTransactions[]>) => {
+        state.transactionLoader = false;
+        state.transactions = action.payload;
+      }
+    );
+    builder.addCase(
+      getUserTransactions.rejected,
       (state, action: PayloadAction<unknown>) => {
         state.loading = false;
         if (action?.payload) {

@@ -7,6 +7,7 @@ type Props = {
   coinName: string;
   balance: number;
   amount: string;
+  type: string
   onOpenCredit: () => void;
   onOpenDebit: () => void;
 };

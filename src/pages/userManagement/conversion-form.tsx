@@ -4,24 +4,40 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Spinner } from "@chakra-ui/react";
 
-type Props = {
+type ConversionType = "fiat" | "crypto";
+
+// Define the schemas for "fiat" and "crypto" conversions
+
+
+type ConversionFormProps = {
+  type: ConversionType;
   handleConvert?: () => void;
 };
 
-const conversionSchema = z.object({
-  btc: z.string(),
-  usd: z.string(),
-  ngn: z.string(),
-});
-type ConversionFormData = z.infer<typeof conversionSchema>;
+const ConversionForm: React.FC<ConversionFormProps> = ({
+  type,
+  handleConvert,
+}) => {
+  const schemas = {
+    fiat: z.object({
+      amount: z.string(),
+      country_id: z.number(),
+      identifier: z.string(),
+    }),
+    crypto: z.object({
+      amount: z.string(),
+      asset: z.string(),
+      identifier: z.string(),
+    }),
+  };
 
-const ConversionForm: React.FC<Props> = ({ handleConvert }) => {
+  type ConversionFormData = z.infer<typeof schemas[type as keyof ConversionType]>;
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ConversionFormData>({
-    resolver: zodResolver(conversionSchema),
+    resolver: zodResolver(schemas[type]),
   });
 
   const onSubmit: SubmitHandler<ConversionFormData> = async (data) => {
@@ -29,97 +45,49 @@ const ConversionForm: React.FC<Props> = ({ handleConvert }) => {
     handleConvert && handleConvert();
   };
 
-  const [formData, setFormData] = useState<ConversionFormData>({
-    btc: "",
-    usd: "",
-    ngn: "",
-  });
-
-  const handleInputChange = (
-    field: keyof ConversionFormData,
-    value: string
-  ) => {
-    setFormData({
-      ...formData,
-      [field]: value,
-    });
-    performConversion(field, value);
-  };
-
-  const performConversion = (
-    changedField: keyof ConversionFormData,
-    value: string
-  ) => {
-    // Implement the conversion logic here to update other fields based on user input.
-    if (changedField === "btc") {
-      // Example: Convert BTC to USD and NGN
-      // You can use a conversion rate or method
-      const btcValue = parseFloat(value);
-      // Implement the conversion logic and update 'usd' and 'ngn' fields accordingly
-      // For example:
-      const usdValue = (btcValue * 50000).toFixed(2);
-      const ngnValue = (btcValue * 2000000).toFixed(2);
-      setFormData({
-        ...formData,
-        usd: usdValue,
-        ngn: ngnValue,
-      });
-    }
-    // Add similar logic for other fields as needed
-  };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label className="text-sm lg:text-base font-semibold" htmlFor="btc">
-          BTC
-        </label>
-        <input
-          className={`mt-3 w-full border-none text-sm bg-formBg lg:text-base text-textForm p-3 rounded-md outline-none placeholder:text-textForm placeholder:text-sm placeholder:opacity-[.6]`}
-          type="text"
-          id="btc"
-          {...register("btc")}
-        //   value={formData.btc}
-          onChange={(e) => handleInputChange("btc", e.target.value)}
-        />
-        <p className="my-1 text-textForm text-xs lg:text-sm">
-          {errors.btc?.message}
-        </p>
-      </div>
+      {/* Render form fields based on the "type" prop */}
+      {type === "fiat" && (
+        <div>
+          <label
+            className="text-sm lg:text-base font-semibold"
+            htmlFor="amount"
+          >
+            Amount
+          </label>
+          <input
+            className={`mt-3 w-full border-none text-sm bg-formBg lg:text-base text-textForm p-3 rounded-md outline-none placeholder:text-textForm placeholder:text-sm placeholder:opacity-[.6]`}
+            type="text"
+            id="amount"
+            {...register("amount")}
+          />
+          <p className="my-1 text-textForm text-xs lg:text-sm">
+            {errors.amount?.message}
+          </p>
+        </div>
+      )}
 
-      <div className="mt-5">
-        <label className="text-sm lg:text-base font-semibold" htmlFor="usd">
-          USD
-        </label>
-        <input
-          className={`mt-3 w-full border-none text-sm bg-formBg lg:text-base text-textForm p-3 rounded-md outline-none placeholder:text-textForm placeholder:text-sm placeholder:opacity-[.6]`}
-          type="text"
-          id="usd"
-          {...register("usd")}
-          value={formData.usd}
-          onChange={(e) => handleInputChange("usd", e.target.value)}
-        />
-        <p className="my-1 text-textForm text-xs lg:text-sm">
-          {errors.usd?.message}
-        </p>
-      </div>
+      {type === "crypto" && (
+        <div>
+          <label
+            className="text-sm lg:text-base font-semibold"
+            htmlFor="amount"
+          >
+            Amount
+          </label>
+          <input
+            className={`mt-3 w-full border-none text-sm bg-formBg lg:text-base text-textForm p-3 rounded-md outline-none placeholder:text-textForm placeholder:text-sm placeholder:opacity-[.6]`}
+            type="text"
+            id="amount"
+            {...register("amount")}
+          />
+          <p className="my-1 text-textForm text-xs lg:text-sm">
+            {errors.amount?.message}
+          </p>
+        </div>
+      )}
 
-      <div className="mt-5">
-        <label className="text-sm lg:text-base font-semibold" htmlFor="ngn">
-          NGN
-        </label>
-        <input
-          className={`mt-3 w-full border-none text-sm bg-formBg lg:text-base text-textForm p-3 rounded-md outline-none placeholder:text-textForm placeholder:text-sm placeholder:opacity-[.6]`}
-          type="text"
-          id="ngn"
-          {...register("ngn")}
-          value={formData.ngn}
-          onChange={(e) => handleInputChange("ngn", e.target.value)}
-        />
-        <p className="my-1 text-textForm text-xs lg:text-sm">
-          {errors.ngn?.message}
-        </p>
-      </div>
       <div className=" w-full">
         {isSubmitting ? (
           <div>
