@@ -294,3 +294,5 @@ export const userDashboard = [
     amount: 3000000,
   },
 ];
+//FOR YOU USING  USEMEMO
+// const options = useMemo(() => countryList().getData(), []);

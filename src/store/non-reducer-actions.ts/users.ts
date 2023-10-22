@@ -1,8 +1,7 @@
 import axios from "axios";
-import  toast  from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Icrypto, IFiat } from "../../utils";
 import { baseUrl } from "../../constants";
-
 
 export const creditCrypto = async (values: Icrypto) => {
   const config = {
@@ -18,7 +17,6 @@ export const creditCrypto = async (values: Icrypto) => {
       toast.error(err.message);
     } else if (axios.isAxiosError(err) && err.response?.data?.message) {
       err.response.data.message.map((err: string) => toast.error(err));
-      return err.response.data.message;
     }
   }
 };
@@ -37,7 +35,6 @@ export const debitCrypto = async (values: Icrypto) => {
       toast.error(err.message);
     } else if (axios.isAxiosError(err) && err.response?.data?.message) {
       err.response.data.message.map((err: string) => toast.error(err));
-      return err.response.data.message;
     }
   }
 };
@@ -56,7 +53,6 @@ export const creditFiat = async (values: IFiat) => {
       toast.error(err.message);
     } else if (axios.isAxiosError(err) && err.response?.data?.message) {
       err.response.data.message.map((err: string) => toast.error(err));
-      return err.response.data.message;
     }
   }
 };
@@ -75,7 +71,30 @@ export const debitFiat = async (values: IFiat) => {
       toast.error(err.message);
     } else if (axios.isAxiosError(err) && err.response?.data?.message) {
       err.response.data.message.map((err: string) => toast.error(err));
-      return err.response.data.message;
+    }
+  }
+};
+
+export const disable2Fa = async (identifier: string, cb: () => void) => {
+  const config = {
+    headers: { "Content-Type": "application/json" },
+  };
+  const body = JSON.stringify({ identifier });
+  try {
+    const res = await axios.post(
+      `${baseUrl}/user/diable-user-2fa`,
+      body,
+      config
+    );
+    toast.success(res.data.message);
+    cb();
+    return res.data.data;
+  } catch (err) {
+    cb();
+    if (err instanceof Error) {
+      toast.error(err.message);
+    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+      err.response.data.message.map((err: string) => toast.error(err));
     }
   }
 };
