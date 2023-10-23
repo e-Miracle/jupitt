@@ -215,3 +215,19 @@ export interface INormalUserTransactions {
   account_name: string;
   account_number: string;
 }
+
+export interface RefferalLog {
+  id: number;
+  referrer: number;
+  referred: number;
+  claimed: number;
+  status: number;
+  created_at: null | string;
+  updated_at: null | string;
+}
+
+export interface RefferalCount {
+  referrer: number;
+  count: number;
+  user: NormalUser;
+}

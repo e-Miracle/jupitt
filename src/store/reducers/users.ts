@@ -153,7 +153,7 @@ const Slice = createSlice({
     builder.addCase(
       getCount.fulfilled,
       (state, action: PayloadAction<Count>) => {
-        state.this_week = action.payload.last_week;
+        state.this_week = action.payload.this_week;
         state.totalUsers = action.payload.total;
         state.last_week = action.payload.last_week;
       }

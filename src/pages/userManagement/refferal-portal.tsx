@@ -9,15 +9,22 @@ import {
   Text,
   Grid,
 } from "@chakra-ui/react";
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import Title from "../../components/title";
 import { results, data, headers, reasons } from "../../constants";
 import { changeHandler } from "../../utils";
 import Table from "../../components/table";
 import RefferalForm from "../../components/refferal-form";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getLogs, getCount } from "../../store/reducers/refferals";
 const Filter = lazy(() => import("../../components/filter"));
 
 export default function Portal() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getLogs());
+    dispatch(getCount());
+  }, [dispatch]);
   const [value, setValue] = useState("");
   const [searchResults, setSearchResults] = useState<Array<unknown>>([]);
   const handleToggle = () => {};
@@ -38,14 +45,14 @@ export default function Portal() {
     if (filteredValue) setSearchResults(filteredValue);
   };
 
-  const handleActionClick = (type: "delete", id: number) => {
+  const handleActionClick = (type: "delete", id: number | string) => {
     if (type === "delete") {
       console.log(id);
       // Perform the delete operation here
     }
   };
 
-  const getViewLink = (id: number) => `/refferal/user/${id}`;
+  const getViewLink = (id: number | string) => `/refferal/user/${id}`;
   return (
     <Suspense>
       <Box

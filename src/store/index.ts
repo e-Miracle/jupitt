@@ -7,7 +7,8 @@ import departmentReducer from "./reducers/department";
 import permssionsReducer from "./reducers/permssions";
 import reportsReducer from "./reducers/reports"
 import userReducer from "./reducers/users"
-
+import refferalReducer from "./reducers/refferals"
+import dashBoardReducer from "./reducers/dashboard"
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -18,6 +19,8 @@ const store = configureStore({
     department: departmentReducer,
     reports: reportsReducer,
     user: userReducer,
+    referral: refferalReducer,
+    dashBoard: dashBoardReducer,
   },
 });
 
