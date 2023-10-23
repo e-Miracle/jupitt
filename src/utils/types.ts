@@ -231,3 +231,17 @@ export interface RefferalCount {
   count: number;
   user: NormalUser;
 }
+
+export interface IReferralSettings {
+  type: string;
+  amount: number;
+  bonus_asset: string;
+  min_transaction_limit: number;
+}
+
+export interface IReferralSettingMain {
+  type: string;
+  amount: number;
+  bonus_asset: string;
+  min_transaction_limit: number;
+}

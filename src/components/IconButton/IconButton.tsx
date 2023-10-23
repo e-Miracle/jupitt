@@ -6,7 +6,9 @@ interface Props {
 export default function IconButton(props: Props) {
   const {
     children,
-    onClick = (event: React.MouseEvent<HTMLButtonElement>) => {},
+    onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      console.log(event)
+    },
     className = "",
   } = props;
   return (

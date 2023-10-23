@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import  { Suspense } from "react";
 import { Box } from "@chakra-ui/react";
 import Title from "../../../components/title";
 import { MultiStepForm } from "../multi-form";

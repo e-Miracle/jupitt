@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -6,11 +5,11 @@ import { Spinner } from "@chakra-ui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { saveSetting } from "../store/non-reducer-actions.ts";
 type Props = {
   title: string;
+  type: string;
   currencies: Array<string>;
-  handleConvert?: () => void;
 };
 
 const conversionSchema = z.object({
@@ -45,8 +44,14 @@ const RefferalForm = (props: Props) => {
   });
 
   const onSubmit: SubmitHandler<ConversionFormData> = async (data) => {
-    console.log(data);
-    props.handleConvert && props.handleConvert();
+    const { type } = props;
+    const res = await saveSetting({
+      type,
+      amount: data.amount,
+      bonus_asset: data.currency,
+      min_transaction_limit: data.limit,
+    });
+    console.log(res);
   };
   return (
     <div>
@@ -67,6 +72,7 @@ const RefferalForm = (props: Props) => {
             {...register("currency", { required: "This is required." })}
             disabled={isSubmitting}
           >
+            <option value="">Select</option>
             {props.currencies.map((item) => (
               <option value={item}>{item}</option>
             ))}

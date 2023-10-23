@@ -1,4 +1,4 @@
-import React, { lazy, useState } from "react";
+import { lazy, useState } from "react";
 import { results, data, headers } from "../../../constants";
 import { changeHandler } from "../../../utils";
 import Table from "../../../components/table";
@@ -24,13 +24,13 @@ const Staffs = () => {
     if (filteredValue) setSearchResults(filteredValue);
   };
 
-  const handleActionClick = (type: "delete", id: number) => {
+  const handleActionClick = (type: "delete", id: number | string) => {
     if (type === "delete") {
       console.log(id);
     }
   };
 
-const getViewLink = (id: number) => `/manage-staff/staff/${id}`;
+  const getViewLink = (id: number | string) => `/manage-staff/staff/${id}`;
   return (
     <div>
       {" "}

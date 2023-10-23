@@ -244,7 +244,7 @@ export const steps = [
   { title: "KYC LEVEL 3" },
 ];
 
-export const reasons = ["testing", "testing", "testing"];
+export const reasons = ["BTC", "ETH", "UDST"];
 
 export const USER_TOKEN = "token";
 

@@ -53,7 +53,7 @@ const Tables: React.FC<Props> = ({
   next_page_url,
   prev_page_url,
 }) => {
-  const [selectedRows, setSelectedRows] = useState<number[] | string[]>([]);
+  const [selectedRows, setSelectedRows] = useState<Array<number | string>>([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
 
   const handleRowClick = (id: number | string) => {

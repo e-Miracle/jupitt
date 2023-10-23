@@ -1,4 +1,3 @@
-import React from 'react'
 import {  useAppSelector } from "../../store/hooks";
 const Fields = () => {
   const { user } = useAppSelector((state) => state.user);

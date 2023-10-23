@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { RefferalLog, RefferalCount } from "../../utils";
+import { RefferalLog, RefferalCount, IReferralSettingMain } from "../../utils";
 import {  baseUrl } from "../../constants";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -40,6 +40,8 @@ type InitialState = {
   referralCountto: number;
   referralCounttotal: number;
   referralCountloading: boolean;
+  settingsLoader: boolean;
+  settings: IReferralSettingMain[] | null;
   error: string[];
 };
 
@@ -60,6 +62,8 @@ const initialState: InitialState = {
   referralCountto: 0,
   referralCounttotal: 0,
   referralCountloading: false,
+  settingsLoader: false,
+  settings: null,
   error: [],
 };
 
@@ -68,6 +72,21 @@ export const getLogs = createAsyncThunk("referral/getLogs", async () => {
     const res = await axios.get(`${baseUrl}/referral/log`);
     toast.success(res.data.message);
     return res.data.data.referrals;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      toast.error(err.message);
+    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+      err.response.data.message.map((err: string) => toast.error(err));
+      return err.response.data.message;
+    }
+  }
+});
+
+export const getSettings = createAsyncThunk("referral/getSettings", async () => {
+  try {
+    const res = await axios.get(`${baseUrl}/referral/setting`);
+    toast.success(res.data.message);
+    return res.data.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
       toast.error(err.message);
@@ -145,6 +164,28 @@ const Slice = createSlice({
       getCount.rejected,
       (state, action: PayloadAction<unknown>) => {
         state.referralLogsloading = false;
+        if (action?.payload) {
+          const error = action.payload as { message?: string[] | undefined };
+          state.error = error.message || ["Something went wrong"];
+        } else {
+          state.error = ["Something went wrong"];
+        }
+      }
+    );
+    builder.addCase(getSettings.pending, (state) => {
+      state.settingsLoader = true;
+    });
+    builder.addCase(
+      getSettings.fulfilled,
+      (state, action: PayloadAction<IReferralSettingMain[]>) => {
+        state.settingsLoader = false;
+        state.settings = action.payload;
+      }
+    );
+    builder.addCase(
+      getSettings.rejected,
+      (state, action: PayloadAction<unknown>) => {
+        state.settingsLoader = false;
         if (action?.payload) {
           const error = action.payload as { message?: string[] | undefined };
           state.error = error.message || ["Something went wrong"];

@@ -16,9 +16,10 @@ import { changeHandler } from "../../utils";
 import Table from "../../components/table";
 import RefferalForm from "../../components/refferal-form";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getLogs, getCount } from "../../store/reducers/refferals";
+import { getLogs, getCount, getSettings } from "../../store/reducers/refferals";
 import LoadingTable from "../../components/table-loader";
 import EmptyArrayMessage from "../../components/empty";
+import ReferralSettingsCard from "../../components/referral-settings-card";
 const Filter = lazy(() => import("../../components/filter"));
 
 export default function Portal() {
@@ -26,6 +27,7 @@ export default function Portal() {
   useEffect(() => {
     dispatch(getLogs());
     dispatch(getCount());
+    dispatch(getSettings());
   }, [dispatch]);
 
   const {
@@ -214,9 +216,25 @@ export default function Portal() {
                 }}
                 gridGap="1rem"
               >
-                <RefferalForm title="Referrer" currencies={reasons} />
-                <RefferalForm title="Referred" currencies={reasons} />
+                <RefferalForm
+                  type="referrer"
+                  title="Referrer"
+                  currencies={reasons}
+                />
+                <RefferalForm
+                  type="referred"
+                  title="Referred"
+                  currencies={reasons}
+                />
               </Grid>
+              <ReferralSettingsCard
+                type={"Referral"}
+                start_date="2023-09-15T12:43:58.348+00:00"
+                stop_date="2023-09-15T12:43:58.348+00:00"
+                status="stopped"
+                currency="BTC"
+                amount={10000000000}
+              />
             </TabPanel>
           </TabPanels>
         </Tabs>

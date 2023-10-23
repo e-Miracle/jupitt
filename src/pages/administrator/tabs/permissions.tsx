@@ -1,4 +1,4 @@
-import React, { lazy, useState } from "react";
+import  { lazy, useState } from "react";
 import { results, data, headers } from "../../../constants";
 import { changeHandler } from "../../../utils";
 import Table from "../../../components/table";
@@ -24,13 +24,13 @@ const Permissions = () => {
     if (filteredValue) setSearchResults(filteredValue);
   };
 
-  const handleActionClick = (type: "delete", id: number) => {
+  const handleActionClick = (type: "delete", id: number| string) => {
     if (type === "delete") {
       console.log(id);
     }
   };
 
-  const getViewLink = (id: number) => `/refferal/user/${id}`;
+  const getViewLink = (id: number| string) => `/refferal/user/${id}`;
   return (
     <div>
       {" "}

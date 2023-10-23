@@ -39,6 +39,19 @@ export function formatServerTime(serverTime: Date): string {
   return `${formattedDate}`;
 }
 
+export function formatTimestamp(timestamp: string) {
+  const formattedDate = new Date(timestamp).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  return formattedDate;
+}
+
+
+
 export const setAuthToken = () => {
   const token = Cookies.get(USER_TOKEN);
   if (token) {
