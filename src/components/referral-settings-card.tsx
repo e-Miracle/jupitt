@@ -36,17 +36,17 @@ const ReferralSettingsCard: React.FC<Props> = ({
     <div className="bg-[#EAECF0] rounded-lg p-5 font-poppins  cursor-pointer">
       <div className="flex flex-wrap justify-between">
         <h3 className="text-xs lg:text-sm font-bold capitalize">{type}</h3>
-        <label className="relative inline-block w-10 h-5">
+        <label className="relative inline-block w-10 h-5 bg-lightgreen rounded-xl">
           <input
             type="checkbox"
             className="hidden"
             checked={checked}
             onChange={handleToggle}
           />
-          <span className="block w-10 h-5 bg-gray-300 rounded-full shadow-inner" />
+          {/* <span className="block w-10 h-5 bg-gray-300 rounded-full shadow-inner" /> */}
           <span
-            className={`absolute block w-4 h-4 bg-white rounded-full shadow transition-transform duration-300 transform ${
-              checked ? "translate-x-5" : ""
+            className={`absolute block mt-[.1rem] ml-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-300 transform ${
+              checked ? "translate-x-4" : ""
             }`}
           />
         </label>
