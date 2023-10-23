@@ -9,14 +9,16 @@ import {
   Text,
   Grid,
 } from "@chakra-ui/react";
-import { Suspense, lazy, useState, useEffect } from "react";
+import { Suspense, lazy, useState, useEffect, useMemo } from "react";
 import Title from "../../components/title";
-import { results, data, headers, reasons } from "../../constants";
+import { results, reasons } from "../../constants";
 import { changeHandler } from "../../utils";
 import Table from "../../components/table";
 import RefferalForm from "../../components/refferal-form";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getLogs, getCount } from "../../store/reducers/refferals";
+import LoadingTable from "../../components/table-loader";
+import EmptyArrayMessage from "../../components/empty";
 const Filter = lazy(() => import("../../components/filter"));
 
 export default function Portal() {
@@ -25,6 +27,41 @@ export default function Portal() {
     dispatch(getLogs());
     dispatch(getCount());
   }, [dispatch]);
+
+  const {
+    referralLogs,
+    referralLogsnext_page_url,
+    referralLogsprev_page_url,
+    referralLogscurrent_page,
+    referralLogstotal,
+    referralLogsloading,
+    referralCount,
+    referralCountnext_page_url,
+    referralCountprev_page_url,
+    referralCountcurrent_page,
+    referralCounttotal,
+    referralCountloading,
+  } = useAppSelector((state) => state.referral);
+
+  const options_logs = useMemo(
+    () => [
+      { key: "id", label: "ID" },
+      { key: "referrer", label: "Referrer" },
+      { key: "reffered", label: "Reffered" },
+      { key: "claimed", label: "Claimed" },
+      { key: "status", label: "Status" },
+    ],
+    []
+  );
+
+  const options_count = useMemo(
+    () => [
+      { key: "user", label: "User" },
+      { key: "referrer", label: "Referrer ID" },
+      { key: "count", label: "Referral Count" },
+    ],
+    []
+  );
   const [value, setValue] = useState("");
   const [searchResults, setSearchResults] = useState<Array<unknown>>([]);
   const handleToggle = () => {};
@@ -53,6 +90,7 @@ export default function Portal() {
   };
 
   const getViewLink = (id: number | string) => `/refferal/user/${id}`;
+  const change = (page: number) => console.log(page);
   return (
     <Suspense>
       <Box
@@ -95,21 +133,75 @@ export default function Portal() {
           />
           <TabPanels>
             <TabPanel>
-              {" "}
-              <Table
-                headers={headers}
-                data={data}
-                onActionClick={handleActionClick}
-                viewLink={getViewLink}
-              />
+              {referralLogsloading && (
+                <LoadingTable
+                  rows={15}
+                  columns={[{ width: 100 }, { width: 150 }, { width: 80 }]}
+                />
+              )}
+              {!referralLogsloading &&
+              referralLogs &&
+              referralLogs.length > 0 ? (
+                <Table
+                  headers={options_logs}
+                  data={referralLogs.map((item) => ({
+                    id: item.id,
+                    referrer: item.referrer,
+                    reffered: item.referred,
+                    claimed: Number(item.claimed) ? "claimed" : "unclaimed",
+                    status: Number(item.status) ? "active" : "inactive",
+                  }))}
+                  onActionClick={handleActionClick}
+                  viewLink={getViewLink}
+                  change={change}
+                  total={referralLogstotal}
+                  currentPage={referralLogscurrent_page}
+                  next_page_url={referralLogsnext_page_url}
+                  prev_page_url={referralLogsprev_page_url}
+                />
+              ) : (
+                <EmptyArrayMessage
+                  array={referralLogs}
+                  message="No users for now"
+                  imageAlt="http://via.placeholder.com/500x5000"
+                />
+              )}
             </TabPanel>
             <TabPanel>
-              <Table
-                headers={headers}
-                data={data}
-                onActionClick={handleActionClick}
-                viewLink={getViewLink}
-              />
+              {referralCountloading && (
+                <LoadingTable
+                  rows={15}
+                  columns={[{ width: 100 }, { width: 150 }, { width: 80 }]}
+                />
+              )}
+              {!referralCountloading &&
+              referralCount &&
+              referralCount.length > 0 ? (
+                <Table
+                  headers={options_count}
+                  data={referralCount.map((item, i) => ({
+                    id: i,
+                    name: item.user.full_name,
+                    email: item.user.email,
+                    image: item.user.full_name,
+                    referrer: item.referrer,
+                    count: Number(item.count),
+                  }))}
+                  onActionClick={handleActionClick}
+                  viewLink={getViewLink}
+                  change={change}
+                  total={referralCounttotal}
+                  currentPage={referralCountcurrent_page}
+                  next_page_url={referralCountnext_page_url}
+                  prev_page_url={referralCountprev_page_url}
+                />
+              ) : (
+                <EmptyArrayMessage
+                  array={referralLogs}
+                  message="No users for now"
+                  imageAlt="http://via.placeholder.com/500x5000"
+                />
+              )}
             </TabPanel>
             <TabPanel>
               <Grid
