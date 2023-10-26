@@ -9,6 +9,11 @@ import {
   TabIndicator,
   Box,
 } from "@chakra-ui/react";
+import Crypto from "./transactionlogstabs/crypto";
+import Fiat from "./transactionlogstabs/fiat";
+import GiftCard from "./transactionlogstabs/gift-card";
+import VirtualDebitCard from "./transactionlogstabs/virtual-debit-card";
+import PerfectMoney from "./transactionlogstabs/perfect-money"
 export default function TransactionLog() {
   return (
     <Suspense>
@@ -84,19 +89,19 @@ export default function TransactionLog() {
           </Box>
           <TabPanels>
             <TabPanel>
-              one
+              <Crypto/>
             </TabPanel>
             <TabPanel>
-              two
+              <Fiat/>
             </TabPanel>
             <TabPanel>
-             three
+             <GiftCard/>
             </TabPanel>
             <TabPanel>
-              four
+              <PerfectMoney/>
             </TabPanel>
             <TabPanel>
-              five
+             <VirtualDebitCard/>
             </TabPanel>
           </TabPanels>
         </Tabs>

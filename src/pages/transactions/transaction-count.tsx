@@ -9,6 +9,11 @@ import {
   TabIndicator,
   Box,
 } from "@chakra-ui/react";
+import Crypto from "./transactioncounttabs/crypto";
+import Fiat from "./transactioncounttabs/fiat";
+import GiftCard from "./transactioncounttabs/giftcard";
+import PerfectMoney from "./transactioncounttabs/perfectmoney";
+import VirtualDebitCard from "./transactioncounttabs/virtualdebutcard";
 export default function TransactionCount() {
   return (
     <Suspense>
@@ -83,11 +88,21 @@ export default function TransactionCount() {
             />
           </Box>
           <TabPanels>
-            <TabPanel>one</TabPanel>
-            <TabPanel>two</TabPanel>
-            <TabPanel>three</TabPanel>
-            <TabPanel>four</TabPanel>
-            <TabPanel>five</TabPanel>
+            <TabPanel>
+              <Crypto/>
+            </TabPanel>
+            <TabPanel>
+              <Fiat/>
+            </TabPanel>
+            <TabPanel>
+              <GiftCard/>
+            </TabPanel>
+            <TabPanel>
+              <PerfectMoney/>
+            </TabPanel>
+            <TabPanel>
+              <VirtualDebitCard/>
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>

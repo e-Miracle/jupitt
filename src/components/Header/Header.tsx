@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { results } from "../../constants";
+import { useAppSelector } from "../../store/hooks";
 const LiveSearch = lazy(() => import("../LiveSearch/LiveSearch"));
 type Props = {
   mobileNav: boolean;
@@ -16,20 +17,12 @@ type Props = {
   handleLogout: () => void;
 };
 
-type Profile = {
-  name: string;
-  profileImage: string;
-};
-
 const Index: React.FC<Props> = ({
   mobileNav,
   handleMobileNav,
   handleLogout,
 }) => {
-  const [profile, setProfile] = React.useState<Profile>({
-    name: "",
-    profileImage: "",
-  });
+  const { user } = useAppSelector((state) => state.auth);
   const [searchResults, setSearchResults] =
     React.useState<
       {
@@ -55,16 +48,6 @@ const Index: React.FC<Props> = ({
 
     setSearchResults(filteredValue);
   };
-  React.useEffect(() => {
-    //mimicking network request
-    setTimeout(() => {
-      setProfile((profile) => ({
-        ...profile,
-        name: "Andy Warhol",
-        profileImage: "https://via.placeholder.com/500x500",
-      }));
-    }, 3000);
-  }, []);
   return (
     <Suspense>
       <div className="flex justify-between items-center py-3 bg-white px-3  lg:px-5 ">
@@ -98,10 +81,8 @@ const Index: React.FC<Props> = ({
               className="hidden lg:inline-block mr-5 text-icon lg:text-2xl text-xl hover:opacity-80 ease-in duration-300 relative "
             >
               <img
-                src={
-                  profile.profileImage || "https://via.placeholder.com/500x500"
-                }
-                alt={profile.profileImage}
+                src={"https://via.placeholder.com/500x500"}
+                alt={""}
                 className="rounded-full w-[40px] h-[40px] object-contain hover:border hover:border-black"
               />
               <span className="absolute bg-[green] right-[.1rem] bottom-[.1rem] rounded-full w-[10px] h-[10px] border-2 border-white"></span>
@@ -109,7 +90,7 @@ const Index: React.FC<Props> = ({
 
             <div className="hidden lg:block mr-5">
               <h1 className=" text-black text-sm capitalize hover:opacity-80 ease-in duration-300 font-medium">
-                {profile.name ? profile.name : "Anon..."}
+                {user ? user?.name : "Anon..."}
               </h1>
 
               <p className="text-black text-sm capitalize hover:opacity-80 ease-in duration-300">
@@ -155,18 +136,15 @@ const Index: React.FC<Props> = ({
                 <div className="flex items-center w-full">
                   <Link className="block relative" to={`/my/dashboard/account`}>
                     <img
-                      src={
-                        profile.profileImage ||
-                        "https://via.placeholder.com/500x500"
-                      }
-                      alt={profile.profileImage}
+                      src={"https://via.placeholder.com/500x500"}
+                      alt={""}
                       className="rounded-full w-[30px] h-[30px] object-contain hover:border hover:border-black"
                     />
                     <span className="absolute bg-[green] right-[.1rem] bottom-[.1rem] rounded-full w-[8px] h-[8px] border-2 border-white"></span>
                   </Link>
                   <div className="w-[60%] ml-2 whitespace-wrap">
                     <h1 className=" text-black text-xs capitalize hover:opacity-80 ease-in duration-300 font-medium">
-                      {profile.name ? profile.name : "Anon..."}
+                      {user ? user?.name : "Anon..."}
                     </h1>
 
                     <p className="text-black text-xs capitalize hover:opacity-80 ease-in duration-300">
