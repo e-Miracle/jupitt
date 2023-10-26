@@ -1,25 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any */
-import { lazy, Suspense } from "react";
-import {
-  faArrowsUpDown,
-  faBarcode,
-  faArrowDown,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { lazy, Suspense } from "react";
+import { FilterLines, Download, UpDownArrow } from "../assets";
 const LiveSearch = lazy(() => import("./LiveSearch/LiveSearch"));
- type changeHandler = React.ChangeEventHandler<HTMLInputElement>;
+type changeHandler = React.ChangeEventHandler<HTMLInputElement>;
 type Props = {
   data: Array<any>;
-  handleExport: () => void;
+  handleExport?: () => void;
   handleChange: changeHandler;
   handleSubmit: () => void;
-  handleFilter: () => void;
-    handleToggle: () => void;
-    handleSelect: (item: string) => void;
+  handleFilter?: () => void;
+  handleToggle?: () => void;
+  handleSelect: (item: string) => void;
   value: string;
+  className?: string;
+  exported?: boolean;
+  filter?: boolean;
+  random?: boolean;
 };
 
-const filter = ({
+const Filter: React.FC<Props> = ({
+  exported = true,
+  filter = true,
+  random = true,
   data,
   handleExport,
   handleSubmit,
@@ -28,10 +30,13 @@ const filter = ({
   handleToggle,
   handleFilter,
   handleSelect,
-}: Props) => {
+  className,
+}) => {
   return (
     <Suspense>
-      <div className="flex flex-wrap items-center justify-between mt-5">
+      <div
+        className={`flex flex-wrap items-center justify-between ${className} `}
+      >
         {" "}
         <LiveSearch
           placeholder="Search with any related keyword"
@@ -45,34 +50,39 @@ const filter = ({
           onSubmit={handleSubmit}
           renderItem={(item: any) => <p className="text-black ">{item.name}</p>}
         />
-        <div className="mt-5">
-          <button
-            onClick={handleToggle}
-            className="rounded-md p-2 text-xs lg:text-base text-gray outline-none border-none hover:opacity-90 "
-          >
-            {" "}
-            <FontAwesomeIcon icon={faArrowsUpDown} />
-          </button>
-          <button
-            onClick={handleFilter}
-            className="rounded-md p-2 text-xs lg:text-base text-gray outline-none border border-coincard hover:bg-coincard ml-5"
-          >
-            {" "}
-            <FontAwesomeIcon className="mr-2" icon={faBarcode} />
-            Filter
-          </button>
-          <button
-            onClick={handleExport}
-            className="rounded-md p-2 text-xs lg:text-base text-gray outline-none border border-coincard hover:bg-coincard ml-5"
-          >
-            {" "}
-            <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
-            Export
-          </button>
+        <div className="mt-5 flex items-center flex-wrap">
+          {random && (
+            <button
+              onClick={handleToggle}
+              className="rounded-md py-2 px-5 text-xs lg:text-base  outline-none border-none hover:opacity-90 "
+            >
+              {" "}
+              <img src={UpDownArrow} alt={UpDownArrow} />
+            </button>
+          )}
+          {filter && (
+            <button
+              onClick={handleFilter}
+              className="rounded-md py-2 px-5 text-xs lg:text-base text-gray outline-none border border-[#E6E7EC] hover:opacity-70 ml-5 flex items-center"
+            >
+              <img src={FilterLines} alt={FilterLines} className="mr-2" />
+              Filter
+            </button>
+          )}
+          {exported && (
+            <button
+              onClick={handleExport}
+              className="rounded-md py-2 px-5 text-xs lg:text-base text-gray outline-none border border-[#E6E7EC] hover:opacity-70 ml-5 flex items-center"
+            >
+              {" "}
+              <img src={Download} alt={Download} className="mr-2" />
+              Export
+            </button>
+          )}
         </div>
       </div>
     </Suspense>
   );
 };
 
-export default filter;
+export default Filter;

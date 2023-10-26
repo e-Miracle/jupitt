@@ -77,6 +77,11 @@ export const dashBoardLinks: Link[] = [
         icon: faCircleDot,
       },
       {
+        path: "/service-management",
+        title: "Service Management",
+        icon: faCircleDot,
+      },
+      {
         path: "/card-funnel",
         title: "Card Funnel",
         icon: faCircleDot,
@@ -294,5 +299,7 @@ export const userDashboard = [
     amount: 3000000,
   },
 ];
+export const currentCoins = ["btc", "eth", "usdt"];
+export const currentCountries = ["nigeria", "ghana", "South Africa"];
 //FOR YOU USING  USEMEMO
 // const options = useMemo(() => countryList().getData(), []);

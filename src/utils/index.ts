@@ -60,3 +60,17 @@ export const setAuthToken = () => {
   }
   delete axios.defaults.headers.common["Authorization"];
 };
+
+export async function getCountryFlag(countryName: string): Promise<string> {
+  // Fetch the country data from the API
+  const response = await fetch(
+    `https://restcountries.com/v2/name/${countryName}`
+  );
+  // convert the response to json
+  const countryData = await response.json();
+  // access the flag property from the response
+  const flagUrl: string = await countryData[0].flag;
+  console.log(flagUrl);
+  // return the flag
+  return flagUrl;
+}

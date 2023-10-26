@@ -1,5 +1,5 @@
 import {
-  faQuestionCircle,
+  faQuestion,
   faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -35,11 +35,11 @@ const Title = (props: Props) => {
       )}
       {props.title}{" "}
       <FontAwesomeIcon
-        className="text-sm lg:text-base text-coincard mx-2"
-        icon={faQuestionCircle}
+        className="text-[.2rem]  text-[#98A2B3] mx-2 rounded-full border p-[0.1rem] border-[#98A2B3] w-[0.75rem] h-[0.75rem]"
+        icon={faQuestion}
       />
       {props.number && (
-        <span className="text-xs lg:text-sm bg-background p-1 rounded-xl">
+        <span className="text-[.75rem]  bg-background p-1  h-[22px] flex items-center justify-center rounded-xl max-w-[40px]">
           {props.number}
         </span>
       )}
@@ -49,7 +49,7 @@ const Title = (props: Props) => {
             color: color[props.status],
             background: background[props.status],
           }}
-          className="text-xs lg:text-sm rounded-xl p-1 capitalize"
+          className="text-xs rounded-xl p-1 capitalize"
         >
           {props.status}
         </span>

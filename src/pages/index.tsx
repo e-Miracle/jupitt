@@ -26,6 +26,8 @@ const RateLog = lazy(() => import("./exchangeRate/rate-log"));
 //gift cards
 const GiftCardMangement = lazy(() => import("./giftcard/gift-card-managemt"));
 const CardFunnel = lazy(() => import("./giftcard/card-funnel"));
+const ServiceManagement = lazy(() => import('./giftcard/service-mangement'));
+const SingleCard = lazy(() => import("./giftcard/singlePages/card"));
 
 //virtual management
 const CardList = lazy(() => import("./virtualcards/card-list"));
@@ -77,6 +79,8 @@ export {
   RateBoard,
   RateLog,
   GiftCardMangement,
+  SingleCard,
+  ServiceManagement,
   CardFunnel,
   CardList,
   TransactionLogs,

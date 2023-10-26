@@ -245,3 +245,23 @@ export interface IReferralSettingMain {
   bonus_asset: string;
   min_transaction_limit: number;
 }
+
+
+
+
+export  type ICountries = {
+  country: string;
+};
+
+export type IFormLayout = {
+  country: string;
+  coinName: string;
+};
+
+
+export type IForm = {
+  type: "buy" | "sell";
+  country: string;
+  coinName: string;
+  className?: string;
+};

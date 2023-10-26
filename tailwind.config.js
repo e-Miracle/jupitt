@@ -36,6 +36,7 @@ export default {
       gray: "#344054",
       tableHead: "#F1F1F1",
       userDetails: "#7C7C7C",
+      submit: "#1C1C93",
     },
   },
   plugins: [],

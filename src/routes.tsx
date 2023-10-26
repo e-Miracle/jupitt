@@ -32,6 +32,8 @@ import {
   SingleUser,
   SingleStaff,
   CreateStaff,
+  ServiceManagement,
+  SingleCard,
 } from "./pages";
 import NotFound from "./components/NotFound/NotFound";
 import { DashboardLayout, FormLayout } from "./layouts";
@@ -143,6 +145,21 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: <GiftCardMangement />,
+      },
+      {
+        path: "/gift-card-management/card/:id",
+        element: <SingleCard />,
+      },
+    ],
+  },
+  {
+    path: "/service-management",
+    element: <DashboardLayout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        index: true,
+        element: <ServiceManagement />,
       },
     ],
   },
