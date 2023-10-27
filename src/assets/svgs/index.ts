@@ -14,6 +14,7 @@ import UpDownArrow from "./Up And Down Arrows.svg"
 import Share from "./share.svg";
 import Check from "./check.svg";
 import VerticalLine from "./line.svg"
+import Search from "./Search.svg"
 export {
   FormImage,
   Barcode,
@@ -31,4 +32,5 @@ export {
   Share,
   Check,
   VerticalLine,
+  Search,
 };

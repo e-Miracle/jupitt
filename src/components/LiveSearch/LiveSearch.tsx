@@ -93,7 +93,7 @@ const LiveSearch = <T extends object>({
           className="relative  w-full lg:w-auto"
         >
           <div className=" flex items-center justify-between w-full bg-background lg:w-[300px] px-5 py-3 text-xs lg:text-sm rounded-[10px] text-black placeholder:text-[#D1D1D1] shadow-[0px 4px 4px rgba(0, 0, 0, 0.1)] focus:border-[#D1D1D1] transition">
-            <button onClick={onSubmit}>
+            <button onClick={onSubmit} className="text-[#667085]">
               <FontAwesomeIcon icon={faSearch} />
             </button>
             <input

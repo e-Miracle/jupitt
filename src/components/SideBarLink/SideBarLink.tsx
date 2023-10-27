@@ -38,7 +38,7 @@ Props) {
       </span>
       {isIconMode ? null : (
         <>
-          <span className="inline-block ml-5 text-sm lg:text-base font-ubuntu">
+          <span className="inline-block ml-5 text-sm lg:text-base font-poppins">
             {title}
           </span>
         </>
@@ -127,7 +127,7 @@ Props) {
                 )}
               </span>
               {isIconMode ? null : (
-                <span className="inline-block ml-5 text-sm lg:text-base font-ubuntu">
+                <span className="inline-block ml-5 text-sm lg:text-base font-poppins">
                   {title}
                 </span>
               )}

@@ -66,11 +66,11 @@ const Index: React.FC<Props> = ({
           renderItem={(item: any) => <p className="text-black ">{item.name}</p>}
         />
 
-        <div className="flex items-center bg-user rounded-lg p-1 ">
+        <div className="flex items-center bg-user rounded-lg p-2 px-4 ">
           <div className="flex items-center relative">
             <Link
               to={`/dashboard/notifications`}
-              className="hidden lg:inline-block mr-5 text-black lg:text-base text-sm hover:opacity-80 ease-in duration-300 relative"
+              className="hidden lg:inline-block mr-5 text-[#667085] lg:text-base text-sm hover:opacity-80 ease-in duration-300 relative"
             >
               <FontAwesomeIcon icon={faBell} />
               <span className="absolute bg-[#FF3B30] rounded-full w-[4px] h-[4px]"></span>

@@ -30,52 +30,52 @@ const DashboardLayout = () => {
   return (
     <Suspense>
       <Authourized>
-      <div className={""}>
-        <SideBar
-          onclick={toggleExpand}
-          expand={expand}
-          mobileNav={mobileNav}
-          handleLogout={toggleModal}
-          handleMobileNav={handleMobileNav}
-        />
-        <div
-          className={
-            isMobile
-              ? ` bg-background`
-              : expand
-              ? "relative left-[4rem] min-h-full bg-background h-screen ease-in duration-300 w-[calc(100%-4rem)] overflow-auto"
-              : "relative left-[18rem] min-h-full bg-background h-screen ease-in duration-300 w-[calc(100%-18rem)] overflow-auto"
-          }
-        >
+        <div className={""}>
+          <SideBar
+            onclick={toggleExpand}
+            expand={expand}
+            mobileNav={mobileNav}
+            handleLogout={toggleModal}
+            handleMobileNav={handleMobileNav}
+          />
           <div
-            className={`${
-              expand
-                ? "w-full mx-auto  md:px-5 xl:px-0"
-                : "w-full mx-auto  md:px-5 xl:px-0 "
-            }`}
+            className={
+              isMobile
+                ? ` bg-background lg:overflow-hidden`
+                : expand
+                ? "relative left-[4rem] min-h-full bg-background h-screen ease-in duration-300 w-[calc(100%-4rem)]  lg:overflow-hidden"
+                : "relative left-[18rem] min-h-full bg-background h-screen ease-in duration-300 w-[calc(100%-18rem)] lg:overflow-hidden "
+            }
           >
-            <Header
-              mobileNav={mobileNav}
-              handleMobileNav={handleMobileNav}
-              handleLogout={toggleModal}
-            />{" "}
-            <div className="bg-white">
-              <ConfirmDialogue
-                title=":( Logout?"
-                open={modal}
-                onClose={() => setModal(false)}
-                onConfirm={() => {
-                  //call the function to logout the user
-                }}
-              >
-                Are you sure you want to log out?
-              </ConfirmDialogue>
-              <Outlet />
+            <div
+              className={`${
+                expand
+                  ? "w-full mx-auto  md:px-5 xl:px-0"
+                  : "w-full mx-auto  md:px-5 xl:px-0 "
+              }`}
+            >
+              <Header
+                mobileNav={mobileNav}
+                handleMobileNav={handleMobileNav}
+                handleLogout={toggleModal}
+              />{" "}
+              <div className="bg-white lg:h-[calc(100vh-50px)] overflow-y-auto pb-7">
+                <ConfirmDialogue
+                  title=":( Logout?"
+                  open={modal}
+                  onClose={() => setModal(false)}
+                  onConfirm={() => {
+                    //call the function to logout the user
+                  }}
+                >
+                  Are you sure you want to log out?
+                </ConfirmDialogue>
+                <Outlet />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Authourized>
+      </Authourized>
     </Suspense>
   );
 };
