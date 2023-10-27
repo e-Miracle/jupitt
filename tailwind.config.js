@@ -14,6 +14,7 @@ export default {
         poppins: ['"Poppins"', "sans-serif"],
         inter: ['"Inter"', "sans-serif"],
         kumbhSans: ['"Kumbh Sans"', "sans-serif"],
+        montserrat: ['"Montserrat"', "sans-serif"],
       },
     },
     colors: {
