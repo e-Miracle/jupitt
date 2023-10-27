@@ -38,7 +38,9 @@ import {
   Aum,
   FinaceLedger,
   SinglePage,
-  Sanctionuser
+  Sanctionuser,
+  SingleTicket,
+  AddTicket,
 } from "./pages";
 import NotFound from "./components/NotFound/NotFound";
 import { DashboardLayout, FormLayout } from "./layouts";
@@ -354,6 +356,14 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: <Ticket />,
+      },
+      {
+        path: "/ticket/:id",
+        element: <SingleTicket />,
+      },
+      {
+        path: "/ticket/add",
+        element: <AddTicket />,
       },
     ],
   },

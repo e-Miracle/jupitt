@@ -41,6 +41,8 @@ const TransactionCount = lazy(() => import("./transactions/transaction-count"));
 //support
 const Ticket = lazy(() => import("./support/ticket"));
 const Chat = lazy(() => import("./support/chat"));
+const SingleTicket = lazy(() => import("./support/singlePage/ticket"));
+const AddTicket = lazy(() => import("./support/singlePage/add-ticket"));
 
 //compliance
 const KycManagement = lazy(() => import("./compliance/kyc-management"));
@@ -111,4 +113,6 @@ export {
   FinaceLedger,
   SinglePage,
   Sanctionuser,
+  SingleTicket,
+  AddTicket,
 };

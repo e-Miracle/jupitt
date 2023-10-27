@@ -319,5 +319,11 @@ export const userDashboard = [
 ];
 export const currentCoins = ["btc", "eth", "usdt"];
 export const currentCountries = ["nigeria", "ghana", "South Africa"];
+export const ticketStatus = ["new", "onGoing", "resolved"];
+export const ticketColors: Record<string, string> = {
+  new: "#0D63D3",
+  resolved: "#FAC885",
+  ongoing: "#54C104",
+};
 //FOR YOU USING  USEMEMO
 // const options = useMemo(() => countryList().getData(), []);
