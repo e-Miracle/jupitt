@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { z } from "zod";
@@ -6,37 +6,40 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import { Spinner } from "@chakra-ui/react";
-const Faq = () => {
-  const formSchema = z.object({
-    message: z
-      .string()
-      .min(8, { message: "password must be at least 8 characters" })
-      .max(255, {
-        message: "The password can't accept more than 255 characters",
-      }),
-  });
+type Props = {
+    tab: "notification" | "policies"
+    type: "push" | "in-app"
+}
+const Form: React.FC<Props> = ({ tab, type }) => {
+    const formSchema = z.object({
+      message: z
+        .string()
+        .min(8, { message: "password must be at least 8 characters" })
+        .max(255, {
+          message: "The password can't accept more than 255 characters",
+        }),
+    });
 
-  type FormSchemaType = z.infer<typeof formSchema>;
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<FormSchemaType>({
-    resolver: zodResolver(formSchema),
-  });
-  const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    console.log(data);
-  };
+    type FormSchemaType = z.infer<typeof formSchema>;
+    const {
+      register,
+      handleSubmit,
+      formState: { errors, isSubmitting },
+    } = useForm<FormSchemaType>({
+      resolver: zodResolver(formSchema),
+    });
+    const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
+      console.log(data);
+    };
   return (
     <div>
-      {" "}
       <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label
-            className="text-sm lg:text-base font-semibold text-center block text-[#667085]"
+            className="text-sm lg:text-base font-semibold capitalize text-center block text-[#667085]"
             htmlFor="tag"
           >
-            FAQ
+            {type} {tab} Message
           </label>
           <textarea
             className={`mt-3 w-full lg:h-[400px] border-none text-sm bg-formBg lg:text-base text-textForm p-3 rounded-md outline-none placeholder:text-textForm placeholder:text-sm placeholder:opacity-[.6]`}
@@ -74,4 +77,4 @@ const Faq = () => {
   );
 };
 
-export default Faq;
+export default Form;

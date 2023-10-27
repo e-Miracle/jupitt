@@ -99,7 +99,7 @@ const Index: React.FC<Props> = ({
             </div>
 
             <button
-              className="text-black hover:opacity-80 hover:secondary ease-in duration-300 mr-5 lg:mr-0"
+              className="text-[#667085] hover:opacity-80 hover:secondary ease-in duration-300 mr-5 lg:mr-0"
               onClick={() => setPopup(!popup)}
             >
               <FontAwesomeIcon icon={faEllipsisV} />
