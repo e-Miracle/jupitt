@@ -37,6 +37,8 @@ import {
   SingeCardFunnel,
   Aum,
   FinaceLedger,
+  SinglePage,
+  Sanctionuser
 } from "./pages";
 import NotFound from "./components/NotFound/NotFound";
 import { DashboardLayout, FormLayout } from "./layouts";
@@ -234,6 +236,10 @@ const routes: RouteObject[] = [
         index: true,
         element: <KycManagement />,
       },
+      {
+        path: "/kyc-management/user/:id",
+        element: <SinglePage />,
+      },
     ],
   },
   {
@@ -255,6 +261,10 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: <SanctionList />,
+      },
+      {
+        path: "/sanction-list/user/:id",
+        element: <Sanctionuser />,
       },
     ],
   },

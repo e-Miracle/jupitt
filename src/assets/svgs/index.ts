@@ -12,7 +12,8 @@ import FilterLines from "./Filters lines.svg"
 import Download from "./Download.svg"
 import UpDownArrow from "./Up And Down Arrows.svg"
 import Share from "./share.svg";
-import Check from "./check.svg"
+import Check from "./check.svg";
+import VerticalLine from "./line.svg"
 export {
   FormImage,
   Barcode,
@@ -29,4 +30,5 @@ export {
   UpDownArrow,
   Share,
   Check,
+  VerticalLine,
 };

@@ -46,6 +46,8 @@ const Chat = lazy(() => import("./support/chat"));
 const KycManagement = lazy(() => import("./compliance/kyc-management"));
 const AmlManagement = lazy(() => import("./compliance/aml-management"));
 const SanctionList = lazy(() => import("./compliance/sanction-list"));
+const SinglePage = lazy(() => import("./compliance/singlepages/user"));
+const Sanctionuser = lazy(() => import("./compliance/singlepages/sanction"));
 
 
 //app management
@@ -107,4 +109,6 @@ export {
   CreateStaff,
   Aum,
   FinaceLedger,
+  SinglePage,
+  Sanctionuser,
 };
