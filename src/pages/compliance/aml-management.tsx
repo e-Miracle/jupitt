@@ -3,7 +3,14 @@ import { Suspense } from "react";
 export default function AmlManagement() {
   return (
     <Suspense>
-      <Box>AmlManagement</Box>
+      <Box
+        paddingTop={".75rem"}
+        paddingBottom={".75rem"}
+        paddingLeft={"1rem"}
+        paddingRight={"1rem"}
+      >
+        AmlManagement
+      </Box>
     </Suspense>
   );
 }

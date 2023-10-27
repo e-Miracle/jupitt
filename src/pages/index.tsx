@@ -65,6 +65,10 @@ const ActivityLog = lazy(() => import("./administrator/activity-log"));
 const SingleStaff = lazy(() => import("./administrator/singlePage/staff"));
 const CreateStaff = lazy(() => import("./administrator/singlePage/createStaff"));
 
+
+//finance
+const Aum = lazy(() => import("./finance/aum"));
+const FinaceLedger = lazy(() => import("./finance/ledger"));
 export {
   Register,
   Login,
@@ -101,4 +105,6 @@ export {
   SingleUser,
   SingleStaff,
   CreateStaff,
+  Aum,
+  FinaceLedger,
 };

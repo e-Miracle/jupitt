@@ -35,6 +35,8 @@ import {
   ServiceManagement,
   SingleCard,
   SingeCardFunnel,
+  Aum,
+  FinaceLedger,
 } from "./pages";
 import NotFound from "./components/NotFound/NotFound";
 import { DashboardLayout, FormLayout } from "./layouts";
@@ -342,6 +344,28 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: <Ticket />,
+      },
+    ],
+  },
+  {
+    path: "/aum",
+    element: <DashboardLayout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        index: true,
+        element: <Aum />,
+      },
+    ],
+  },
+  {
+    path: "/finance-ledger",
+    element: <DashboardLayout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        index: true,
+        element: <FinaceLedger />,
       },
     ],
   },

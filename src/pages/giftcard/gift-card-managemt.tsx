@@ -67,6 +67,8 @@ export default function GiftCardManagement() {
                 </Box>
                 <Button
                   onClick={onOpen}
+                  background={"#0D63D3"}
+                  color={"#fff"}
                   className=" text-xs  bg-secondary font-medium text-white rounded-lg px-5 py-3 hover:opacity-90 flex items-center"
                 >
                   {" "}
