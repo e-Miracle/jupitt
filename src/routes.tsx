@@ -34,6 +34,7 @@ import {
   CreateStaff,
   ServiceManagement,
   SingleCard,
+  SingeCardFunnel,
 } from "./pages";
 import NotFound from "./components/NotFound/NotFound";
 import { DashboardLayout, FormLayout } from "./layouts";
@@ -171,6 +172,10 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: <CardFunnel />,
+      },
+      {
+        path: "/card-funnel/card/:id",
+        element: <SingeCardFunnel />,
       },
     ],
   },

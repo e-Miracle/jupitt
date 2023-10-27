@@ -50,7 +50,7 @@ const Filter: React.FC<Props> = ({
           onSubmit={handleSubmit}
           renderItem={(item: any) => <p className="text-black ">{item.name}</p>}
         />
-        <div className="mt-5 flex items-center flex-wrap">
+        <div className=" flex items-center flex-wrap">
           {random && (
             <button
               onClick={handleToggle}

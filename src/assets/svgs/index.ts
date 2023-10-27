@@ -11,6 +11,8 @@ import EmptyImage from "./empty image.svg"
 import FilterLines from "./Filters lines.svg"
 import Download from "./Download.svg"
 import UpDownArrow from "./Up And Down Arrows.svg"
+import Share from "./share.svg";
+import Check from "./check.svg"
 export {
   FormImage,
   Barcode,
@@ -25,4 +27,6 @@ export {
   FilterLines,
   Download,
   UpDownArrow,
+  Share,
+  Check,
 };

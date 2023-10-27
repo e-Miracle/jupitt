@@ -12,6 +12,7 @@ import {
   faPhone,
   faGrin,
   faTicket,
+  faClockRotateLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const results = [
@@ -101,6 +102,23 @@ export const dashBoardLinks: Link[] = [
       {
         path: "/card-transaction-logs",
         title: "Transaction Logs",
+        icon: faCircleDot,
+      },
+    ],
+  },
+  {
+    path: "",
+    title: "Finance",
+    icon: faClockRotateLeft,
+    subLinks: [
+      {
+        path: "/aum",
+        title: "AUM",
+        icon: faCircleDot,
+      },
+      {
+        path: "/finance-ledger",
+        title: "Ledger",
         icon: faCircleDot,
       },
     ],

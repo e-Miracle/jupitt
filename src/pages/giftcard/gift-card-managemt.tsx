@@ -15,10 +15,10 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
+  Button,
 } from "@chakra-ui/react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "../../components/Button/Button";
 import AddCardForm from "./form/add-Card";
 import CatalogueBuy from "./tabs/catalogue-buy";
 export default function GiftCardManagement() {
