@@ -13,7 +13,7 @@ const Transactions = () => {
   return (
     <Suspense>
       <div className="bg-white rounded-lg p-5 font-poppins  cursor-pointer">
-        <div className="flex items-center justify-between relative">
+        <div className="flex flex-wrap items-center justify-between relative">
           <h3 className="capitalize text-base lg:text-lg font-semibold">
             {" "}
             transactions

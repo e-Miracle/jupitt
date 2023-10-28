@@ -1,7 +1,10 @@
 import React, { Suspense } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Authourized } from "../modules";
+import Spinner from "../components/spinner/Spinner"
+import { useAppDispatch } from "../store/hooks";
+import { logout } from "../store/reducers/auth";
 const SideBar = React.lazy(() => import("../components/SideBar/SideBar"));
 const Header = React.lazy(() => import("../components/Header/Header"));
 const ConfirmDialogue = React.lazy(
@@ -12,6 +15,8 @@ const item: boolean =
   localStorage.getItem("expand") && JSON.parse(localStorage.expand);
 console.log(typeof item);
 const DashboardLayout = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [modal, setModal] = React.useState<boolean>(false);
   const [expand, setExpand] = React.useState<boolean>(item);
   const [mobileNav, setmobileNav] = React.useState<boolean>(false);
@@ -28,7 +33,7 @@ const DashboardLayout = () => {
     }
   };
   return (
-    <Suspense>
+    <Suspense fallback={<Spinner/>}>
       <Authourized>
         <div className={""}>
           <SideBar
@@ -43,8 +48,8 @@ const DashboardLayout = () => {
               isMobile
                 ? ` bg-background lg:overflow-hidden`
                 : expand
-                ? "relative left-[4rem] min-h-full bg-background h-screen ease-in duration-300 w-[calc(100%-4rem)]  lg:overflow-hidden"
-                : "relative left-[18rem] min-h-full bg-background h-screen ease-in duration-300 w-[calc(100%-18rem)] lg:overflow-hidden "
+                ? "relative lg:left-[4rem] min-h-full bg-background h-screen ease-in duration-300 lg:w-[calc(100%-4rem)]  lg:overflow-hidden"
+                : "relative lg:left-[18rem] min-h-full bg-background h-screen ease-in duration-300 lg:w-[calc(100%-18rem)] lg:overflow-hidden "
             }
           >
             <div
@@ -65,7 +70,8 @@ const DashboardLayout = () => {
                   open={modal}
                   onClose={() => setModal(false)}
                   onConfirm={() => {
-                    //call the function to logout the user
+                    dispatch(logout());
+                    navigate("/")
                   }}
                 >
                   Are you sure you want to log out?

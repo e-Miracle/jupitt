@@ -37,20 +37,23 @@ const Filter: React.FC<Props> = ({
       <div
         className={`flex flex-wrap items-center justify-between ${className} `}
       >
-        {" "}
-        <LiveSearch
-          placeholder="Search with any related keyword"
-          results={data}
-          onChange={handleChange}
-          onSelect={(item: any) => {
-            console.log(item);
-            handleSelect(item);
-          }}
-          value={value}
-          onSubmit={handleSubmit}
-          renderItem={(item: any) => <p className="text-black ">{item.name}</p>}
-        />
-        <div className=" flex items-center flex-wrap">
+        <div className="w-full  lg:max-w-[300px]">
+          <LiveSearch
+            placeholder="Search with any related keyword"
+            results={data}
+            onChange={handleChange}
+            onSelect={(item: any) => {
+              console.log(item);
+              handleSelect(item);
+            }}
+            value={value}
+            onSubmit={handleSubmit}
+            renderItem={(item: any) => (
+              <p className="text-black ">{item.name}</p>
+            )}
+          />
+        </div>
+        <div className=" flex items-center flex-wrap mt-5 lg:mt-0">
           {random && (
             <button
               onClick={handleToggle}

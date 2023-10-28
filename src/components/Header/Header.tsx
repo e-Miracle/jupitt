@@ -51,20 +51,24 @@ const Index: React.FC<Props> = ({
   return (
     <Suspense>
       <div className="flex justify-between items-center py-3 bg-white px-3  lg:px-5 ">
-        <LiveSearch
-          placeholder="Search anything here"
-          results={searchResults}
-          onChange={handleChange}
-          onSelect={(item: any) => {
-            console.log(item);
-            setSelectedProfile(item);
-          }}
-          value={selectedProfile?.name}
-          onSubmit={() => {
-            if (selectedProfile) console.log(selectedProfile);
-          }}
-          renderItem={(item: any) => <p className="text-black ">{item.name}</p>}
-        />
+        <div className="w-full mr-5 lg:mr-0 lg:max-w-[380px]">
+          <LiveSearch
+            placeholder="Search anything here"
+            results={searchResults}
+            onChange={handleChange}
+            onSelect={(item: any) => {
+              console.log(item);
+              setSelectedProfile(item);
+            }}
+            value={selectedProfile?.name}
+            onSubmit={() => {
+              if (selectedProfile) console.log(selectedProfile);
+            }}
+            renderItem={(item: any) => (
+              <p className="text-black ">{item.name}</p>
+            )}
+          />
+        </div>
 
         <div className="flex items-center bg-user rounded-lg p-2 px-4 ">
           <div className="flex items-center relative">

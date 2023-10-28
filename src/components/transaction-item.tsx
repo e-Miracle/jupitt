@@ -17,10 +17,10 @@ const color = {
 const TransactionItem = (props: Props) => {
   return (
     <Suspense>
-      <div className="flex flex-wrap  justify-between font-poppins mt-5">
-        <div className="flex flex-wrap">
+      <div className="flex   justify-between font-poppins mt-5 ">
+        <div className="flex flex-wrap justify-between ">
           <img
-            className="w-[50px] h-[50px] object-contain"
+            className="lg:w-[50px] lg:h-[50px] object-contain"
             src={props.image}
             alt={props.image}
             loading="lazy"

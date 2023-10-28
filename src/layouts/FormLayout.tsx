@@ -21,7 +21,7 @@ const Index = () => {
           />
         </div>
         <div className="w-full lg:w-2/4  grid place-items-center  bg-[#fff]  overflow-auto px-[1rem] lg:px-[4rem] h-full  ">
-          <div className="w-full  mx-auto max-w-[800px]">
+          <div className="w-full  mx-auto max-w-[400px] lg:max-w-[800px]">
             <Outlet />
           </div>
         </div>
