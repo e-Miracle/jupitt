@@ -1,11 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any */
 import React, { lazy, Suspense } from "react";
-import { FilterLines, Download, UpDownArrow } from "../assets";
+import {
+  FilterLines,
+  Download,
+  UpDownArrow,
+  Csv,
+  Pdf,
+  Xlxs,
+  Print,
+} from "../assets";
+import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
 const LiveSearch = lazy(() => import("./LiveSearch/LiveSearch"));
 type changeHandler = React.ChangeEventHandler<HTMLInputElement>;
 type Props = {
   data: Array<any>;
   handleExport?: () => void;
+  handleXlxs?: () => void;
+  handleCsv?: () => void;
+  handlePrint?: () => void;
   handleChange: changeHandler;
   handleSubmit: () => void;
   handleFilter?: () => void;
@@ -30,6 +42,9 @@ const Filter: React.FC<Props> = ({
   handleToggle,
   handleFilter,
   handleSelect,
+  handleCsv,
+  handleXlxs,
+  handlePrint,
   className,
 }) => {
   return (
@@ -73,14 +88,60 @@ const Filter: React.FC<Props> = ({
             </button>
           )}
           {exported && (
-            <button
+            <>
+              {/* <button
               onClick={handleExport}
               className="w-full md:w-auto text-center rounded-md py-2 px-5 text-xs lg:text-base text-gray outline-none border border-[#E6E7EC] hover:opacity-70 md:ml-5 mt-5 md:mt-0 flex items-center justify-center"
             >
               {" "}
               <img src={Download} alt={Download} className="mr-2" />
               Export
-            </button>
+              </button> */}
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  background={"none"}
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  whiteSpace={"nowrap"}
+                  className="w-full md:w-auto text-center rounded-md py-2 px-5 text-xs lg:text-base text-gray outline-none border border-[#E6E7EC] hover:opacity-70 md:ml-5 mt-5 md:mt-0 flex items-center justify-center"
+                >
+                  <div className="whitespace-nowrap  flex items-center justify-center text-xs">
+                    <img src={Download} alt={Download} className="mr-2 " />
+                    Export
+                  </div>
+                </MenuButton>
+                <MenuList style={{ minWidth: "120px" }} className="text-xs ">
+                  <MenuItem
+                    onClick={handleXlxs}
+                    className="hover:text-secondary font-montserrat font-semibold text-[#84818A]"
+                  >
+                    <img src={Xlxs} alt={Xlxs} className="mr-2 " /> Export as
+                    Xlxs
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleCsv}
+                    className="hover:text-secondary font-montserrat font-semibold text-[#84818A]"
+                  >
+                    <img src={Csv} alt={Csv} className="mr-2 " /> Export as CSV
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleExport}
+                    className="hover:text-secondary font-montserrat font-semibold text-[#84818A]"
+                  >
+                    <img src={Pdf} alt={Pdf} className="mr-2 " />
+                    Export as PDF
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handlePrint}
+                    className="hover:text-secondary font-montserrat font-semibold text-[#84818A]"
+                  >
+                    <img src={Print} alt={Print} className="mr-2 " /> Print
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </>
           )}
         </div>
       </div>

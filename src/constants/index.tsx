@@ -337,5 +337,12 @@ export const tableBackgroundColors: Record<string, string> = {
   flagged: "rgba(13, 99, 211, 0.3)",
   inactive: "rgba(255, 154, 152, 0.3)",
 };
+
+export const assetImages: Record<string, string> = {
+  fiat: USDT,
+  usdt: USDT,
+  btc: Btc,
+  eth: Eth,
+};
 //FOR YOU USING  USEMEMO
 // const options = useMemo(() => countryList().getData(), []);

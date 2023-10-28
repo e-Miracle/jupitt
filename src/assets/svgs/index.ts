@@ -16,6 +16,10 @@ import Check from "./check.svg";
 import VerticalLine from "./line.svg";
 import Search from "./Search.svg";
 import Copy from "./copy.svg";
+import Csv from "./Csv.svg";
+import Pdf from "./Pdf.svg";
+import Xlxs from "./Xls File.svg";
+import Print from "./printer.svg"
 export {
   FormImage,
   Barcode,
@@ -35,4 +39,8 @@ export {
   VerticalLine,
   Search,
   Copy,
+  Csv,
+  Pdf,
+  Xlxs,
+  Print,
 };

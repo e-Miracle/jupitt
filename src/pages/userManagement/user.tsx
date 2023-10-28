@@ -1,14 +1,4 @@
 import {
-  Box,
-  Step,
-  StepIcon,
-  StepIndicator,
-  StepNumber,
-  StepSeparator,
-  StepStatus,
-  StepTitle,
-  Stepper,
-  useSteps,
   useDisclosure,
   Modal,
   ModalOverlay,
@@ -17,19 +7,13 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import {
-  faQuestionCircle,
-  faMinusCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { steps, reasons } from "../../constants";
+import { reasons } from "../../constants";
 import CaseForm from "./case-form";
+import UserVerification from "../../components/user-verification";
 
 const User = () => {
-  const { activeStep } = useSteps({
-    index: 2,
-    count: steps.length,
-  });
   const {
     isOpen: isModal1Open,
     onOpen: onModal1Open,
@@ -42,7 +26,8 @@ const User = () => {
   } = useDisclosure();
   return (
     <>
-      <div className="bg-formBg rounded-lg p-5">
+      <UserVerification />
+      {/* <div className="bg-formBg rounded-lg p-5">
         <h3 className="capitalize text-base lg:text-lg font-semibold text-center">
           {" "}
           User Verification{" "}
@@ -81,18 +66,18 @@ const User = () => {
             ))}
           </Stepper>
         </Box>
-      </div>
-      <div className="flex justify-between items-center mt-5">
+      </div> */}
+      <div className="flex  flex-wrap justify-between items-center mt-5">
         <button
           onClick={onModal1Open}
-          className=" w-full lg:w-[48%] bg-background  text-sm   p-3  rounded-lg cursor-pointer hover:opacity-70 text-[#0E2354] border border-[#E24646] border-dashed "
+          className=" w-full  lg:w-[48%] bg-background  text-sm   p-3  rounded-lg cursor-pointer hover:opacity-70 text-[#0E2354] border border-[#E24646] border-dashed "
         >
           <FontAwesomeIcon className="mr-2" icon={faMinusCircle} />
           Suspend User
         </button>
         <button
           onClick={onModal2Open}
-          className=" w-full lg:w-[48%] bg-background  text-sm   p-3  rounded-lg cursor-pointer hover:opacity-70 text-[#0E2354] border border-black border-dashed "
+          className=" mt-5 lg:mt-0 w-full lg:w-[48%] bg-background  text-sm   p-3  rounded-lg cursor-pointer hover:opacity-70 text-[#0E2354] border border-black border-dashed "
         >
           <FontAwesomeIcon className="mr-2" icon={faMinusCircle} />
           Blacklist User
@@ -121,7 +106,6 @@ const User = () => {
             {" "}
             <CaseForm reasons={reasons} />
           </ModalBody>
-
         </ModalContent>
       </Modal>
     </>

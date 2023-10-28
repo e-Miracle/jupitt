@@ -100,24 +100,26 @@ const CryptoWallet = () => {
   return (
     <>
       <Box>
-        <Box className="flex items-center justify-between flex-wrap">
-          <LiveSearch
-            placeholder="Search anything here"
-            results={searchResults}
-            onChange={handleChange}
-            onSelect={(item: any) => {
-              console.log(item);
-              setSelectedProfile(item);
-            }}
-            value={selectedProfile?.name}
-            onSubmit={() => {
-              if (selectedProfile) console.log(selectedProfile);
-            }}
-            renderItem={(item: any) => (
-              <p className="text-black ">{item.name}</p>
-            )}
-          />
-          <Box>
+        <Box className="flex items-center justify-between flex-wrap ">
+          <div className="w-full lg:max-w-[300px]">
+            <LiveSearch
+              placeholder="Search anything here"
+              results={searchResults}
+              onChange={handleChange}
+              onSelect={(item: any) => {
+                console.log(item);
+                setSelectedProfile(item);
+              }}
+              value={selectedProfile?.name}
+              onSubmit={() => {
+                if (selectedProfile) console.log(selectedProfile);
+              }}
+              renderItem={(item: any) => (
+                <p className="text-black ">{item.name}</p>
+              )}
+            />
+          </div>
+          <Box className=" w-full lg:w-auto flex justify-end items-center flex-wrap">
             <Button className=" mt-5 lg:mt-0 w-full lg:w-auto bg-background  text-sm   p-3  rounded-lg cursor-pointer hover:opacity-70 text-[#E24646] border border-[#E24646] border-dashed ">
               <FontAwesomeIcon className="mr-2" icon={faLockOpen} /> Unlock
               Profile

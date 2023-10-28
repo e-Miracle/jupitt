@@ -52,12 +52,46 @@ export default function SingleUser() {
         )}
         {!loading && user && (
           <Tabs position="relative" className=" mt-7">
-            <TabList>
-              <Tab className="text-coincard text-xs">Crypto Wallets</Tab>
-              <Tab>Fiat Wallets</Tab>
-              <Tab>Virtual Debit Card</Tab>
-              <Tab>Transactions</Tab>
-            </TabList>
+            <div className="relative overflow-x-auto whitespace-nowrap">
+              <TabList>
+                <Tab
+                  className=" font-inter font-medium"
+                  fontSize={"14px"}
+                  color={"#667085"}
+                  fontFamily={"Inter"}
+                  _selected={{ color: "#0D63D3" }}
+                >
+                  Crypto Wallets
+                </Tab>
+                <Tab
+                  className=" font-inter font-medium"
+                  fontSize={"14px"}
+                  color={"#667085"}
+                  fontFamily={"Inter"}
+                  _selected={{ color: "#0D63D3" }}
+                >
+                  Fiat Wallets
+                </Tab>
+                <Tab
+                  className=" font-inter font-medium"
+                  fontSize={"14px"}
+                  color={"#667085"}
+                  fontFamily={"Inter"}
+                  _selected={{ color: "#0D63D3" }}
+                >
+                  Virtual Debit Card
+                </Tab>
+                <Tab
+                  className=" font-inter font-medium"
+                  fontSize={"14px"}
+                  color={"#667085"}
+                  fontFamily={"Inter"}
+                  _selected={{ color: "#0D63D3" }}
+                >
+                  Transactions
+                </Tab>
+              </TabList>
+            </div>
             <TabIndicator
               color="#0D63D3"
               mt="-1.5px"

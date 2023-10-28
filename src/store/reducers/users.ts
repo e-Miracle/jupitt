@@ -36,7 +36,7 @@ type Response = {
   per_page: number;
   prev_page_url: null | string;
   to: number;
-  total: number;
+  last_page: number;
 };
 
 const initialState: InitialState = {
@@ -139,7 +139,7 @@ const Slice = createSlice({
       state.prev_page_url = action.payload.prev_page_url;
       state.per_page = action.payload.per_page;
       state.to = action.payload.to;
-      state.total = action.payload.total;
+      state.total = action.payload.last_page;
     });
     builder.addCase(get.rejected, (state, action: PayloadAction<unknown>) => {
       state.loading = false;

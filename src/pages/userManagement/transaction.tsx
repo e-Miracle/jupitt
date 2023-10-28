@@ -1,5 +1,5 @@
 import { Box, Avatar, Text } from "@chakra-ui/react";
-import React, { useState, lazy, useEffect } from "react";
+import React, { useState, lazy, useEffect, useMemo } from "react";
 import { results } from "../../constants";
 import { changeHandler } from "../../utils";
 import Table from "../../components/table";
@@ -50,15 +50,21 @@ const Transaction = () => {
     { key: "price", label: "Market Price ($)" },
   ];
 
-  
-  const handleActionClick = (type: "delete", id: number | string) => {
-    if (type === "delete") {
-      console.log(id);
-      // Perform the delete operation here
-    }
-  };
-
-  const getViewLink = (id: number | string) => `/user-portal/user/${id}`;
+  const options = useMemo(
+    () =>
+      transactions &&
+      transactions.map((item, id) => ({
+        id: item.reference ? item.reference : id,
+        time: item.date,
+        asset: item.asset,
+        activity: item.activity,
+        from: item.from ? item.from : "",
+        to: item.to ? item.to : "",
+        amount: item.amount,
+        price: item.market_price,
+      })),
+    [transactions]
+  );
   return (
     <Box>
       <Filter
@@ -87,21 +93,7 @@ const Transaction = () => {
         />
       )}
       {!transactionLoader && transactions && transactions.length > 0 ? (
-        <Table
-          headers={headers}
-          data={transactions.map((item, id) => ({
-            id: item.reference ? item.reference: id,
-            time: item.date,
-            asset: item.asset,
-            activity: item.activity,
-            from: item.from ? item.from : "",
-            to: item.to ? item.to: "",
-            amount: item.amount,
-            price: item.market_price,
-          }))}
-          onActionClick={handleActionClick}
-          viewLink={getViewLink}
-        />
+        <Table headers={headers} data={options || []} />
       ) : (
         <EmptyArrayMessage
           array={transactions}

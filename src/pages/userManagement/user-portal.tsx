@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any */
-import React, { lazy, useState, useEffect } from "react";
+import React, { lazy, useState, useEffect, useMemo } from "react";
 import { Box, Text } from "@chakra-ui/react";
 import { Suspense } from "react";
 import Title from "../../components/title";
@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { get, getCount } from "../../store/reducers/users";
 import LoadingTable from "../../components/table-loader";
 import EmptyArrayMessage from "../../components/empty";
-import Spinner from "../../components/spinner/Spinner"
+import Spinner from "../../components/spinner/Spinner";
 export default function UserPortal() {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -64,7 +64,28 @@ export default function UserPortal() {
   };
 
   const getViewLink = (id: number | string) => `/user-portal/user/${id}`;
-  const change = (page: number) => get({ page: String(page) });
+  const change = (page: number) => {
+    dispatch(get({ page: String(page) }));
+  };
+
+  const options = useMemo(
+    () =>
+      users &&
+      users.map((item) => ({
+        id: item.identifier,
+        name: item.full_name,
+        email: item.email,
+        image: item.full_name,
+        identifier: item.identifier,
+        phone: item.phone_number,
+        time: item.updated_at,
+        status:
+          item.is_suspended === true || item.is_blacklisted === true
+            ? "inactive"
+            : "active",
+      })),
+    [users]
+  );
 
   return (
     <Suspense fallback={<Spinner />}>
@@ -102,19 +123,7 @@ export default function UserPortal() {
         {!loading && users && users.length > 0 ? (
           <Table
             headers={headers}
-            data={users.map((item) => ({
-              id: item.identifier,
-              name: item.full_name,
-              email: item.email,
-              image: item.full_name,
-              identifier: item.identifier,
-              phone: item.phone_number,
-              time: item.updated_at,
-              status:
-                item.is_suspended === true || item.is_blacklisted === true
-                  ? "inactive"
-                  : "active",
-            }))}
+            data={options || []}
             onActionClick={handleActionClick}
             viewLink={getViewLink}
             change={change}
@@ -122,6 +131,7 @@ export default function UserPortal() {
             currentPage={current_page}
             next_page_url={next_page_url}
             prev_page_url={prev_page_url}
+            moreSection
           />
         ) : (
           <EmptyArrayMessage
