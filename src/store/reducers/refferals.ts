@@ -11,7 +11,7 @@ type Response = {
   per_page: number;
   prev_page_url: null | string;
   to: number;
-  total: number;
+  last_page: number;
 };
 
 type Response2 = {
@@ -21,7 +21,7 @@ type Response2 = {
   per_page: number;
   prev_page_url: null | string;
   to: number;
-  total: number;
+  last_page: number;
 };
 type InitialState = {
   referralLogs: null | RefferalLog[];
@@ -130,7 +130,7 @@ const Slice = createSlice({
         state.referralLogsprev_page_url = action.payload.prev_page_url;
         state.referralLogsper_page = action.payload.per_page;
         state.referralLogsto = action.payload.to;
-        state.referralLogstotal = action.payload.total;
+        state.referralLogstotal = action.payload.last_page;
       }
     );
     builder.addCase(
@@ -157,7 +157,7 @@ const Slice = createSlice({
         state.referralCountprev_page_url = action.payload.prev_page_url;
         state.referralCountper_page = action.payload.per_page;
         state.referralCountto = action.payload.to;
-        state.referralCounttotal = action.payload.total;
+        state.referralCounttotal = action.payload.last_page;
       }
     );
     builder.addCase(

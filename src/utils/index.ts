@@ -39,6 +39,15 @@ export function formatServerTime(serverTime: Date): string {
   return `${formattedDate}`;
 }
 
+export function timestampToDate(time: string): string {
+  if (!time) return "N/A";
+  const serverTime = new Date(time);
+  const month = (serverTime.getMonth() + 1).toString().padStart(2, "0"); // Month is 0-based
+  const day = serverTime.getDate().toString().padStart(2, "0");
+  const year = serverTime.getFullYear();
+  return `${month}/${day}/${year}`;
+}
+
 export function formatTimestamp(timestamp: string) {
   const formattedDate = new Date(timestamp).toLocaleDateString("en-US", {
     year: "numeric",
@@ -49,8 +58,6 @@ export function formatTimestamp(timestamp: string) {
   });
   return formattedDate;
 }
-
-
 
 export const setAuthToken = () => {
   const token = Cookies.get(USER_TOKEN);

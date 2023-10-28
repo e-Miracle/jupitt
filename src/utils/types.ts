@@ -230,6 +230,8 @@ export interface RefferalLog {
   status: number;
   created_at: null | string;
   updated_at: null | string;
+  referred_user: NormalUser;
+  user: NormalUser;
 }
 
 export interface RefferalCount {

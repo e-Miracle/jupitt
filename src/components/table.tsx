@@ -12,8 +12,13 @@ import {
 import { Link } from "react-router-dom";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { formatServerTime } from "../utils";
-import { assetImages, tableBackgroundColors, tableStatusColors } from "../constants";
+import { formatServerTime, timestampToDate } from "../utils";
+import {
+  assetImages,
+  tableBackgroundColors,
+  tableClaims,
+  tableStatusColors,
+} from "../constants";
 export type TableData = {
   id: number | string;
   [key: string]: string | number | Date;
@@ -189,7 +194,71 @@ const Tables: React.FC<Props> = ({
                                     </span>{" "}
                                   </>
                                 ) : (
-                                  <>{row[header.key]}</>
+                                  <>
+                                    {header.key === "claimed" ? (
+                                      <span
+                                        className="capitalize"
+                                        style={{
+                                          color:
+                                            tableClaims[
+                                              row[header.key] as string
+                                            ],
+                                        }}
+                                      >
+                                        {row[header.key] as string}
+                                      </span>
+                                    ) : (
+                                      <>
+                                        {header.key === "second_user" ? (
+                                          <>
+                                            <div className="flex items-center space-x-2">
+                                              {row.second_image && (
+                                                <Avatar
+                                                  width={"40px"}
+                                                  height={"40px"}
+                                                  name={row.name as string}
+                                                  src={row.image as string}
+                                                />
+                                              )}
+                                              {row.second_name && (
+                                                <div>
+                                                  <Text
+                                                    color={"#101828"}
+                                                    className="font-medium capitalize text-sm"
+                                                  >
+                                                    {row.second_name as string}
+                                                  </Text>
+                                                  {row.second_email && (
+                                                    <Text
+                                                      color="#6B788E"
+                                                      className="text-sm "
+                                                    >
+                                                      {
+                                                        row.second_email as string
+                                                      }
+                                                    </Text>
+                                                  )}
+                                                </div>
+                                              )}
+                                            </div>
+                                          </>
+                                        ) : (
+                                          <>
+                                            {header.key === "normal_time" ? (
+                                              <>
+                                                {" "}
+                                                {timestampToDate(
+                                                  String(row[header.key])
+                                                )}
+                                              </>
+                                            ) : (
+                                              <>{row[header.key]}</>
+                                            )}
+                                          </>
+                                        )}{" "}
+                                      </>
+                                    )}
+                                  </>
                                 )}
                               </>
                             )}

@@ -332,6 +332,11 @@ export const tableStatusColors: Record<string, string> = {
   inactive: "#F15046",
 };
 
+export const tableClaims: Record<string, string> = {
+  claimed: "#027A48",
+  unclaimed: "#0D63D3",
+};
+
 export const tableBackgroundColors: Record<string, string> = {
   active: "rgba(42, 181, 125, 0.3)",
   flagged: "rgba(13, 99, 211, 0.3)",

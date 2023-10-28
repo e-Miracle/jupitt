@@ -47,10 +47,12 @@ export default function Portal() {
 
   const options_logs = useMemo(
     () => [
-      { key: "id", label: "ID" },
-      { key: "referrer", label: "Referrer" },
-      { key: "reffered", label: "Reffered" },
-      { key: "claimed", label: "Claimed" },
+      { key: "user", label: "New User" },
+      { key: "referred_user_id", label: "User ID" },
+      { key: "second_user", label: "Referrer" },
+      { key: "referrer", label: "Referrer ID" },
+      { key: "claimed", label: "Referral Bonus" },
+      { key: "normal_time", label: "Referral Date" },
       { key: "status", label: "Status" },
     ],
     []
@@ -84,15 +86,43 @@ export default function Portal() {
     if (filteredValue) setSearchResults(filteredValue);
   };
 
-  const handleActionClick = (type: "delete", id: number | string) => {
-    if (type === "delete") {
-      console.log(id);
-      // Perform the delete operation here
-    }
-  };
-
-  const getViewLink = (id: number | string) => `/refferal/user/${id}`;
   const change = (page: number) => console.log(page);
+  const options = useMemo(
+    () =>
+      referralLogs &&
+      referralLogs.map((item) => ({
+        id: item.id,
+        referrer: item.user ? item.user.identifier : "N/A",
+        referred: item.referred,
+        claimed: Number(item.claimed) ? "claimed" : "unclaimed",
+        status: Number(item.status) ? "active" : "inactive",
+        name: item.referred_user ? item.referred_user.full_name : "N/A",
+        email: item.referred_user ? item.referred_user.email : "N/A",
+        image: item.referred_user ? item.referred_user.full_name : "N/A",
+        second_name: item.user ? item.user.full_name : "N/A",
+        second_email: item.user ? item.user.email : "N/A",
+        second_image: item.user ? item.user.full_name : "N/A",
+        referred_user_id: item.referred_user
+          ? item.referred_user.identifier
+          : "N/A",
+        normal_time: item.created_at ? item.created_at : "",
+      })),
+    [referralLogs]
+  );
+
+   const options_two = useMemo(
+     () =>
+       referralCount &&
+       referralCount.map((item) => ({
+         id: item.user.identifier,
+         name: item.user.full_name,
+         email: item.user.email,
+         image: item.user.full_name,
+         referrer: item.user.identifier,
+         count: Number(item.count),
+       })),
+     [referralCount]
+   );
   return (
     <Suspense>
       <Box
@@ -121,11 +151,37 @@ export default function Portal() {
           handleSelect={(item) => setValue(item)}
         />
         <Tabs position="relative" className=" mt-7">
-          <TabList>
-            <Tab className="text-coincard text-xs">Referral Log</Tab>
-            <Tab className="text-coincard text-xs">Referral Counter</Tab>
-            <Tab className="text-coincard text-xs">Referral Settings</Tab>
-          </TabList>
+          <div className="relative overflow-x-auto whitespace-nowrap">
+            <TabList>
+              <Tab
+                className=" font-inter font-medium"
+                fontSize={"14px"}
+                color={"#667085"}
+                fontFamily={"Inter"}
+                _selected={{ color: "#0D63D3" }}
+              >
+                Referral Log
+              </Tab>
+              <Tab
+                className=" font-inter font-medium"
+                fontSize={"14px"}
+                color={"#667085"}
+                fontFamily={"Inter"}
+                _selected={{ color: "#0D63D3" }}
+              >
+                Referral Counter
+              </Tab>
+              <Tab
+                className=" font-inter font-medium"
+                fontSize={"14px"}
+                color={"#667085"}
+                fontFamily={"Inter"}
+                _selected={{ color: "#0D63D3" }}
+              >
+                Referral Settings
+              </Tab>
+            </TabList>
+          </div>
           <TabIndicator
             color="#0D63D3"
             mt="-1.5px"
@@ -146,15 +202,7 @@ export default function Portal() {
               referralLogs.length > 0 ? (
                 <Table
                   headers={options_logs}
-                  data={referralLogs.map((item) => ({
-                    id: item.id,
-                    referrer: item.referrer,
-                    reffered: item.referred,
-                    claimed: Number(item.claimed) ? "claimed" : "unclaimed",
-                    status: Number(item.status) ? "active" : "inactive",
-                  }))}
-                  onActionClick={handleActionClick}
-                  viewLink={getViewLink}
+                  data={options || []}
                   change={change}
                   total={referralLogstotal}
                   currentPage={referralLogscurrent_page}
@@ -181,16 +229,7 @@ export default function Portal() {
               referralCount.length > 0 ? (
                 <Table
                   headers={options_count}
-                  data={referralCount.map((item, i) => ({
-                    id: i,
-                    name: item.user.full_name,
-                    email: item.user.email,
-                    image: item.user.full_name,
-                    referrer: item.referrer,
-                    count: Number(item.count),
-                  }))}
-                  onActionClick={handleActionClick}
-                  viewLink={getViewLink}
+                  data={options_two || []}
                   change={change}
                   total={referralCounttotal}
                   currentPage={referralCountcurrent_page}
