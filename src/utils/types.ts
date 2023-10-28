@@ -6,6 +6,12 @@ export interface Link {
   subLinks?: Link[];
 }
 
+export type Res = {
+  path: string;
+  title: string;
+  icon: IconDefinition;
+};
+
 export type changeHandler = React.ChangeEventHandler<HTMLInputElement>;
 export type TableData = {
   id: number;

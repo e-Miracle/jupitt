@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { get, getCount } from "../../store/reducers/users";
 import LoadingTable from "../../components/table-loader";
 import EmptyArrayMessage from "../../components/empty";
+import Spinner from "../../components/spinner/Spinner"
 export default function UserPortal() {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -66,22 +67,22 @@ export default function UserPortal() {
   const change = (page: number) => get({ page: String(page) });
 
   return (
-    <Suspense>
+    <Suspense fallback={<Spinner />}>
       <Box
         paddingTop={".75rem"}
         paddingBottom={".75rem"}
         paddingLeft={"1rem"}
         paddingRight={"1rem"}
       >
-        <Box display={"flex"} alignItems={"center"}>
+        <div className={"flex items-center flex-wrap  mb-2"}>
           <Title title="User Portal" number={this_week || 0} />
-          <Box className="lg:ml-[15rem] flex justify-end items-end text-secondary font-medium font-inter">
+          <div className=" lg:ml-[15rem] flex justify-end items-end text-secondary font-medium font-inter ">
             <Text fontSize="3xl">{totalUsers || 0}</Text>
             <Text fontSize="sm" className="ml-1">
               Total Users
             </Text>
-          </Box>
-        </Box>
+          </div>
+        </div>
         <Filter
           data={searchResults}
           handleToggle={handleToggle}

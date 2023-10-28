@@ -127,7 +127,7 @@ Props) {
                 )}
               </span>
               {isIconMode ? null : (
-                <span className="inline-block ml-5 text-sm lg:text-base font-poppins">
+                <span className="inline-block ml-5 text-xs lg:text-sm font-poppins">
                   {title}
                 </span>
               )}

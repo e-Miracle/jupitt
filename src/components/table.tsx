@@ -17,9 +17,10 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { faCircleDot, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+import { faCircleDot, faDotCircle, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatServerTime } from "../utils";
+import { tableBackgroundColors, tableStatusColors } from "../constants";
 export type TableData = {
   id: number | string;
   [key: string]: string | number | Date;
@@ -77,55 +78,57 @@ const Tables: React.FC<Props> = ({
   const allSelected = selectedRows.length === data.length;
 
   return (
-    <Box className="w-full overflow-x-auto">
-      <Table className="mt-5 font-inter">
-        <Thead className="bg-tableHead text-xs font-semibold">
-          <Tr>
-            <Th>
+    <div className="relative overflow-x-auto mt-5">
+      <table className="w-full text-left font-inter">
+        <thead className="bg-tableHead text-sm capitalize ">
+          <tr>
+            <th scope="col" className="pl-3 py-3 ">
               <Checkbox isChecked={allSelected} onChange={handleAllSelect} />
-            </Th>
+            </th>
             {headers.map((header) => (
-              <Th key={header.key}>{header.label}</Th>
+              <th
+                scope="col"
+                className="px-3 py-3 font-medium text-sm whitespace-nowrap  text-coincard"
+                key={header.key}
+              >
+                {header.label}
+              </th>
             ))}
-            <Th>More</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
+            <th>More</th>
+          </tr>
+        </thead>
+        <tbody>
           {data.map((row) => (
-            <Tr key={row.id}>
-              <Td>
+            <tr className="border-b h-[70px]" key={row.id}>
+              <th scope="row" className="pl-3 py-3">
                 <Checkbox
                   isChecked={selectedRows.includes(row.id)}
                   onChange={() => handleRowClick(row.id)}
                 />
-              </Td>
+              </th>
               {headers.map((header) => (
-                <Td key={header.key} className="text-coincard">
+                <td
+                  key={header.key}
+                  className="text-[#666666] text-sm px-3 py-3 min-w-[100px] whitespace-nowrap"
+                >
                   {header.key === "status" ? (
-                    <Text
-                      className="w-auto p-2 rounded-[100px] capitalize inline text-xs font-semibold"
-                      backgroundColor={
-                        header.key === "status" && row.status === "active"
-                          ? "rgba(42, 181, 125, 0.3)"
-                          : header.key === "status" && row.status === "flagged"
-                          ? "blue.200"
-                          : header.key === "status" && row.status === "inactive"
-                          ? "rgba(255, 154, 152, 0.3)"
-                          : "transparent"
-                      }
-                      color={
-                        header.key === "status" && row.status === "active"
-                          ? "#2AB57D"
-                          : header.key === "status" && row.status === "flagged"
-                          ? "blue.600"
-                          : header.key === "status" && row.status === "inactive"
-                          ? "#FD625E"
-                          : "black"
-                      }
+                    <span
+                      style={{
+                        background:
+                          tableBackgroundColors[row[header.key] as string],
+                        color: tableStatusColors[row[header.key] as string],
+                      }}
+                      className="w-auto p-2 rounded-[16px] capitalize text-xs font-semibold "
                     >
-                      <FontAwesomeIcon className=" mr-1" icon={faCircleDot} />{" "}
+                      <span
+                        style={{
+                          background:
+                            tableStatusColors[row[header.key] as string],
+                        }}
+                        className="inline-block w-[8px] h-[8px] rounded-full mr-2"
+                      ></span>
                       {row[header.key] as string}
-                    </Text>
+                    </span>
                   ) : (
                     <>
                       {header.key === "user" ? (
@@ -133,17 +136,22 @@ const Tables: React.FC<Props> = ({
                           <div className="flex items-center space-x-2">
                             {row.image && (
                               <Avatar
+                                width={"40px"}
+                                height={"40px"}
                                 name={row.name as string}
                                 src={row.image as string}
                               />
                             )}
                             {row.name && (
                               <div>
-                                <Text className="font-medium">
+                                <Text
+                                  color={"#101828"}
+                                  className="font-medium capitalize text-sm"
+                                >
                                   {row.name as string}
                                 </Text>
                                 {row.email && (
-                                  <Text fontSize="sm" color="gray.500">
+                                  <Text color="#6B788E" className="text-sm ">
                                     {row.email as string}
                                   </Text>
                                 )}
@@ -162,9 +170,9 @@ const Tables: React.FC<Props> = ({
                       )}
                     </>
                   )}
-                </Td>
+                </td>
               ))}
-              <Td>
+              <td>
                 <Menu>
                   <MenuButton as={Button} background={"none"}>
                     <FontAwesomeIcon
@@ -174,19 +182,21 @@ const Tables: React.FC<Props> = ({
                   </MenuButton>
                   <MenuList>
                     <MenuItem>
-                      <Link className="block w-full" to={viewLink(row.id)}>View</Link>
+                      <Link className="block w-full" to={viewLink(row.id)}>
+                        View
+                      </Link>
                     </MenuItem>
                     <MenuItem onClick={() => onActionClick("delete", row.id)}>
                       Delete
                     </MenuItem>
                   </MenuList>
                 </Menu>
-              </Td>
-            </Tr>
+              </td>
+            </tr>
           ))}
-        </Tbody>
-      </Table>
-      <Box className="my-5 flex items-center flex-wrap justify-between">
+        </tbody>
+      </table>
+      <div className="my-5 flex items-center flex-wrap justify-between">
         {prev_page_url && (
           <button
             className="rounded-md p-2 text-gray outline-none border border-coincard hover:bg-coincard ml-5"
@@ -212,8 +222,8 @@ const Tables: React.FC<Props> = ({
             Next
           </button>
         )}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 

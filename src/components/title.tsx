@@ -25,7 +25,7 @@ const background = {
 const Title = (props: Props) => {
   const navigate = useNavigate();
   return (
-    <h3 className="font-inter text-xl lg:text-2xl font-medium flex items-center">
+    <h3 className="font-inter text-xl lg:text-2xl font-medium flex items-center mr-[1rem]">
       {props.backBtn && (
         <FontAwesomeIcon
           onClick={() => navigate(-1)}

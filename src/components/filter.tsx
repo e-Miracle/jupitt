@@ -53,11 +53,11 @@ const Filter: React.FC<Props> = ({
             )}
           />
         </div>
-        <div className=" flex items-center flex-wrap mt-5 lg:mt-0">
+        <div className=" flex items-center flex-wrap mt-5 lg:mt-0 w-full md:w-auto">
           {random && (
             <button
               onClick={handleToggle}
-              className="rounded-md py-2 px-5 text-xs lg:text-base  outline-none border-none hover:opacity-90 "
+              className="w-full  md:w-auto rounded-md py-2 px-5 text-xs lg:text-base  outline-none border-none hover:opacity-90 flex items-center justify-center"
             >
               {" "}
               <img src={UpDownArrow} alt={UpDownArrow} />
@@ -66,7 +66,7 @@ const Filter: React.FC<Props> = ({
           {filter && (
             <button
               onClick={handleFilter}
-              className="rounded-md py-2 px-5 text-xs lg:text-base text-gray outline-none border border-[#E6E7EC] hover:opacity-70 ml-5 flex items-center"
+              className="w-full  md:w-auto rounded-md py-2 px-5 text-xs lg:text-base text-gray outline-none border border-[#E6E7EC] hover:opacity-70 md:ml-5 mt-5 md:mt-0 flex items-center justify-center"
             >
               <img src={FilterLines} alt={FilterLines} className="mr-2" />
               Filter
@@ -75,7 +75,7 @@ const Filter: React.FC<Props> = ({
           {exported && (
             <button
               onClick={handleExport}
-              className="rounded-md py-2 px-5 text-xs lg:text-base text-gray outline-none border border-[#E6E7EC] hover:opacity-70 ml-5 flex items-center"
+              className="w-full md:w-auto text-center rounded-md py-2 px-5 text-xs lg:text-base text-gray outline-none border border-[#E6E7EC] hover:opacity-70 md:ml-5 mt-5 md:mt-0 flex items-center justify-center"
             >
               {" "}
               <img src={Download} alt={Download} className="mr-2" />

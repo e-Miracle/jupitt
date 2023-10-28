@@ -7,9 +7,10 @@ import {
   faEllipsisV,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import { results } from "../../constants";
+import { Link, useNavigate } from "react-router-dom";
+import { dashBoardLinks } from "../../constants";
 import { useAppSelector } from "../../store/hooks";
+import { Res } from "../../utils";
 const LiveSearch = lazy(() => import("../LiveSearch/LiveSearch"));
 type Props = {
   mobileNav: boolean;
@@ -17,33 +18,25 @@ type Props = {
   handleLogout: () => void;
 };
 
+const rizz: Array<Res> = dashBoardLinks.flatMap((link) => link.subLinks || []);
 const Index: React.FC<Props> = ({
   mobileNav,
   handleMobileNav,
   handleLogout,
 }) => {
+  const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
-  const [searchResults, setSearchResults] =
-    React.useState<
-      {
-        id: string;
-        name: string;
-      }[]
-    >();
-  const [selectedProfile, setSelectedProfile] =
-    React.useState<{
-      id: string;
-      name: string;
-    }>();
+  const [searchResults, setSearchResults] = React.useState<Array<Res>>([]);
+  const [selectedLink, setSelectedLink] = React.useState<Res>();
   const [popup, setPopup] = React.useState<boolean>(false);
 
   type changeHandler = React.ChangeEventHandler<HTMLInputElement>;
   const handleChange: changeHandler = (e) => {
     const { target } = e;
     if (!target.value.trim()) return setSearchResults([]);
-
-    const filteredValue = results.filter((result) =>
-      result.name.toLowerCase().startsWith(target.value)
+    const lowercase = target.value.toLowerCase();
+    const filteredValue = rizz.filter(({ title }) =>
+      title.toLowerCase().startsWith(lowercase)
     );
 
     setSearchResults(filteredValue);
@@ -57,15 +50,15 @@ const Index: React.FC<Props> = ({
             results={searchResults}
             onChange={handleChange}
             onSelect={(item: any) => {
-              console.log(item);
-              setSelectedProfile(item);
+              navigate(item.path);
+              setSelectedLink(item);
             }}
-            value={selectedProfile?.name}
+            value={selectedLink?.title}
             onSubmit={() => {
-              if (selectedProfile) console.log(selectedProfile);
+              if (selectedLink) console.log(selectedLink);
             }}
             renderItem={(item: any) => (
-              <p className="text-black ">{item.name}</p>
+              <p className="text-black font-poppins capitalize w-full">{item.title}</p>
             )}
           />
         </div>

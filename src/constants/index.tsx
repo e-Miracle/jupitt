@@ -325,5 +325,17 @@ export const ticketColors: Record<string, string> = {
   resolved: "#FAC885",
   ongoing: "#54C104",
 };
+
+export const tableStatusColors: Record<string, string> = {
+  active: "#027A48",
+  flagged: "#0D63D3",
+  inactive: "#F15046",
+};
+
+export const tableBackgroundColors: Record<string, string> = {
+  active: "rgba(42, 181, 125, 0.3)",
+  flagged: "rgba(13, 99, 211, 0.3)",
+  inactive: "rgba(255, 154, 152, 0.3)",
+};
 //FOR YOU USING  USEMEMO
 // const options = useMemo(() => countryList().getData(), []);
