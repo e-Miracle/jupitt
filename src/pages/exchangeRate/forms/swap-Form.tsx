@@ -38,7 +38,7 @@ const SwapForm: React.FC<Props> = ({ country, className }) => {
         className="mt-5 flex flex-wrap items-end justify-between"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className=" w-full lg:w-[75%]">
+        <div className=" w-full lg:w-[75%] mb-5">
           <label className="text-xs lg:text-sm font-semibold capitalize">
             Crypto Swap
           </label>
@@ -64,7 +64,7 @@ const SwapForm: React.FC<Props> = ({ country, className }) => {
           />
         </div>
 
-        <div className=" w-full lg:w-[20%]">
+        <div className=" w-full lg:w-[20%] mb-5">
           {isSubmitting ? (
             <div>
               <Spinner />

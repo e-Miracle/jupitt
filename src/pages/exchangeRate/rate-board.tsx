@@ -28,7 +28,7 @@ export default function RateBoard() {
         </Box>
 
         <Tabs position="relative" className=" mt-3">
-          <Box>
+          <div className="relative overflow-x-auto whitespace-nowrap">
             <TabList
               display={"flex"}
               justifyContent={"space-between"}
@@ -89,7 +89,7 @@ export default function RateBoard() {
               bg="#0D63D3"
               borderRadius="1px"
             />
-          </Box>
+          </div>
           <TabPanels>
             <TabPanel>
               <Crypto />
@@ -101,10 +101,10 @@ export default function RateBoard() {
               <Swap />
             </TabPanel>
             <TabPanel>
-              <PerfectRate/>
+              <PerfectRate />
             </TabPanel>
             <TabPanel>
-              <VirtualBoard/>
+              <VirtualBoard />
             </TabPanel>
           </TabPanels>
         </Tabs>
