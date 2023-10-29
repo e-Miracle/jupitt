@@ -15,7 +15,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-  Button,
 } from "@chakra-ui/react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -65,11 +64,10 @@ export default function GiftCardManagement() {
                     Catalog (Sell)
                   </Tab>
                 </Box>
-                <Button
+                <button
                   onClick={onOpen}
-                  background={"#0D63D3"}
                   color={"#fff"}
-                  className=" text-xs  bg-secondary font-medium text-white rounded-lg px-5 py-3 hover:opacity-90 flex items-center"
+                  className=" w-[95%] mx-auto md:mx-0 md:w-auto mt-5 md:mt-0  md:max-w-[200px] text-xs  bg-secondary font-medium text-white rounded-lg px-5 py-3 hover:opacity-90 flex items-center justify-center"
                 >
                   {" "}
                   <FontAwesomeIcon
@@ -77,7 +75,7 @@ export default function GiftCardManagement() {
                     className="mr-2 border rounded-full border-dashed p-1"
                   />{" "}
                   Add New Card
-                </Button>
+                </button>
               </TabList>
               <TabIndicator
                 mt="-1.5px"

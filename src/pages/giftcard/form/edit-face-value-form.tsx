@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { z } from "zod";
 import { Spinner } from "@chakra-ui/react";
 
 // Define the Zod schema for the gift card values

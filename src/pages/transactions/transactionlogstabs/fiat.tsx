@@ -1,6 +1,6 @@
 import { lazy, useState } from "react";
 import { changeHandler } from "../../../utils";
-import { results, data, headers } from "../../../constants";
+import { results } from "../../../constants";
 import Table from "../../../components/table";
 const Filter = lazy(() => import("../../../components/filter"));
 
@@ -13,13 +13,6 @@ const Fiat = () => {
     if (!value) return;
     console.log(value);
   };
-  const handleActionClick = (type: "delete", id: number | string) => {
-    if (type === "delete") {
-      console.log(id);
-    }
-  };
-
-  const getViewLink = (id: number | string) => `/manage-staff/staff/${id}`;
 
   const handleChange: changeHandler = (e) => {
     const { target } = e;
@@ -31,6 +24,41 @@ const Fiat = () => {
 
     if (filteredValue) setSearchResults(filteredValue);
   };
+
+   const headers = [
+     { key: "transaction_id", label: "Transaction ID" },
+     { key: "time", label: "Date" },
+     { key: "user_id", label: "User ID" },
+     { key: "activity", label: "Activity" },
+     { key: "fiat_value", label: "Fiat Value" },
+     { key: "currency", label: "Fiat Currency" },
+     { key: "status", label: "Status" },
+   ];
+
+   const data = [
+     {
+       id: 1,
+       activity: "Buy",
+       asset: "btc",
+       transaction_id: "123456789012",
+       user_id: "J394300",
+       time: "2023-10-15 03:28 AM",
+       fiat_value: "71,000.00",
+       currency: "NGN",
+       status: "active",
+     },
+     {
+       id: 2,
+       activity: "Buy",
+       asset: "btc",
+       transaction_id: "123456789012",
+       user_id: "J394300",
+       time: "2023-10-15 03:28 AM",
+       fiat_value: "71,000.00",
+       currency: "NGN",
+       status: "active",
+     },
+   ];
   return (
     <div>
       <Filter
@@ -47,8 +75,6 @@ const Fiat = () => {
       <Table
         headers={headers}
         data={data}
-        onActionClick={handleActionClick}
-        viewLink={getViewLink}
       />
     </div>
   );

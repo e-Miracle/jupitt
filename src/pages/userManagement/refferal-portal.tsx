@@ -110,19 +110,19 @@ export default function Portal() {
     [referralLogs]
   );
 
-   const options_two = useMemo(
-     () =>
-       referralCount &&
-       referralCount.map((item) => ({
-         id: item.user.identifier,
-         name: item.user.full_name,
-         email: item.user.email,
-         image: item.user.full_name,
-         referrer: item.user.identifier,
-         count: Number(item.count),
-       })),
-     [referralCount]
-   );
+  const options_two = useMemo(
+    () =>
+      referralCount &&
+      referralCount.map((item) => ({
+        id: item.user.identifier,
+        name: item.user.full_name,
+        email: item.user.email,
+        image: item.user.full_name,
+        referrer: item.user.identifier,
+        count: Number(item.count),
+      })),
+    [referralCount]
+  );
   return (
     <Suspense>
       <Box
@@ -208,6 +208,7 @@ export default function Portal() {
                   currentPage={referralLogscurrent_page}
                   next_page_url={referralLogsnext_page_url}
                   prev_page_url={referralLogsprev_page_url}
+                  checkboxes
                 />
               ) : (
                 <EmptyArrayMessage
@@ -235,6 +236,7 @@ export default function Portal() {
                   currentPage={referralCountcurrent_page}
                   next_page_url={referralCountnext_page_url}
                   prev_page_url={referralCountprev_page_url}
+                  checkboxes
                 />
               ) : (
                 <EmptyArrayMessage

@@ -22,9 +22,9 @@ export default function Ledger() {
         paddingRight={"1rem"}
       >
         {" "}
-        <Title title="Ledger"  />
+        <Title title="Ledger" />
         <Tabs position="relative" className=" mt-3">
-          <Box>
+          <div className="relative overflow-x-auto whitespace-nowrap">
             <TabList
               display={"flex"}
               justifyContent={"space-between"}
@@ -67,16 +67,16 @@ export default function Ledger() {
               bg="#0D63D3"
               borderRadius="1px"
             />
-          </Box>
+          </div>
           <TabPanels>
             <TabPanel>
-              <Crypto/>
+              <Crypto />
             </TabPanel>
             <TabPanel>
-              <Fiat/>
+              <Fiat />
             </TabPanel>
             <TabPanel>
-              <VirtualDebitCards/>
+              <VirtualDebitCards />
             </TabPanel>
           </TabPanels>
         </Tabs>

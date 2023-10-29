@@ -8,7 +8,6 @@ import {
   Tab,
   TabPanel,
   TabIndicator,
-  Button,
 } from "@chakra-ui/react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,7 +26,7 @@ export default function ContentManagement() {
       >
         <Title title="Content Management" />
         <Tabs position="relative" className=" mt-3">
-          <Box>
+          <div className="relative overflow-x-auto whitespace-nowrap">
             <TabList
               display={"flex"}
               justifyContent={"space-between"}
@@ -72,18 +71,14 @@ export default function ContentManagement() {
                   Policies
                 </Tab>
               </Box>
-              <Button
-                background={"#0D63D3"}
-                color={"#fff"}
-                className=" text-xs  bg-secondary font-medium text-white rounded-lg px-5 py-3 hover:opacity-90 flex items-center"
-              >
+              <button className=" w-[95%] md:w-auto sticky mx-auto md:mx-0 text-xs  bg-secondary font-medium text-white rounded-lg px-5 py-3 hover:opacity-90 flex items-center justify-center">
                 {" "}
                 <FontAwesomeIcon
                   icon={faPlus}
                   className="mr-2 border rounded-full border-dashed p-1"
                 />{" "}
                 Add FAQ
-              </Button>
+              </button>
             </TabList>
             <TabIndicator
               mt="-1.5px"
@@ -91,19 +86,19 @@ export default function ContentManagement() {
               bg="#0D63D3"
               borderRadius="1px"
             />
-          </Box>
+          </div>
           <TabPanels>
             <TabPanel>
-              <Banner/>
+              <Banner />
             </TabPanel>
             <TabPanel>
-              <Faq/>
+              <Faq />
             </TabPanel>
             <TabPanel>
-              <Message/>
+              <Message />
             </TabPanel>
             <TabPanel>
-              <Policies/>
+              <Policies />
             </TabPanel>
           </TabPanels>
         </Tabs>

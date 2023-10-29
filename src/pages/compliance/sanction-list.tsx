@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import React, { lazy, useState } from "react";
 import { changeHandler } from "../../utils";
-import { results, data, headers } from "../../constants";
+import { results, } from "../../constants";
 import Table from "../../components/table";
 const Filter = lazy(() => import("../../components/filter"));
 export default function SanctionList() {
@@ -41,6 +41,41 @@ export default function SanctionList() {
 
     if (filteredValue) setSearchResults(filteredValue);
   };
+
+   const headers = [
+     { key: "user", label: "Name" },
+     { key: "status", label: "Status" },
+     { key: "user_country", label: "User Country" },
+     { key: "user_id", label: "User ID" },
+     { key: "time", label: "Effective From" },
+     { key: "doc", label: "Documents" },
+   ];
+
+   const data = [
+     {
+       id: 1,
+       name: "Alice",
+       status: "active",
+       user_country: "Nigeria",
+       user_id: "J394300",
+       email: "alice@example.com",
+       image: "https://example.com/alice.jpg",
+       time: "2023-10-15 03:28 AM",
+       doc: "/sanction-list/user/1",
+     },
+     {
+       id: 2,
+       name: "Alice",
+       status: "active",
+       user_country: "Nigeria",
+       user_id: "J394300",
+       email: "alice@example.com",
+       image: "https://example.com/alice.jpg",
+       time: "2023-10-15 03:28 AM",
+       doc: "/sanction-list/user/2",
+     },
+     // Add more data here as needed
+   ];
   return (
     <Suspense>
       <Box

@@ -38,21 +38,21 @@ const CatalogueBuy = () => {
       <div className="font-inter">
         <button
           onClick={() => setCurrentState("active")}
-          className={`${
+          className={` w-full md:w-auto mt-5 md:mt-0  md:max-w-[200px] ${
             currentState === "active"
               ? "text-secondary border border-secondary"
               : "text-[#9DA8B6] border border-[#EFF2F7]"
-          } text-sm lg:text-base  rounded-l-[10px] py-2 px-7 capitalize`}
+          } text-sm lg:text-base rounded-[10px]  md:rounded-l-[10px] md:rounded-r-[0px] lg:py-2 lg:px-7 px-5 py-3 capitalize`}
         >
           active
         </button>
         <button
           onClick={() => setCurrentState("inactive")}
-          className={`${
+          className={`w-full md:w-auto my-5 md:my-0  md:max-w-[200px] ${
             currentState === "inactive"
               ? "text-secondary border border-secondary"
               : "text-[#9DA8B6] border border-[#EFF2F7]"
-          }  text-sm lg:text-base  rounded-r-[10px] py-2 px-7 capitalize`}
+          }  text-sm lg:text-base rounded-[10px] md:rounded-r-[10px] md:rounded-l-[0px] lg:py-2 lg:px-7 px-5 py-3 capitalize`}
         >
           inactive
         </button>

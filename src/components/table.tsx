@@ -40,6 +40,7 @@ type Props = {
   next_page_url?: null | string;
   prev_page_url?: null | string;
   moreSection?: boolean;
+  checkboxes?: boolean;
 };
 
 const Tables: React.FC<Props> = ({
@@ -53,6 +54,7 @@ const Tables: React.FC<Props> = ({
   next_page_url,
   prev_page_url,
   moreSection = false,
+  checkboxes = false,
 }) => {
   const [selectedRows, setSelectedRows] = useState<Array<number | string>>([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
@@ -83,9 +85,14 @@ const Tables: React.FC<Props> = ({
         <table className="w-full text-left font-inter">
           <thead className="bg-tableHead text-sm capitalize ">
             <tr>
-              <th scope="col" className="pl-3 py-3 ">
-                <Checkbox isChecked={allSelected} onChange={handleAllSelect} />
-              </th>
+              {checkboxes && (
+                <th scope="col" className="pl-3 py-3 ">
+                  <Checkbox
+                    isChecked={allSelected}
+                    onChange={handleAllSelect}
+                  />
+                </th>
+              )}
               {headers.map((header) => (
                 <th
                   scope="col"
@@ -103,12 +110,14 @@ const Tables: React.FC<Props> = ({
           <tbody>
             {data.map((row) => (
               <tr className="border-b h-[70px]" key={row.id}>
-                <th scope="row" className="pl-3 py-3">
-                  <Checkbox
-                    isChecked={selectedRows.includes(row.id)}
-                    onChange={() => handleRowClick(row.id)}
-                  />
-                </th>
+                {checkboxes && (
+                  <th scope="row" className="pl-3 py-3">
+                    <Checkbox
+                      isChecked={selectedRows.includes(row.id)}
+                      onChange={() => handleRowClick(row.id)}
+                    />
+                  </th>
+                )}
                 {headers.map((header) => (
                   <td
                     key={header.key}
@@ -252,7 +261,21 @@ const Tables: React.FC<Props> = ({
                                                 )}
                                               </>
                                             ) : (
-                                              <>{row[header.key]}</>
+                                              <>
+                                                {" "}
+                                                {header.key === "doc" ? (
+                                                  <Link
+                                                    className="bg-secondary text-center text-white p-2 rounded-[8px] block  min-w-[100px]"
+                                                    to={
+                                                      row[header.key] as string
+                                                    }
+                                                  >
+                                                    View
+                                                  </Link>
+                                                ) : (
+                                                  <> {row[header.key]}</>
+                                                )}
+                                              </>
                                             )}
                                           </>
                                         )}{" "}

@@ -21,9 +21,9 @@ export default function Aum() {
         paddingLeft={"1rem"}
         paddingRight={"1rem"}
       >
-        <Title title="Asset Under Management"  />
+        <Title title="Asset Under Management" />
         <Tabs position="relative" className=" mt-3">
-          <Box>
+          <div className="relative overflow-x-auto whitespace-nowrap">
             <TabList
               display={"flex"}
               justifyContent={"space-between"}
@@ -66,16 +66,16 @@ export default function Aum() {
               bg="#0D63D3"
               borderRadius="1px"
             />
-          </Box>
+          </div>
           <TabPanels>
             <TabPanel>
-              <Crypto/>
+              <Crypto />
             </TabPanel>
             <TabPanel>
-              <Fiat/>
+              <Fiat />
             </TabPanel>
             <TabPanel>
-              <VirtualDebitCard/>
+              <VirtualDebitCard />
             </TabPanel>
           </TabPanels>
         </Tabs>

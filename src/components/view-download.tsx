@@ -10,11 +10,11 @@ const ViewDownload: React.FC<Props> = ({
   handleView,
 }) => {
   return (
-    <div className="flex items-center justify-between mt-5 font-poppins">
-      <h3 className="text-sm lg:text-base  capitalize font-semibold text-[#323C47]">
+    <div className="flex items-center justify-between mt-5 font-poppins flex-wrap">
+      <h3 className="text-sm lg:text-base  capitalize font-semibold text-[#323C47] mb-5">
         {title}
       </h3>
-      <div>
+      <div className="mb-5">
         <button
           className="bg-secondary text-sm lg:text-base text-white rounded-lg py-1 px-5 hover:opacity-90 capitalize"
           onClick={handleView}

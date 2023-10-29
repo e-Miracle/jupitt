@@ -132,6 +132,7 @@ export default function UserPortal() {
             next_page_url={next_page_url}
             prev_page_url={prev_page_url}
             moreSection
+            checkboxes
           />
         ) : (
           <EmptyArrayMessage

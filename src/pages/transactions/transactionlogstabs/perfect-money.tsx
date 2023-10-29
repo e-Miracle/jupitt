@@ -1,6 +1,6 @@
 import { lazy, useState } from "react";
 import { changeHandler } from "../../../utils";
-import { results, data, headers } from "../../../constants";
+import { results } from "../../../constants";
 import Table from "../../../components/table";
 const Filter = lazy(() => import("../../../components/filter"));
 
@@ -13,13 +13,6 @@ const PerfectMoney = () => {
      if (!value) return;
      console.log(value);
    };
-   const handleActionClick = (type: "delete", id: number | string) => {
-     if (type === "delete") {
-       console.log(id);
-     }
-   };
-
-   const getViewLink = (id: number | string) => `/manage-staff/staff/${id}`;
 
    const handleChange: changeHandler = (e) => {
      const { target } = e;
@@ -31,6 +24,39 @@ const PerfectMoney = () => {
 
      if (filteredValue) setSearchResults(filteredValue);
    };
+
+    const headers = [
+      { key: "transaction_id", label: "Transaction ID" },
+      { key: "time", label: "Date" },
+      { key: "user_id", label: "User ID" },
+      { key: "activity", label: "Activity" },
+      { key: "from", label: "From" },
+      { key: "to", label: "To" },
+      { key: "amount", label: "Amount" },
+    ];
+
+    const data = [
+      {
+        id: 1,
+        time: "2023-10-15 03:28 AM",
+        transaction_id: "123456789012",
+        user_id: "J97364",
+        activity: "Sell",
+        from: "U5239868",
+        to: "U5239868",
+        amount: "1,000.00",
+      },
+      {
+        id: 2,
+        time: "2023-10-15 03:28 AM",
+        transaction_id: "123456789012",
+        user_id: "J97364",
+        activity: "Sell",
+        from: "U5239868",
+        to: "U5239868",
+        amount: "1,000.00",
+      },
+    ];
   return (
     <div>
       <Filter
@@ -47,8 +73,6 @@ const PerfectMoney = () => {
       <Table
         headers={headers}
         data={data}
-        onActionClick={handleActionClick}
-        viewLink={getViewLink}
       />
     </div>
   );

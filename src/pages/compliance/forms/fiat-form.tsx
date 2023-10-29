@@ -36,12 +36,11 @@ const FiatForm: React.FC<Props> = ({ type, tier, country, className }) => {
   return (
     <div className={` ${className}`}>
       {" "}
-     
       <form
         className="mt-5 flex flex-wrap items-end justify-between"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className=" w-full lg:w-[75%]">
+        <div className=" w-full lg:w-[75%] mb-5">
           <label className="text-xs lg:text-sm font-semibold capitalize">
             Fiat {type}
           </label>
@@ -67,7 +66,7 @@ const FiatForm: React.FC<Props> = ({ type, tier, country, className }) => {
           />
         </div>
 
-        <div className=" w-full lg:w-[20%]">
+        <div className=" w-full lg:w-[20%] mb-5 min-w-[50px]">
           {isSubmitting ? (
             <div>
               <Spinner />

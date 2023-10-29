@@ -49,6 +49,8 @@ const Staffs = () => {
         data={data}
         onActionClick={handleActionClick}
         viewLink={getViewLink}
+        checkboxes
+        moreSection
       />
     </div>
   );

@@ -28,7 +28,7 @@ export default function Ticket() {
         {" "}
         <Title title="Tickets" number={100} />
         <Tabs position="relative" className=" mt-3">
-          <Box>
+          <div className="relative overflow-x-auto whitespace-nowrap">
             <TabList
               display={"flex"}
               justifyContent={"space-between"}
@@ -75,7 +75,7 @@ export default function Ticket() {
               </Box>
               <Link
                 to={"/ticket/add"}
-                className=" text-xs  bg-secondary font-medium text-white rounded-lg px-5 py-3 hover:opacity-90 flex items-center"
+                className=" w-[95%] mx-auto md:mx-0 text-center md:w-auto text-xs  bg-secondary font-medium text-white rounded-lg px-5 py-3 hover:opacity-90 flex items-center justify-center"
               >
                 {" "}
                 <FontAwesomeIcon
@@ -91,7 +91,7 @@ export default function Ticket() {
               bg="#0D63D3"
               borderRadius="1px"
             />
-          </Box>
+          </div>
           <TabPanels>
             <TabPanel>
               <Tick />

@@ -25,7 +25,7 @@ export default function TransactionLog() {
       >
         <Title title="Transaction Log" />
         <Tabs position="relative" className=" mt-3">
-          <Box>
+          <div className="relative overflow-x-auto whitespace-nowrap">
             <TabList
               display={"flex"}
               justifyContent={"space-between"}
@@ -86,22 +86,22 @@ export default function TransactionLog() {
               bg="#0D63D3"
               borderRadius="1px"
             />
-          </Box>
+          </div>
           <TabPanels>
             <TabPanel>
-              <Crypto/>
+              <Crypto />
             </TabPanel>
             <TabPanel>
-              <Fiat/>
+              <Fiat />
             </TabPanel>
             <TabPanel>
-             <GiftCard/>
+              <GiftCard />
             </TabPanel>
             <TabPanel>
-              <PerfectMoney/>
+              <PerfectMoney />
             </TabPanel>
             <TabPanel>
-             <VirtualDebitCard/>
+              <VirtualDebitCard />
             </TabPanel>
           </TabPanels>
         </Tabs>

@@ -49,7 +49,7 @@ export default function SanctionList() {
         paddingLeft={"1rem"}
         paddingRight={"1rem"}
       >
-        <Title title="KYC Management" />
+        <Title backBtn title="KYC Management" />
         <Tabs position="relative" className=" mt-3">
           <Box>
             <TabList

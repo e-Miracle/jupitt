@@ -1,4 +1,4 @@
-import React from "react";
+
 import Form from "../forms/faq";
 const Faq = () => {
   return (

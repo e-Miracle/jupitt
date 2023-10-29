@@ -77,10 +77,10 @@ export default function ManageRoles() {
                   Permission
                 </Tab>
               </Box>
-              <Box className="flex items-center">
+              <div className="flex items-center flex-wrap w-full md:w-auto ">
                 <button
                   onClick={Modal1OnOpen}
-                  className="  text-xs font-inter  border font-medium text-[#0E2354] rounded-lg px-5 py-3 hover:opacity-90 flex items-center"
+                  className="w-[95%] md:w-auto sticky mx-auto md:mx-0   text-xs font-inter  border font-medium text-[#0E2354] rounded-lg px-5 py-3 hover:opacity-90 flex items-center"
                 >
                   {" "}
                   <FontAwesomeIcon
@@ -91,7 +91,7 @@ export default function ManageRoles() {
                 </button>
                 <button
                   onClick={Modal2OnOpen}
-                  className="ml-2 text-xs  font-inter   bg-secondary font-medium text-white rounded-lg px-5 py-3 hover:opacity-90 flex items-center"
+                  className="w-[95%] md:w-auto sticky mx-auto md:mr-0 mt-5 md:mt-0 ml-2 text-xs  font-inter   bg-secondary font-medium text-white rounded-lg px-5 py-3 hover:opacity-90 flex items-center"
                 >
                   {" "}
                   <FontAwesomeIcon
@@ -100,7 +100,7 @@ export default function ManageRoles() {
                   />{" "}
                   New Role
                 </button>
-              </Box>
+              </div>
             </TabList>
             <TabIndicator
               mt="-1.5px"

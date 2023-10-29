@@ -31,8 +31,8 @@ const RolesCardComponent: React.FC<Props> = ({
     position
 }) => {
   return (
-    <Box p={4} borderWidth="1px" borderRadius="lg" className="font-inter">
-      <Flex justifyContent="space-between" alignItems="center" mb={2}>
+    <div   className="font-inter border rounded-lg p-4">
+      <Flex flexWrap={"wrap"} justifyContent="space-between" alignItems="center" mb={2}>
         <Text fontSize={{ base: "16px", lg: "18px" }} color="#091E42">
           {title}
         </Text>
@@ -61,7 +61,7 @@ const RolesCardComponent: React.FC<Props> = ({
           {content}
         </Text>
       </Box>
-      <Flex mt={2}>
+      <div className=" flex flex-wrap">
         {tags.map((item) => (
           <Box
             key={item}
@@ -71,6 +71,7 @@ const RolesCardComponent: React.FC<Props> = ({
             display="flex"
             justifyContent="center"
             alignItems="center"
+            mt={2}
             mr={2}
           >
             <Text fontSize="12px" fontWeight={500} lineHeight="16px">
@@ -78,7 +79,7 @@ const RolesCardComponent: React.FC<Props> = ({
             </Text>
           </Box>
         ))}
-      </Flex>
+      </div>
       <Flex mt={5} alignItems="center">
         <Avatar name={profileImage} src={profileImage} w="44px" h="44px" />
         <Flex flexDir="column" ml={2}>
@@ -97,7 +98,7 @@ const RolesCardComponent: React.FC<Props> = ({
           icon={<AiOutlineArrowRight />}
         />
       </Flex>
-    </Box>
+    </div>
   );
 };
 

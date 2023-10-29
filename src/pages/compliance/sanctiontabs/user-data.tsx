@@ -1,6 +1,5 @@
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
 import UserVerification from "../../../components/user-verification";
 import copy from "copy-text-to-clipboard";
 import toast from "react-hot-toast";

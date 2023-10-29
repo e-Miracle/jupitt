@@ -1,5 +1,5 @@
 import React from 'react'
-import { results, data, headers } from "../../../constants";
+import { results } from "../../../constants";
 import { changeHandler } from "../../../utils";
 import Table from "../../../components/table";
 const Filter = React.lazy(() => import("../../../components/filter"));
@@ -32,7 +32,36 @@ const Ticket = () => {
       }
     };
 
-    const getViewLink = (id: number | string) => `/ticket/${id}`;
+  const getViewLink = (id: number | string) => `/ticket/${id}`;
+  
+ const headers = [
+   { key: "user", label: "Name" },
+   { key: "subject", label: "Subject" },
+   { key: "message", label: "Message" },
+   { key: "time", label: "Time" },
+ ];
+
+ const data = [
+   {
+     id: 1,
+     name: "Alice",
+     subject: "Lorem ipsum",
+     message: "Lorem ipsum dolor sit ipsum ametipsum...",
+     email: "alice@example.com",
+     image: "https://example.com/alice.jpg",
+     time: "2023-10-15 03:28 AM",
+   },
+   {
+     id: 2,
+     name: "Alice",
+     subject: "Lorem ipsum",
+     message: "Lorem ipsum dolor sit ipsum ametipsum...",
+     email: "alice@example.com",
+     image: "https://example.com/alice.jpg",
+     time: "2023-10-15 03:28 AM",
+   },
+   // Add more data here as needed
+ ];
   return (
     <div>
       <Filter
@@ -51,6 +80,8 @@ const Ticket = () => {
         data={data}
         onActionClick={handleActionClick}
         viewLink={getViewLink}
+        checkboxes
+        moreSection
       />
     </div>
   );

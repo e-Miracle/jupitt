@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { Box } from "@chakra-ui/react";
 import Title from "../../../components/title";
 import {
@@ -24,7 +24,7 @@ const Sanction = () => {
         {" "}
         <Title backBtn={true} title="User Profile" />
         <Tabs position="relative" className=" mt-3">
-          <Box>
+          <div className="relative overflow-x-auto whitespace-nowrap">
             <TabList
               display={"flex"}
               justifyContent={"space-between"}
@@ -67,7 +67,7 @@ const Sanction = () => {
               bg="#0D63D3"
               borderRadius="1px"
             />
-          </Box>
+          </div>
           <div className="border-b"></div>
           <TabPanels>
             <TabPanel>

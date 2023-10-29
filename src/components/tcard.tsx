@@ -29,7 +29,7 @@ const Tcard: React.FC<Props> = ({
         {coinName}
       </h3>
       {type && (
-        <h4 className="my-5 uppercase text-xs lg:text-sm font-medium tracking-widest text-[#666666]">
+        <h4 className="my-5 text-center uppercase text-xs lg:text-sm font-medium tracking-widest text-[#666666]">
           total {type}
         </h4>
       )}
@@ -42,7 +42,7 @@ const Tcard: React.FC<Props> = ({
       <h2 className="text-xl lg:text-2xl font-semibold">{value}</h2>
 
       {optionalnumber && (
-        <h5 className="mt-3 text-xs lg:text-sm font-medium tracking-widest text-[#666666]">
+        <h5 className="mt-3 text-xs lg:text-sm font-medium tracking-widest text-[#666666] text-center">
           {optionalnumber}
         </h5>
       )}
