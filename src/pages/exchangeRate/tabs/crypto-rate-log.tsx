@@ -1,6 +1,6 @@
 import React, { lazy, useState } from "react";
 import { changeHandler } from "../../../utils";
-import { results , data, headers } from "../../../constants";
+import { results } from "../../../constants";
 import Table from "../../../components/table";
 const Filter = lazy(() => import("../../../components/filter"));
 
@@ -13,13 +13,6 @@ const CryptoRateLog = () => {
     if (!value) return;
     console.log(value);
   };
-   const handleActionClick = (type: "delete", id: number | string) => {
-     if (type === "delete") {
-       console.log(id);
-     }
-   };
-
-   const getViewLink = (id: number | string) => `/manage-staff/staff/${id}`;
 
   const handleChange: changeHandler = (e) => {
     const { target } = e;
@@ -31,6 +24,39 @@ const CryptoRateLog = () => {
 
     if (filteredValue) setSearchResults(filteredValue);
   };
+
+  const headers = [
+    { key: "activity", label: "Activity" },
+    { key: "asset", label: "Coin Type" },
+    { key: "rate", label: "Rate" },
+    { key: "currency", label: "Fiat Currency" },
+    { key: "time", label: "Time Stamp" },
+    { key: "authorize", label: "Authorize" },
+    { key: "authorized_szn", label: "Authorizer STN" },
+  ];
+
+ const data = [
+   {
+     id: 1,
+     activity: "Buy",
+     asset: "btc",
+     rate: "750",
+     currency: "NGN",
+     authorize: "Chris",
+     authorized_szn: "#234554G",
+     time: "2023-10-15 03:28 AM",
+   },
+   {
+     id: 2,
+     activity: "Buy",
+     asset: "btc",
+     rate: "750",
+     currency: "NGN",
+     authorize: "Chris",
+     authorized_szn: "#234554G",
+     time: "2023-10-15 03:28 AM",
+   },
+ ];
   return (
     <div>
       <Filter
@@ -47,8 +73,6 @@ const CryptoRateLog = () => {
       <Table
         headers={headers}
         data={data}
-        onActionClick={handleActionClick}
-        viewLink={getViewLink}
       />
     </div>
   );

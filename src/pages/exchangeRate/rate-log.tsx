@@ -27,7 +27,7 @@ export default function RateLog() {
           <Title title="Rate Log" number={100} />
         </Box>
         <Tabs position="relative" className=" mt-3">
-          <Box>
+          <div className="relative overflow-x-auto whitespace-nowrap">
             <TabList
               display={"flex"}
               justifyContent={"space-between"}
@@ -60,6 +60,15 @@ export default function RateLog() {
                   fontFamily={"Inter"}
                   _selected={{ color: "#0D63D3" }}
                 >
+                  Perfect Money Rate Log
+                </Tab>
+                <Tab
+                  className=" font-inter font-medium"
+                  fontSize={"14px"}
+                  color={"#667085"}
+                  fontFamily={"Inter"}
+                  _selected={{ color: "#0D63D3" }}
+                >
                   Swap Rate Log
                 </Tab>
                 <Tab
@@ -71,15 +80,6 @@ export default function RateLog() {
                 >
                   Virtual Debit Card Rate Log
                 </Tab>
-                <Tab
-                  className=" font-inter font-medium"
-                  fontSize={"14px"}
-                  color={"#667085"}
-                  fontFamily={"Inter"}
-                  _selected={{ color: "#0D63D3" }}
-                >
-                  Virtual Card
-                </Tab>
               </Box>
             </TabList>
             <TabIndicator
@@ -88,22 +88,22 @@ export default function RateLog() {
               bg="#0D63D3"
               borderRadius="1px"
             />
-          </Box>
+          </div>
           <TabPanels>
             <TabPanel>
-              <CryptoRateLog/>
+              <CryptoRateLog />
             </TabPanel>
             <TabPanel>
-              <GiftCardRateLog/>
+              <GiftCardRateLog />
             </TabPanel>
             <TabPanel>
-              <SwapRateLog/>
+              <VirtualCard />
             </TabPanel>
             <TabPanel>
-              <VirtualDebitCardRateLog/>
+              <SwapRateLog />
             </TabPanel>
             <TabPanel>
-              <VirtualCard/>
+              <VirtualDebitCardRateLog />
             </TabPanel>
           </TabPanels>
         </Tabs>
