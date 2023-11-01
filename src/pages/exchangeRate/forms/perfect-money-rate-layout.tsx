@@ -1,9 +1,9 @@
 import React from "react";
-import { ICountries } from "../../../utils/types";
+import { INewCountries } from "../../../utils/types";
 import Form from "./perfect-money-rate-form";
 import { getCountryFlag } from "../../../utils";
 
-const FormLayout: React.FC<ICountries> = ({ country }) => {
+const FormLayout: React.FC<INewCountries> = ({ country, id }) => {
   const [flag, setFlag] = React.useState("");
   React.useEffect(() => {
     const init = async () => {
@@ -26,8 +26,8 @@ const FormLayout: React.FC<ICountries> = ({ country }) => {
           {country}
         </h2>
       </div>
-      <Form type="buy" country={country} />
-      <Form type="sell" country={country} />
+      <Form type="buy" id={id} />
+      <Form type="sell" id={id} />
     </div>
   );
 };

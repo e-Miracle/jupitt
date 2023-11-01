@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { ICryptoRateLog, IGet, ISwapRateLog } from "../../utils";
+import { ICryptoRateLog, IGet, ISwapRateLog, IPmRateLog } from "../../utils";
 import { baseUrl } from "../../constants";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -21,6 +21,14 @@ type InitialState = {
   swap_prev_page_url: null | string;
   swap_total: number;
   swap_last_page: number;
+  pm_logs: null | Array<IPmRateLog>;
+  pm_logs_loading: boolean;
+  pm_current_page: null | number;
+  pm_next_page_url: null | string;
+  pm_per_page: number;
+  pm_prev_page_url: null | string;
+  pm_total: number;
+  pm_last_page: number;
   error: string[];
 };
 
@@ -36,6 +44,16 @@ type CrytoResponse = {
 
 type SwapResponse = {
   data: Array<ISwapRateLog>;
+  current_page: null | number;
+  next_page_url: null | string;
+  per_page: number;
+  prev_page_url: null | string;
+  to: number;
+  last_page: number;
+};
+
+type PmResponse = {
+  data: Array<IPmRateLog>;
   current_page: null | number;
   next_page_url: null | string;
   per_page: number;
@@ -61,6 +79,14 @@ const initialState: InitialState = {
   swap_logs_loading: false,
   swap_last_page: 0,
   swap_logs: null,
+  pm_current_page: null,
+  pm_next_page_url: null,
+  pm_per_page: 15,
+  pm_prev_page_url: null,
+  pm_total: 0,
+  pm_logs_loading: false,
+  pm_last_page: 0,
+  pm_logs: null,
   error: [],
 };
 
@@ -96,6 +122,30 @@ export const getSwap = createAsyncThunk(
     const queryString = new URLSearchParams(filter).toString();
     try {
       const res = await axios.get(`${baseUrl}/rate/swap-log?${queryString}`);
+      toast.success(res.data.message);
+      return res.data.data;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      }
+      if (axios.isAxiosError(err) && err.response?.data?.message) {
+        toast.error(err.response.data.message);
+        err.response.data.message.map((err: string) => toast.error(err));
+        return err.response.data.message;
+      }
+    }
+  }
+);
+
+export const getPm = createAsyncThunk(
+  "log/getPmLogs",
+  async (values: IGet) => {
+    const filter: { [key: string]: string } = {
+      ...values,
+    };
+    const queryString = new URLSearchParams(filter).toString();
+    try {
+      const res = await axios.get(`${baseUrl}/rate/pm-log?${queryString}`);
       toast.success(res.data.message);
       return res.data.data;
     } catch (err: unknown) {
@@ -170,6 +220,30 @@ const Slice = createSlice({
         }
       }
     );
+    builder.addCase(getPm.pending, (state) => {
+      state.pm_logs_loading = true;
+    });
+    builder.addCase(
+      getPm.fulfilled,
+      (state, action: PayloadAction<PmResponse>) => {
+        state.pm_logs_loading = false;
+        state.pm_logs = action.payload.data;
+        state.pm_current_page = action.payload.current_page;
+        state.pm_next_page_url = action.payload.next_page_url;
+        state.pm_prev_page_url = action.payload.prev_page_url;
+        state.pm_per_page = action.payload.per_page;
+        state.pm_total = action.payload.last_page;
+      }
+    );
+    builder.addCase(getPm.rejected, (state, action: PayloadAction<unknown>) => {
+      state.pm_logs_loading = false;
+      if (action?.payload) {
+        const error = action.payload as { message?: string[] | undefined };
+        state.error = error.message || ["Something went wrong"];
+      } else {
+        state.error = ["Something went wrong"];
+      }
+    });
   },
 });
 export default Slice.reducer;

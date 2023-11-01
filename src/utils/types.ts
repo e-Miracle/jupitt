@@ -258,6 +258,11 @@ export type ICountries = {
   country: string;
 };
 
+// export type INewCountries = {
+//   country: string;
+//   id: number;
+// };
+
 export type INewCountries = {
   country: string;
   id: number;
@@ -356,6 +361,23 @@ export type ISwapRateLog = {
   authorizer: IAuthorizer;
 };
 
+export type IPmRateLog = {
+  id: number;
+  activity: string;
+  rate: string;
+  rate_currency: string;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+  authorizer: IAuthorizer;
+};
+
+export type ISwapRate = {
+  country_id: number;
+  rate: number;
+};
+
+
 export type IAllCountry = {
   id: number;
   name: string;
@@ -379,6 +401,12 @@ export type IAllCountry = {
 export type ICryptoRate = {
   country_id: number;
   asset: string;
+  buy?: number;
+  sell?: number;
+};
+
+export type IPmRate = {
+  country_id: number;
   buy?: number;
   sell?: number;
 };

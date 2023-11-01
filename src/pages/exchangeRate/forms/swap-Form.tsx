@@ -6,11 +6,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Spinner } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
+import { setSwapRate } from "../../../store/non-reducer-actions.ts/rate";
 type Props = {
-  country: string;
+  id: number;
   className?: string;
 };
-const SwapForm: React.FC<Props> = ({ country, className }) => {
+const SwapForm: React.FC<Props> = ({ id, className }) => {
   const formSchema = z.object({
     percentage: z
       .number({
@@ -23,13 +24,16 @@ const SwapForm: React.FC<Props> = ({ country, className }) => {
   type FormSchemaType = z.infer<typeof formSchema>;
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
   });
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    console.log({ ...data, country });
+    const res = await setSwapRate({ rate: data.percentage, country_id: id });
+    if (res) reset({ percentage: 0 });
+    return;
   };
   return (
     <div className={` ${className}`}>

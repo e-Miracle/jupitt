@@ -6,16 +6,13 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Spinner } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
+import { setPmRate } from "../../../store/non-reducer-actions.ts/rate";
 type Props = {
   type: "buy" | "sell";
-  country: string;
+  id: number;
   className?: string | undefined;
 };
-const PerfectMoneyRateForm: React.FC<Props> = ({
-  type,
-  country,
-  className,
-}) => {
+const PerfectMoneyRateForm: React.FC<Props> = ({ type, id, className }) => {
   const formSchema = z.object({
     rate: z
       .number({
@@ -29,12 +26,29 @@ const PerfectMoneyRateForm: React.FC<Props> = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
   });
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    console.log({ ...data, country, type });
+    if (type === "buy") {
+      const res = await setPmRate({
+        country_id: id,
+        buy: data.rate,
+      });
+      if (res) reset({ rate: 0 });
+      return;
+    }
+
+    if (type === "sell") {
+      const res = await setPmRate({
+        country_id: id,
+        sell: data.rate,
+      });
+      if (res) reset({ rate: 0 });
+      return;
+    }
   };
   return (
     <div className={` ${className}`}>
