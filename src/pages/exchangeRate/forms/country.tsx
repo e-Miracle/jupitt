@@ -2,18 +2,18 @@ import React from "react";
 import { getCountryFlag } from "../../../utils";
 import { currentCoins } from "../../../constants";
 import Form from "./form";
-import { ICountries, IFormLayout } from "../../../utils";
+import { INewCountries, INewFormLayout } from "../../../utils";
 
-const FormLayout: React.FC<IFormLayout> = ({ coinName, country }) => {
+const FormLayout: React.FC<INewFormLayout> = ({ coinName, id }) => {
   return (
     <div>
       <h2 className=" font-inter text-base lg:text-lg uppercase">{coinName}</h2>
-      <Form type="buy" coinName={coinName} country={country} />
-      <Form type="sell" coinName={coinName} country={country} />
+      <Form type="buy" coinName={coinName} id={id} />
+      <Form type="sell" coinName={coinName} id={id} />
     </div>
   );
 };
-const Country: React.FC<ICountries> = ({ country }) => {
+const Country: React.FC<INewCountries> = ({ country, id }) => {
   const coins = React.useMemo(() => currentCoins, []);
   const [flag, setFlag] = React.useState("");
   React.useEffect(() => {
@@ -41,7 +41,7 @@ const Country: React.FC<ICountries> = ({ country }) => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1rem] mt-[1rem]">
         {coins.map((item, value) => (
-          <FormLayout key={value} coinName={item} country={country} />
+          <FormLayout id={id} key={value} coinName={item} />
         ))}
       </div>
     </div>

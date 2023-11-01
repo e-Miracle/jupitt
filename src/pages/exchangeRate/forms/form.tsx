@@ -6,8 +6,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Spinner } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
-import { IForm } from "../../../utils";
-const Form: React.FC<IForm> = ({ type, coinName, country, className }) => {
+import { INewForm } from "../../../utils";
+import { setCryptoRate } from "../../../store/non-reducer-actions.ts/rate";
+const Form: React.FC<INewForm> = ({ type, coinName, className, id }) => {
   const formSchema = z.object({
     rate: z
       .number({
@@ -21,12 +22,28 @@ const Form: React.FC<IForm> = ({ type, coinName, country, className }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
   });
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    console.log({ ...data, country, coinName, type });
+    if (type === "sell") {
+      const res = await setCryptoRate({
+        sell: data.rate,
+        country_id: id,
+        asset: coinName.toLocaleUpperCase(),
+      });
+      if (res) reset({ rate: 0 });
+    }
+    if (type === "buy") {
+      const res = await setCryptoRate({
+        buy: data.rate,
+        country_id: id,
+        asset: coinName.toLocaleUpperCase(),
+      });
+      if (res) reset({ rate: 0 });
+    }
   };
   return (
     <div className={` ${className}`}>

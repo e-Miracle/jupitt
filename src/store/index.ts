@@ -10,6 +10,8 @@ import userReducer from "./reducers/users"
 import refferalReducer from "./reducers/refferals"
 import dashBoardReducer from "./reducers/dashboard"
 import AumReducer from "./reducers/aum"
+import Ratelogs from "./reducers/ratelogs";
+import CountryReducer from "./reducers/countries"
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -23,6 +25,8 @@ const store = configureStore({
     referral: refferalReducer,
     dashBoard: dashBoardReducer,
     aum: AumReducer,
+    logs: Ratelogs,
+    countries: CountryReducer,
   },
 });
 

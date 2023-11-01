@@ -83,7 +83,6 @@ const Crypto = () => {
         handleSelect={(item) => setValue(item)}
         random={false}
       />
-      <div>
         {crypto_aum_loading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1rem] mt-5">
             <CardLoader />
@@ -117,7 +116,6 @@ const Crypto = () => {
             />
           </div>
         )}
-      </div>
       <Table headers={headers} data={data} />
     </div>
   );

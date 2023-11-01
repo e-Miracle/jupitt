@@ -254,11 +254,13 @@ export interface IReferralSettingMain {
   min_transaction_limit: number;
 }
 
-
-
-
-export  type ICountries = {
+export type ICountries = {
   country: string;
+};
+
+export type INewCountries = {
+  country: string;
+  id: number;
 };
 
 export type IFormLayout = {
@@ -266,6 +268,10 @@ export type IFormLayout = {
   coinName: string;
 };
 
+export type INewFormLayout = {
+  coinName: string;
+  id: number;
+};
 
 export type IForm = {
   type: "buy" | "sell";
@@ -274,8 +280,93 @@ export type IForm = {
   className?: string;
 };
 
+export type INewForm = {
+  type: "buy" | "sell";
+  coinName: string;
+  className?: string;
+  id: number;
+};
+
 export type ICryptoAum = {
   ETH: number;
   BTC: number;
   USDT: number;
+};
+
+export type IFiatAum = {
+  id: number;
+  currency_name: string;
+  balance: string;
+};
+
+export type IAML = {
+  withdrawal_limit: number;
+  country_id: number;
+  level: number;
+};
+
+export type IVCAML = {
+  withdrawal_limit: number;
+  country_id: number;
+  level: number;
+  deposit_limit: number;
+};
+
+export type ICryptoRateLog = {
+  id: number;
+  activity: string;
+  asset: string;
+  fiat_currency: string;
+  rate: string;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+  authorizer: {
+    id: number;
+    identifier: string;
+    designation: null | string;
+    country_id: number;
+    reports_to: null | string;
+    department_id: null | string;
+    gender: string;
+    name: string;
+    email: string;
+    email_verified_at: null | string;
+    phone: string;
+    phone_verified_at: null | string;
+    status: number;
+    twofa_enabled: boolean;
+    google2fa_secret: string;
+    created_at: string;
+    updated_at: string;
+    deleted_at: null | string;
+  };
+};
+
+export type IAllCountry = {
+  id: number;
+  name: string;
+  iso3: string;
+  iso2: string;
+  numeric_code: string;
+  phone_code: string;
+  capital: string;
+  currency: string;
+  currency_name: string;
+  currency_symbol: string;
+  tld: string;
+  native: string;
+  region: string;
+  subregion: string;
+  created_at: string;
+  updated_at: string;
+  flag_url: null | string;
+};
+
+
+export type ICryptoRate = {
+  country_id: number;
+  asset: string;
+  buy?: number;
+  sell?: number;
 };

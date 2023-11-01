@@ -1,10 +1,11 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Authourized } from "../modules";
-import Spinner from "../components/spinner/Spinner"
-import { useAppDispatch } from "../store/hooks";
+import Spinner from "../components/spinner/Spinner";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { logout } from "../store/reducers/auth";
+import { getCountries, getActiveCountries } from "../store/reducers/countries";
 const SideBar = React.lazy(() => import("../components/SideBar/SideBar"));
 const Header = React.lazy(() => import("../components/Header/Header"));
 const ConfirmDialogue = React.lazy(
@@ -16,6 +17,13 @@ const item: boolean =
 console.log(typeof item);
 const DashboardLayout = () => {
   const dispatch = useAppDispatch();
+  const { countries, active_countries } = useAppSelector(
+    (state) => state.countries
+  );
+  useEffect(() => {
+    if (!countries) dispatch(getCountries());
+    if (!active_countries) dispatch(getActiveCountries());
+  }, [dispatch, countries, active_countries]);
   const navigate = useNavigate();
   const [modal, setModal] = React.useState<boolean>(false);
   const [expand, setExpand] = React.useState<boolean>(item);
@@ -33,7 +41,7 @@ const DashboardLayout = () => {
     }
   };
   return (
-    <Suspense fallback={<Spinner/>}>
+    <Suspense fallback={<Spinner />}>
       <Authourized>
         <div className={""}>
           <SideBar
@@ -71,7 +79,7 @@ const DashboardLayout = () => {
                   onClose={() => setModal(false)}
                   onConfirm={() => {
                     dispatch(logout());
-                    navigate("/")
+                    navigate("/");
                   }}
                 >
                   Are you sure you want to log out?
