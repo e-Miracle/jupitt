@@ -18,7 +18,10 @@ type Props = {
   handleLogout: () => void;
 };
 
-const rizz: Array<Res> = dashBoardLinks.flatMap((link) => link.subLinks || []);
+const rizz: Array<Res> = [
+  dashBoardLinks[0],
+  ...dashBoardLinks.flatMap((link) => link.subLinks || []),
+];
 const Index: React.FC<Props> = ({
   mobileNav,
   handleMobileNav,
@@ -58,7 +61,9 @@ const Index: React.FC<Props> = ({
               if (selectedLink) console.log(selectedLink);
             }}
             renderItem={(item: any) => (
-              <p className="text-black font-poppins capitalize w-full">{item.title}</p>
+              <p className="text-black font-poppins capitalize w-full">
+                {item.title}
+              </p>
             )}
           />
         </div>

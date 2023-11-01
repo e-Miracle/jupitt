@@ -4,6 +4,7 @@ import { User, ILogin, LoginResponse } from "../../utils";
 import { USER_TOKEN, baseUrl } from "../../constants";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+// import { data } from "../../constants/index";
 const cookieConfig: Cookies.CookieAttributes = {
   expires: 7,
   secure: true,
@@ -34,8 +35,10 @@ export const getUser = createAsyncThunk("auth/getuser", async () => {
     return res.data.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
-      toast.error(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+      console.log(err.message)
+    }
+    if (axios.isAxiosError(err) && err.response?.data?.message) {
+      toast.error(err.response.data.message);
       err.response.data.message.map((err: string) => toast.error(err));
       return err.response.data.message;
     }
@@ -52,9 +55,13 @@ export const login = createAsyncThunk("auth/login", async (values: ILogin) => {
     toast.success(res.data.message);
     return res.data.data;
   } catch (err) {
+    console.log();
+
     if (err instanceof Error) {
-      toast.error(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+     console.log(err.message);
+    }
+    if (axios.isAxiosError(err) && err.response?.data?.message) {
+      toast.error(err.response.data.message);
       err.response.data.message.map((err: string) => toast.error(err));
       return err.response.data.message;
     }

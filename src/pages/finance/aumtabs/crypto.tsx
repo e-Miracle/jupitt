@@ -1,11 +1,21 @@
-import { lazy, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { changeHandler } from "../../../utils";
 import { results } from "../../../constants";
 import Table from "../../../components/table";
 import Tcard from "../../../components/tcard";
 import { Btc, Eth, USDT } from "../../../assets";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { getCryptoAum } from "../../../store/reducers/aum";
+import CardLoader from "../../../components/card-loader";
 const Filter = lazy(() => import("../../../components/filter"));
 const Crypto = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getCryptoAum());
+  }, [dispatch]);
+  const { crypto_aum, crypto_aum_loading } = useAppSelector(
+    (state) => state.aum
+  );
   const [value, setValue] = useState("");
   const [searchResults, setSearchResults] = useState<Array<unknown>>([]);
   const handleToggle = () => {};
@@ -25,41 +35,41 @@ const Crypto = () => {
 
     if (filteredValue) setSearchResults(filteredValue);
   };
-   const headers = [
-     { key: "transaction_id", label: "Transaction ID" },
-     { key: "time", label: "Date" },
-     { key: "user_id", label: "User ID" },
-     { key: "aum", label: "AUM Bal b/f" },
-     { key: "activity", label: "Activity" },
-     { key: "asset", label: "Asset" },
-     { key: "amount", label: "Amount" },
-     { key: "value", label: "Value (USD)" },
-   ];
+  const headers = [
+    { key: "transaction_id", label: "Transaction ID" },
+    { key: "time", label: "Date" },
+    { key: "user_id", label: "User ID" },
+    { key: "aum", label: "AUM Bal b/f" },
+    { key: "activity", label: "Activity" },
+    { key: "asset", label: "Asset" },
+    { key: "amount", label: "Amount" },
+    { key: "value", label: "Value (USD)" },
+  ];
 
-   const data = [
-     {
-       id: 1,
-       activity: "Buy",
-       asset: "btc",
-       transaction_id: "123456789012",
-       user_id: "J394300",
-       aum: "27,000.30",
-       amount: "0.004959",
-       value: "1,000.00",
-       time: "2023-10-15 03:28 AM",
-     },
-     {
-       id: 2,
-       activity: "Buy",
-       asset: "btc",
-       transaction_id: "123456789012",
-       user_id: "J394300",
-       aum: "27,000.30",
-       amount: "0.004959",
-       value: "1,000.00",
-       time: "2023-10-15 03:28 AM",
-     },
-   ];
+  const data = [
+    {
+      id: 1,
+      activity: "Buy",
+      asset: "btc",
+      transaction_id: "123456789012",
+      user_id: "J394300",
+      aum: "27,000.30",
+      amount: "0.004959",
+      value: "1,000.00",
+      time: "2023-10-15 03:28 AM",
+    },
+    {
+      id: 2,
+      activity: "Buy",
+      asset: "btc",
+      transaction_id: "123456789012",
+      user_id: "J394300",
+      aum: "27,000.30",
+      amount: "0.004959",
+      value: "1,000.00",
+      time: "2023-10-15 03:28 AM",
+    },
+  ];
   return (
     <div>
       <Filter
@@ -73,34 +83,42 @@ const Crypto = () => {
         handleSelect={(item) => setValue(item)}
         random={false}
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1rem] mt-5">
-        <Tcard
-          optionalString="AUM Balance"
-          coinName={"Bitcoin"}
-          value={Number(10405).toLocaleString()}
-          img={Btc}
-          optionalnumber={`$ ${Number(30000).toLocaleString()}`}
-        />
-        <Tcard
-          optionalString="AUM Balance"
-          coinName={"Ethereum"}
-          value={Number(10405).toLocaleString()}
-          img={Eth}
-          optionalnumber={`$ ${Number(30000).toLocaleString()}`}
-        />
+      <div>
+        {crypto_aum_loading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1rem] mt-5">
+            <CardLoader />
+            <CardLoader />
+            <CardLoader />
+          </div>
+        )}
+        {!crypto_aum_loading && crypto_aum && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1rem] mt-5">
+            <Tcard
+              optionalString="AUM Balance"
+              coinName={"Bitcoin"}
+              value={Number(crypto_aum?.BTC).toLocaleString()}
+              img={Btc}
+              optionalnumber={`$ ${Number(30000).toLocaleString()}`}
+            />
+            <Tcard
+              optionalString="AUM Balance"
+              coinName={"Ethereum"}
+              value={Number(crypto_aum?.ETH).toLocaleString()}
+              img={Eth}
+              optionalnumber={`$ ${Number(30000).toLocaleString()}`}
+            />
 
-        <Tcard
-          optionalString="AUM Balance"
-          coinName={"USDT"}
-          value={Number(10405).toLocaleString()}
-          img={USDT}
-          optionalnumber={`$ ${Number(30000).toLocaleString()}`}
-        />
+            <Tcard
+              optionalString="AUM Balance"
+              coinName={"USDT"}
+              value={Number(crypto_aum?.USDT).toLocaleString()}
+              img={USDT}
+              optionalnumber={`$ ${Number(30000).toLocaleString()}`}
+            />
+          </div>
+        )}
       </div>
-      <Table
-        headers={headers}
-        data={data}
-      />
+      <Table headers={headers} data={data} />
     </div>
   );
 };

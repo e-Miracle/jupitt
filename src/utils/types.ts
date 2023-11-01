@@ -273,3 +273,9 @@ export type IForm = {
   coinName: string;
   className?: string;
 };
+
+export type ICryptoAum = {
+  ETH: number;
+  BTC: number;
+  USDT: number;
+};

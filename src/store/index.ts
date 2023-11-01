@@ -9,6 +9,7 @@ import reportsReducer from "./reducers/reports"
 import userReducer from "./reducers/users"
 import refferalReducer from "./reducers/refferals"
 import dashBoardReducer from "./reducers/dashboard"
+import AumReducer from "./reducers/aum"
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -21,6 +22,7 @@ const store = configureStore({
     user: userReducer,
     referral: refferalReducer,
     dashBoard: dashBoardReducer,
+    aum: AumReducer,
   },
 });
 
