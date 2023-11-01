@@ -35,6 +35,7 @@ const Form: React.FC<INewForm> = ({ type, coinName, className, id }) => {
         asset: coinName.toLocaleUpperCase(),
       });
       if (res) reset({ rate: 0 });
+      return
     }
     if (type === "buy") {
       const res = await setCryptoRate({
@@ -43,6 +44,7 @@ const Form: React.FC<INewForm> = ({ type, coinName, className, id }) => {
         asset: coinName.toLocaleUpperCase(),
       });
       if (res) reset({ rate: 0 });
+       return;
     }
   };
   return (

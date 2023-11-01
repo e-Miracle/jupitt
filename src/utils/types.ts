@@ -312,6 +312,27 @@ export type IVCAML = {
   deposit_limit: number;
 };
 
+type IAuthorizer = {
+  id: number;
+  identifier: string;
+  designation: null | string;
+  country_id: number;
+  reports_to: null | string;
+  department_id: null | string;
+  gender: string;
+  name: string;
+  email: string;
+  email_verified_at: null | string;
+  phone: string;
+  phone_verified_at: null | string;
+  status: number;
+  twofa_enabled: boolean;
+  google2fa_secret: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: null | string;
+};
+
 export type ICryptoRateLog = {
   id: number;
   activity: string;
@@ -321,26 +342,18 @@ export type ICryptoRateLog = {
   user_id: string;
   created_at: string;
   updated_at: string;
-  authorizer: {
-    id: number;
-    identifier: string;
-    designation: null | string;
-    country_id: number;
-    reports_to: null | string;
-    department_id: null | string;
-    gender: string;
-    name: string;
-    email: string;
-    email_verified_at: null | string;
-    phone: string;
-    phone_verified_at: null | string;
-    status: number;
-    twofa_enabled: boolean;
-    google2fa_secret: string;
-    created_at: string;
-    updated_at: string;
-    deleted_at: null | string;
-  };
+  authorizer: IAuthorizer;
+};
+
+export type ISwapRateLog = {
+  id: number;
+  activity: string;
+  rate: string;
+  rate_currency: string;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+  authorizer: IAuthorizer;
 };
 
 export type IAllCountry = {
@@ -362,7 +375,6 @@ export type IAllCountry = {
   updated_at: string;
   flag_url: null | string;
 };
-
 
 export type ICryptoRate = {
   country_id: number;
