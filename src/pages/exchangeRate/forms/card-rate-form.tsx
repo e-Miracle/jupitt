@@ -6,12 +6,13 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Spinner } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
+import { setVcRate } from "../../../store/non-reducer-actions.ts/rate";
 type Props = {
   type: "funding" | "withdrawal" | "spending";
-  country: string;
+  id: number;
   className?: string | undefined;
 };
-const CardRateForm: React.FC<Props> = ({ type, country, className }) => {
+const CardRateForm: React.FC<Props> = ({ type, id, className }) => {
   const formSchema = z.object({
     percentage: z
       .number({
@@ -25,12 +26,32 @@ const CardRateForm: React.FC<Props> = ({ type, country, className }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
   });
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    console.log({ ...data, country, type });
+    if (type === "funding") {
+      const res = await setVcRate({ country_id: id, fund: data.percentage });
+      if (res) reset({ percentage: 0 });
+      return;
+    }
+
+    if (type === "withdrawal") {
+      const res = await setVcRate({
+        country_id: id,
+        withdraw: data.percentage,
+      });
+      if (res) reset({ percentage: 0 });
+      return;
+    }
+
+    if (type === "spending") {
+      const res = await setVcRate({ country_id: id, spend: data.percentage });
+      if (res) reset({ percentage: 0 });
+      return;
+    }
   };
   return (
     <div className={` ${className}`}>

@@ -1,9 +1,9 @@
 import React from "react";
-import { ICountries } from "../../../utils/types";
+import { INewCountries } from "../../../utils/types";
 import Form from "./card-rate-form";
 import { getCountryFlag } from "../../../utils";
 
-const CardRateFormLayout: React.FC<ICountries> = ({ country }) => {
+const CardRateFormLayout: React.FC<INewCountries> = ({ country, id }) => {
   const [flag, setFlag] = React.useState("");
   React.useEffect(() => {
     const init = async () => {
@@ -26,9 +26,9 @@ const CardRateFormLayout: React.FC<ICountries> = ({ country }) => {
           {country}
         </h2>
       </div>
-      <Form type="funding" country={country} />
-      <Form type="withdrawal" country={country} />
-      <Form type="spending" country={country} />
+      <Form type="funding" id={id} />
+      <Form type="withdrawal" id={id} />
+      <Form type="spending" id={id} />
     </div>
   );
 };

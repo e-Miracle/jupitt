@@ -372,6 +372,17 @@ export type IPmRateLog = {
   authorizer: IAuthorizer;
 };
 
+export type IVCRateLog = {
+  id: number;
+  activity: string;
+  rate: string;
+  rate_currency: string;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+  authorizer: IAuthorizer;
+};
+
 export type ISwapRate = {
   country_id: number;
   rate: number;
@@ -409,4 +420,11 @@ export type IPmRate = {
   country_id: number;
   buy?: number;
   sell?: number;
+};
+
+export type IVcRate = {
+  country_id: number;
+  fund?: number;
+  withdraw?: number;
+  spend?: number;
 };

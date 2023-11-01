@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { ICryptoRateLog, IGet, ISwapRateLog, IPmRateLog } from "../../utils";
+import {
+  ICryptoRateLog,
+  IGet,
+  ISwapRateLog,
+  IPmRateLog,
+  IVCRateLog,
+} from "../../utils";
 import { baseUrl } from "../../constants";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -29,6 +35,14 @@ type InitialState = {
   pm_prev_page_url: null | string;
   pm_total: number;
   pm_last_page: number;
+  vc_logs: null | Array<IVCRateLog>;
+  vc_logs_loading: boolean;
+  vc_current_page: null | number;
+  vc_next_page_url: null | string;
+  vc_per_page: number;
+  vc_prev_page_url: null | string;
+  vc_total: number;
+  vc_last_page: number;
   error: string[];
 };
 
@@ -62,6 +76,16 @@ type PmResponse = {
   last_page: number;
 };
 
+type VcResponse = {
+  data: Array<IVCRateLog>;
+  current_page: null | number;
+  next_page_url: null | string;
+  per_page: number;
+  prev_page_url: null | string;
+  to: number;
+  last_page: number;
+};
+
 const initialState: InitialState = {
   crypto_current_page: null,
   crypto_next_page_url: null,
@@ -87,6 +111,14 @@ const initialState: InitialState = {
   pm_logs_loading: false,
   pm_last_page: 0,
   pm_logs: null,
+  vc_current_page: null,
+  vc_next_page_url: null,
+  vc_per_page: 15,
+  vc_prev_page_url: null,
+  vc_total: 0,
+  vc_logs_loading: false,
+  vc_last_page: 0,
+  vc_logs: null,
   error: [],
 };
 
@@ -160,6 +192,27 @@ export const getPm = createAsyncThunk(
     }
   }
 );
+
+export const getVc= createAsyncThunk("log/getVcLogs", async (values: IGet) => {
+  const filter: { [key: string]: string } = {
+    ...values,
+  };
+  const queryString = new URLSearchParams(filter).toString();
+  try {
+    const res = await axios.get(`${baseUrl}/rate/vc-log?${queryString}`);
+    toast.success(res.data.message);
+    return res.data.data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.log(err.message);
+    }
+    if (axios.isAxiosError(err) && err.response?.data?.message) {
+      toast.error(err.response.data.message);
+      err.response.data.message.map((err: string) => toast.error(err));
+      return err.response.data.message;
+    }
+  }
+});
 
 const Slice = createSlice({
   name: "log",
@@ -244,6 +297,33 @@ const Slice = createSlice({
         state.error = ["Something went wrong"];
       }
     });
+     builder.addCase(getVc.pending, (state) => {
+       state.vc_logs_loading = true;
+     });
+     builder.addCase(
+       getVc.fulfilled,
+       (state, action: PayloadAction<VcResponse>) => {
+         state.vc_logs_loading = false;
+         state.vc_logs = action.payload.data;
+         state.vc_current_page = action.payload.current_page;
+         state.vc_next_page_url = action.payload.next_page_url;
+         state.vc_prev_page_url = action.payload.prev_page_url;
+         state.vc_per_page = action.payload.per_page;
+         state.vc_total = action.payload.last_page;
+       }
+     );
+     builder.addCase(
+       getVc.rejected,
+       (state, action: PayloadAction<unknown>) => {
+         state.vc_logs_loading = false;
+         if (action?.payload) {
+           const error = action.payload as { message?: string[] | undefined };
+           state.error = error.message || ["Something went wrong"];
+         } else {
+           state.error = ["Something went wrong"];
+         }
+       }
+     );
   },
 });
 export default Slice.reducer;
