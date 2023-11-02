@@ -93,7 +93,9 @@ export default function ActivityLog() {
         paddingRight={"1rem"}
       >
         <div>
-          <Title title="Activity Log" number={100} />
+          <div className="mb-5">
+            <Title title="Activity Log" number={100} />
+          </div>
           <Filter
             data={searchResults}
             handleToggle={handleToggle}
