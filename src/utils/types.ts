@@ -213,7 +213,6 @@ export interface INotifications {
   };
 }
 
-
 export interface IBanks {
   id: number;
   account_number: string;
@@ -222,7 +221,7 @@ export interface IBanks {
   created_at: string;
   updated_at: string;
   verified: string;
-  bank: IBank
+  bank: IBank;
 }
 
 export interface IBank {
@@ -554,8 +553,33 @@ export type IFiatTransactions = {
 };
 
 export type IActivity = {
-  id: string;
-  reference: string;
+  id: number;
+  event: string;
+  description: string;
+  user_id: string;
+  ip_address: string;
+  created_at: string;
+  updated_at: string;
+  staff: {
+    id: number;
+    identifier: string;
+    designation: null | string;
+    country_id: number;
+    reports_to: null | string;
+    department_id: null | string;
+    gender: string;
+    name: string;
+    email: string;
+    email_verified_at: null | string;
+    phone: string;
+    phone_verified_at: null | string;
+    status: number;
+    twofa_enabled: boolean;
+    google2fa_secret: string;
+    created_at: string;
+    updated_at: string;
+    deleted_at: null | string;
+  };
 };
 
 export interface IUserVc {

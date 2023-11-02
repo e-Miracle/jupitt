@@ -40,7 +40,7 @@ const initialState: InitialState = {
   error: [],
 };
 
-export const getAll = createAsyncThunk(
+export const getAllActivities = createAsyncThunk(
   "activities/getAll",
   async (values: IGet) => {
     const filter: { [key: string]: string } = {
@@ -89,11 +89,11 @@ const Slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAll.pending, (state) => {
+    builder.addCase(getAllActivities.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(
-      getAll.fulfilled,
+      getAllActivities.fulfilled,
       (state, action: PayloadAction<Response>) => {
         state.loading = false;
         state.activities = action.payload.data;
@@ -105,7 +105,7 @@ const Slice = createSlice({
       }
     );
     builder.addCase(
-      getAll.rejected,
+      getAllActivities.rejected,
       (state, action: PayloadAction<unknown>) => {
         state.loading = false;
         if (action?.payload) {
@@ -115,7 +115,7 @@ const Slice = createSlice({
           state.error = ["Something went wrong"];
         }
       }
-      );
+    );
       builder.addCase(getOne.pending, (state) => {
         state.loading = true;
       });
