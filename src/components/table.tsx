@@ -35,6 +35,7 @@ type Props = {
   onActionClick?: (type: "delete", id: number | string) => void;
   viewLink?: (id: number | string) => string;
   change?: (page: number) => void;
+  rowClick?: (page: number | string) => void;
   total?: number;
   currentPage?: number | null;
   next_page_url?: null | string;
@@ -55,6 +56,7 @@ const Tables: React.FC<Props> = ({
   prev_page_url,
   moreSection = false,
   checkboxes = false,
+  rowClick
 }) => {
   const [selectedRows, setSelectedRows] = useState<Array<number | string>>([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
@@ -109,7 +111,11 @@ const Tables: React.FC<Props> = ({
           </thead>
           <tbody>
             {data.map((row) => (
-              <tr className="border-b h-[70px]" key={row.id}>
+              <tr
+                className="border-b h-[70px]"
+                onClick={() => rowClick && rowClick(row.id)}
+                key={row.id}
+              >
                 {checkboxes && (
                   <th scope="row" className="pl-3 py-3">
                     <Checkbox

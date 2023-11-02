@@ -46,7 +46,7 @@ const Index: React.FC<Props> = ({
   };
   return (
     <Suspense>
-      <div className="flex justify-between items-center py-3 bg-white px-3  lg:px-5 max-w-screen-xl">
+      <div className="flex justify-between items-center py-3 bg-white px-3  lg:px-5 ">
         <div className="w-full mr-5 lg:mr-0 lg:max-w-[380px]">
           <LiveSearch
             placeholder="Search anything here"

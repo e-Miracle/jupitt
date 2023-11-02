@@ -6,6 +6,7 @@ import Spinner from "../components/spinner/Spinner";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { logout } from "../store/reducers/auth";
 import { getCountries, getActiveCountries } from "../store/reducers/countries";
+
 const SideBar = React.lazy(() => import("../components/SideBar/SideBar"));
 const Header = React.lazy(() => import("../components/Header/Header"));
 const ConfirmDialogue = React.lazy(
@@ -43,7 +44,7 @@ const DashboardLayout = () => {
   return (
     <Suspense fallback={<Spinner />}>
       <Authourized>
-        <div className={""}>
+        <div className={"max-w-screen-2xl mx-auto"}>
           <SideBar
             onclick={toggleExpand}
             expand={expand}
@@ -72,7 +73,7 @@ const DashboardLayout = () => {
                 handleMobileNav={handleMobileNav}
                 handleLogout={toggleModal}
               />{" "}
-              <div className="bg-white lg:h-[calc(100vh-50px)] overflow-y-auto pb-7 max-w-screen-xl">
+              <div className="bg-white lg:h-[calc(100vh-50px)] overflow-y-auto pb-7 ">
                 <ConfirmDialogue
                   title=":( Logout?"
                   open={modal}
@@ -89,6 +90,7 @@ const DashboardLayout = () => {
             </div>
           </div>
         </div>
+        
       </Authourized>
     </Suspense>
   );

@@ -35,7 +35,7 @@ const initialState: InitialState = {
   total: 0,
   loading: false,
   last_page: 0,
-    activities: null,
+  activities: null,
   single_activity: null,
   error: [],
 };
@@ -87,7 +87,14 @@ export const getOne = createAsyncThunk(
 const Slice = createSlice({
   name: "log",
   initialState,
-  reducers: {},
+  reducers: {
+    single: (state, action: PayloadAction<number>) => {
+      const activity = state.activities?.find(
+        (item) => item.id === action.payload
+      );
+      state.single_activity = activity ? activity : null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllActivities.pending, (state) => {
       state.loading = true;
@@ -116,28 +123,29 @@ const Slice = createSlice({
         }
       }
     );
-      builder.addCase(getOne.pending, (state) => {
-        state.loading = true;
-      });
-      builder.addCase(
-        getOne.fulfilled,
-        (state, action: PayloadAction<IActivity>) => {
-            state.loading = false;
-            state.single_activity = action.payload;
+    builder.addCase(getOne.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      getOne.fulfilled,
+      (state, action: PayloadAction<IActivity>) => {
+        state.loading = false;
+        state.single_activity = action.payload;
+      }
+    );
+    builder.addCase(
+      getOne.rejected,
+      (state, action: PayloadAction<unknown>) => {
+        state.loading = false;
+        if (action?.payload) {
+          const error = action.payload as { message?: string[] | undefined };
+          state.error = error.message || ["Something went wrong"];
+        } else {
+          state.error = ["Something went wrong"];
         }
-      );
-      builder.addCase(
-        getOne.rejected,
-        (state, action: PayloadAction<unknown>) => {
-          state.loading = false;
-          if (action?.payload) {
-            const error = action.payload as { message?: string[] | undefined };
-            state.error = error.message || ["Something went wrong"];
-          } else {
-            state.error = ["Something went wrong"];
-          }
-        }
-      );
+      }
+    );
   },
 });
 export default Slice.reducer;
+export const { single } = Slice.actions;
