@@ -72,7 +72,7 @@ const DashboardLayout = () => {
                 handleMobileNav={handleMobileNav}
                 handleLogout={toggleModal}
               />{" "}
-              <div className="bg-white lg:h-[calc(100vh-50px)] overflow-y-auto pb-7">
+              <div className="bg-white lg:h-[calc(100vh-50px)] overflow-y-auto pb-7 max-w-screen-xl">
                 <ConfirmDialogue
                   title=":( Logout?"
                   open={modal}

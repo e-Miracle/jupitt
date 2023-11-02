@@ -39,6 +39,7 @@ export default {
       tableHead: "#F1F1F1",
       userDetails: "#7C7C7C",
       submit: "#1C1C93",
+      linear : "linear-gradient(99.84deg, #15AF94 0.47%, #2D3306 55.82%, #031D07 85.51%)"
     },
   },
   plugins: [],

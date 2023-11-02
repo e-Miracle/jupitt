@@ -12,6 +12,8 @@ import { Suspense } from "react";
 import Title from "../../components/title";
 import Transaction from "./transaction";
 import CryptoWallet from "./crypto-wallet";
+import FiatWallet from "./fiat-wallet";
+import VirtualCardWallet from "./virtual-wallet"
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getById } from "../../store/reducers/users";
 import { useParams } from "react-router-dom";
@@ -104,10 +106,10 @@ export default function SingleUser() {
                 <CryptoWallet />
               </TabPanel>
               <TabPanel>
-                <p>two!</p>
+                < FiatWallet/>
               </TabPanel>
               <TabPanel>
-                <p>three!</p>
+                <VirtualCardWallet/>
               </TabPanel>
               <TabPanel>
                 <Transaction />

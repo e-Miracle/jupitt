@@ -19,7 +19,8 @@ import Copy from "./copy.svg";
 import Csv from "./Csv.svg";
 import Pdf from "./Pdf.svg";
 import Xlxs from "./Xls File.svg";
-import Print from "./printer.svg"
+import Print from "./printer.svg";
+import WhiteLogo from "./white_logo.svg"
 export {
   FormImage,
   Barcode,
@@ -43,4 +44,5 @@ export {
   Pdf,
   Xlxs,
   Print,
+  WhiteLogo,
 };

@@ -186,6 +186,87 @@ export interface NormalUser {
   total_qualified_referred: number;
   country: ICountry;
   kyc: IKyc;
+  crypto_wallet: Array<ICryptoWallet>;
+  fiat_wallets: Array<IFiatWallet>;
+  banks: Array<IBanks>;
+  notifications: Array<INotifications>;
+}
+
+export interface INotifications {
+  id: string;
+  type: string;
+  notifiable_type: string;
+  notifiable_id: string;
+  read_at: null | string;
+  created_at: string;
+  updated_at: string;
+  data: {
+    type: string;
+    data: {
+      title: string;
+      brief: string;
+      full: string;
+      read_at: null | string;
+      created_at: string;
+      updated_at: string;
+    };
+  };
+}
+
+
+export interface IBanks {
+  id: number;
+  account_number: string;
+  account_name: string;
+  bank_id: string;
+  created_at: string;
+  updated_at: string;
+  verified: string;
+  bank: IBank
+}
+
+export interface IBank {
+  id: number;
+  name: string;
+  slug: string;
+  code: string;
+  active: string;
+  country: string;
+  currency: string;
+  purple_pay_bank_code: string;
+  deleted_at: null | string;
+  logo: null | string;
+}
+
+export interface IFiatWallet {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  country_id: string;
+  bank_name: string;
+  account_number: string;
+  account_name: string;
+  balance: string;
+}
+
+export interface ICryptoWallet {
+  id: number;
+  asset: string;
+  value: string;
+  active: string;
+  deleted_at: null | string;
+  created_at: string;
+  updated_at: string;
+  addresses: Array<CryptoAddress>;
+}
+export interface CryptoAddress {
+  id: 302;
+  wallet_id: "227";
+  network: "BTC";
+  address: "2N4Q2kPsiH8yS8QWt9rkkranxPtcxndHJ5i";
+  active: "1";
+  created_at: "2023-08-26T22:12:54.000000Z";
+  updated_at: "2023-08-26T22:12:54.000000Z";
 }
 
 export interface Icrypto {
@@ -388,7 +469,6 @@ export type ISwapRate = {
   rate: number;
 };
 
-
 export type IAllCountry = {
   id: number;
   name: string;
@@ -450,3 +530,13 @@ export type ITransactions = {
   account_name: string;
   account_number: string;
 };
+
+export type IActivity = {
+  id: string;
+  reference: string;
+};
+
+export interface IUserVc {
+  balance: number;
+  masked_card_number: string;
+}

@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { baseUrl } from "../../constants";
 import { IGet } from "../../utils";
-import { NormalUser, INormalUserTransactions } from "../../utils";
+import { NormalUser, INormalUserTransactions, IUserVc } from "../../utils";
 
 type InitialState = {
   loading: boolean;
@@ -21,6 +21,8 @@ type InitialState = {
   last_week: number | null;
   transactionLoader: boolean;
   transactions: INormalUserTransactions[] | null;
+  userVc: IUserVc | null;
+  userVcLoading: boolean;
 };
 
 type Count = {
@@ -53,7 +55,9 @@ const initialState: InitialState = {
   totalUsers: null,
   last_week: null,
   transactionLoader: false,
-   transactions: null,
+  transactions: null,
+  userVc: null,
+  userVcLoading: false,
   error: [],
 };
 
@@ -67,12 +71,14 @@ export const get = createAsyncThunk("users/get", async (values: IGet) => {
     toast.success(res.data.message);
     return res.data.data;
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      toast.error(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-      err.response.data.message.map((err: string) => toast.error(err));
-      return err.response.data.message;
-    }
+   if (err instanceof Error) {
+     console.log(err.message);
+   }
+   if (axios.isAxiosError(err) && err.response?.data?.message) {
+     toast.error(err.response.data.message);
+     err.response.data.message.map((err: string) => toast.error(err));
+     return err.response.data.message;
+   }
   }
 });
 
@@ -83,8 +89,10 @@ export const getCount = createAsyncThunk("users/getCount", async () => {
     return res.data.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
-      toast.error(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+      console.log(err.message);
+    }
+    if (axios.isAxiosError(err) && err.response?.data?.message) {
+      toast.error(err.response.data.message);
       err.response.data.message.map((err: string) => toast.error(err));
       return err.response.data.message;
     }
@@ -97,26 +105,50 @@ export const getById = createAsyncThunk("users/getById", async (id: string) => {
     toast.success(res.data.message);
     return res.data.data;
   } catch (err) {
-    if (err instanceof Error) {
-      toast.error(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-      err.response.data.message.map((err: string) => toast.error(err));
-      return err.response.data.message;
-    }
+   if (err instanceof Error) {
+     console.log(err.message);
+   }
+   if (axios.isAxiosError(err) && err.response?.data?.message) {
+     toast.error(err.response.data.message);
+     err.response.data.message.map((err: string) => toast.error(err));
+     return err.response.data.message;
+   }
   }
 });
 
-export const getUserTransactions = createAsyncThunk("users/getTransactions", async (id: string) => {
+export const getUserTransactions = createAsyncThunk(
+  "users/getTransactions",
+  async (id: string) => {
+    try {
+      const res = await axios.get(
+        `${baseUrl}/transactions/user/all?identifier=${id}`
+      );
+      toast.success(res.data.message);
+      return res.data.data.data;
+    } catch (err) {
+     if (err instanceof Error) {
+       console.log(err.message);
+     }
+     if (axios.isAxiosError(err) && err.response?.data?.message) {
+       toast.error(err.response.data.message);
+       err.response.data.message.map((err: string) => toast.error(err));
+       return err.response.data.message;
+     }
+    }
+  }
+);
+
+export const getVcDetails = createAsyncThunk("users/getVc", async (id: string) => {
   try {
-    const res = await axios.get(
-      `${baseUrl}/transactions/user/all?identifier=${id}`
-    );
+    const res = await axios.get(`${baseUrl}/user/vc/${id}`);
     toast.success(res.data.message);
-    return res.data.data.data;
+    return res.data.data;
   } catch (err) {
     if (err instanceof Error) {
-      toast.error(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+      console.log(err.message);
+    }
+    if (axios.isAxiosError(err) && err.response?.data?.message) {
+      toast.error(err.response.data.message);
       err.response.data.message.map((err: string) => toast.error(err));
       return err.response.data.message;
     }
@@ -214,6 +246,28 @@ const Slice = createSlice({
         }
       }
     );
+     builder.addCase(getVcDetails.pending, (state) => {
+       state.userVcLoading = true;
+     });
+     builder.addCase(
+       getVcDetails.fulfilled,
+       (state, action: PayloadAction<IUserVc>) => {
+         state.userVcLoading = false;
+         state.userVc = action.payload;
+       }
+     );
+     builder.addCase(
+       getVcDetails.rejected,
+       (state, action: PayloadAction<unknown>) => {
+         state.userVcLoading = false;
+         if (action?.payload) {
+           const error = action.payload as { message?: string[] | undefined };
+           state.error = error.message || ["Something went wrong"];
+         } else {
+           state.error = ["Something went wrong"];
+         }
+       }
+     );
   },
 });
 

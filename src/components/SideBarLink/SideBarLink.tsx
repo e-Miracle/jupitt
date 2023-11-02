@@ -56,10 +56,10 @@ Props) {
             subLinks.map((item) => item.path).includes(location.pathname)
               ? isIconMode
                 ? "bg-hoverLink relative w-full  text-secondary   my-1  flex justify-center items-center  p-2"
-                : "my-1 py-3 px-5 w-full text-secondary bg-hoverLink  hover:bg-background hover:text-activeLink  flex items-center  "
+                : "my-1 py-3 px-5 w-full text-secondary bg-hoverLink  hover:bg-background hover:text-activeLink  flex items-center  justify-between "
               : isIconMode
-              ? " my-1   w-full text-link  hover:bg-background hover:text-activeLink  flex justify-center items-center  p-2"
-              : " my-1 py-3 px-5 w-full text-link  hover:bg-background hover:text-activeLink  flex items-center "
+              ? " my-1   w-full text-link  hover:bg-background hover:text-activeLink  flex justify-center items-center   p-2"
+              : " my-1 py-3 px-5 w-full text-link  hover:bg-background hover:text-activeLink  flex items-center justify-between "
           }
         >
           <NavLink

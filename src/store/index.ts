@@ -13,6 +13,7 @@ import AumReducer from "./reducers/aum"
 import Ratelogs from "./reducers/ratelogs";
 import CountryReducer from "./reducers/countries";
 import TransactionReducer from "./reducers/transactions"
+import ActivityReducer from "./reducers/activity"
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -29,6 +30,7 @@ const store = configureStore({
     logs: Ratelogs,
     countries: CountryReducer,
     transactions: TransactionReducer,
+    activity: ActivityReducer,
   },
 });
 
