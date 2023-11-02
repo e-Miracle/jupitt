@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { z } from "zod";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,33 +6,70 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Spinner } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
+import { setCryptoAml } from "../../../store/non-reducer-actions.ts/aml";
 
 type Props = {
   type: "Tier 1" | "Tier 2" | "Tier 3" | "ordinary";
-  country: string;
+  id: number;
   className?: string | undefined;
 };
-const CryptoWithdrawForm: React.FC<Props> = ({ type, country, className }) => {
-    const formSchema = z.object({
-      limit: z
-        .number({
-          required_error: "limit is required",
-          invalid_type_error: "limit must be a number",
-        })
-        .positive(),
-    });
+const CryptoWithdrawForm: React.FC<Props> = ({ type, id, className }) => {
+  const formSchema = z.object({
+    limit: z
+      .number({
+        required_error: "limit is required",
+        invalid_type_error: "limit must be a number",
+      })
+      .positive(),
+  });
 
-    type FormSchemaType = z.infer<typeof formSchema>;
-    const {
-      register,
-      handleSubmit,
-      formState: { errors, isSubmitting },
-    } = useForm<FormSchemaType>({
-      resolver: zodResolver(formSchema),
-    });
-    const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-      console.log({ ...data, country,  type });
-    };
+  type FormSchemaType = z.infer<typeof formSchema>;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormSchemaType>({
+    resolver: zodResolver(formSchema),
+  });
+  const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
+    if (type === "Tier 1") {
+      const res = await setCryptoAml({
+        withdrawal_limit: data.limit,
+        country_id: id,
+        level: 1,
+      });
+      if (res) reset({ limit: 0 });
+      return;
+    }
+    if (type === "Tier 2") {
+      const res = await setCryptoAml({
+        withdrawal_limit: data.limit,
+        country_id: id,
+        level: 2,
+      });
+      if (res) reset({ limit: 0 });
+      return;
+    }
+    if (type === "Tier 3") {
+      const res = await setCryptoAml({
+        withdrawal_limit: data.limit,
+        country_id: id,
+        level: 3,
+      });
+      if (res) reset({ limit: 0 });
+      return;
+    }
+    if (type === "ordinary") {
+      const res = await setCryptoAml({
+        withdrawal_limit: data.limit,
+        country_id: id,
+        level: 4,
+      });
+      if (res) reset({ limit: 0 });
+      return;
+    }
+  };
   return (
     <div className={` ${className}`}>
       <h3 className="mt-3 text-base lg:text-lg font-inter capitalize text-[#333333]">

@@ -3,15 +3,18 @@ import { Suspense } from "react";
 type Props = {
   image: string;
   coinName: string;
-  action: "sell" | "buy" | "swap";
+  action: "sell" | "buy" | "swap" | "send" | "receive" | "withdraw" | string;
   amount: number;
   balance: string;
 };
 
-const color = {
-  sell: "#1FCB4F",
+const color: Record<string, string> = {
+  sell: "#EB5757",
   buy: "#EB5757",
   swap: "#0D63D3",
+  send: "#EB5757",
+  receive: "#1FCB4F",
+  withdraw: "#1FCB4F",
 };
 
 const TransactionItem = (props: Props) => {
@@ -37,10 +40,17 @@ const TransactionItem = (props: Props) => {
         </div>
         <div>
           <h4 className="text-xs lg:text-sm font-bold text-right">
-            {props.action === "sell" || props.action === "swap" ? "-" : "+"}{" "}
+            {props.action === "sell" ||
+            props.action === "swap" ||
+            props.action === "withdraw" ||
+            props.action === "send"
+              ? "-"
+              : "+"}{" "}
             {props.amount}
           </h4>
-          <p className="text-xs lg:text-sm mt-2 text-right text-coincard">${props.balance}</p>
+          <p className="text-xs lg:text-sm mt-2 text-right text-coincard">
+            ${props.balance}
+          </p>
         </div>
       </div>
     </Suspense>

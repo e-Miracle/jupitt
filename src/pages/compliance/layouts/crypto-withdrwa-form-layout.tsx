@@ -1,8 +1,8 @@
 import React from "react";
-import { ICountries } from "../../../utils";
+import { INewCountries } from "../../../utils";
 import { getCountryFlag } from "../../../utils";
 import Form from "../forms/crypto-withdraw-form";
-const CryptoWithdrwaFormLayout: React.FC<ICountries> = ({ country }) => {
+const CryptoWithdrwaFormLayout: React.FC<INewCountries> = ({ country, id }) => {
   const [flag, setFlag] = React.useState("");
   React.useEffect(() => {
     const init = async () => {
@@ -25,10 +25,10 @@ const CryptoWithdrwaFormLayout: React.FC<ICountries> = ({ country }) => {
         <h2 className=" ">{country}</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[1rem] mt-[1rem]">
-        <Form type="ordinary" country={country} />
-        <Form type="Tier 1" country={country} />
-        <Form type="Tier 2" country={country} />
-        <Form type="Tier 3" country={country} />
+        <Form type="ordinary" id={id} />
+        <Form type="Tier 1" id={id} />
+        <Form type="Tier 2" id={id} />
+        <Form type="Tier 3" id={id} />
       </div>
     </div>
   );

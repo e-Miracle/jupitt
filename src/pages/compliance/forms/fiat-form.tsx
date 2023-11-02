@@ -6,13 +6,14 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Spinner } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
+import { setFiatAml } from "../../../store/non-reducer-actions.ts/aml";
 type Props = {
   tier: "tier 1" | "tier 2" | "tier 3" | "ordinary";
   type: "deposit" | "withdrawal";
-  country: string;
+  id: number;
   className?: string | undefined;
 };
-const FiatForm: React.FC<Props> = ({ type, tier, country, className }) => {
+const FiatForm: React.FC<Props> = ({ type, tier, id, className }) => {
   const formSchema = z.object({
     limit: z
       .number({
@@ -26,12 +27,28 @@ const FiatForm: React.FC<Props> = ({ type, tier, country, className }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
   });
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    console.log({ ...data, country, type, tier });
+    const packet: {
+      withdrawal_limit?: number;
+      country_id: number;
+      level: number;
+      deposit_limit?: number;
+    } = {
+      withdrawal_limit: data.limit,
+      country_id: id,
+      level: tier === "ordinary" ? 4 : parseInt(tier.split(" ")[1]),
+      deposit_limit: data.limit,
+    };
+    if (type === "deposit") delete packet.withdrawal_limit;
+    if (type === "withdrawal") delete packet.deposit_limit;
+    const res = await setFiatAml(packet);
+    if (res) reset({ limit: 0 });
+    return;
   };
   return (
     <div className={` ${className}`}>

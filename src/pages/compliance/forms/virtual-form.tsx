@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { z } from "zod";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,13 +6,14 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Spinner } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
+import { setVCAml } from "../../../store/non-reducer-actions.ts/aml";
 
 type Props = {
   type: "Tier 1" | "Tier 2" | "Tier 3" | "ordinary";
-  country: string;
+  id: number;
   className?: string | undefined;
 };
-const VirtualForm: React.FC<Props> = ({ type, country, className }) => {
+const VirtualForm: React.FC<Props> = ({ type, id, className }) => {
   const formSchema = z.object({
     limit: z
       .number({
@@ -26,12 +27,20 @@ const VirtualForm: React.FC<Props> = ({ type, country, className }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
   });
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    console.log({ ...data, country, type });
+
+    const res = await setVCAml({
+      withdrawal_limit: data.limit,
+      country_id: id,
+      level: type === "ordinary" ? 4 : parseInt(type.split(" ")[1]),
+    });
+    if (res) reset({ limit: 0 });
+    return;
   };
   return (
     <div className={` ${className}`}>

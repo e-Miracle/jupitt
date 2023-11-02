@@ -3,6 +3,7 @@ import { Suspense, lazy, useEffect } from "react";
 import { Wallet, Graph } from "../assets";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getBalance, getUserCount } from "../store/reducers/dashboard";
+import { getTransactions } from "../store/reducers/transactions";
 import CardLoader from "../components/card-loader";
 import Spinner from "../components/spinner/Spinner";
 const CoinCard = lazy(() => import("../components/coincard"));
@@ -15,6 +16,7 @@ export default function Dashboard() {
   useEffect(() => {
     dispatch(getBalance());
     dispatch(getUserCount());
+    dispatch(getTransactions({}));
   }, [dispatch]);
   const {
     users_loading,
@@ -74,7 +76,7 @@ export default function Dashboard() {
           )}
         </Grid>
         <div className="grid grid-cols-1 lg:grid-cols-9 gap-[1rem] mt-[1rem]">
-          <div className="col-span-8 lg:col-span-6  grid grid-cols-1 lg:grid-cols-8 gap-[1rem]">
+          <div className="col-span-8 lg:col-span-6  grid grid-cols-1 lg:grid-cols-8 gap-[1rem] place-content-start">
             <div className="col-span-8 ">
               <LineChartContainer />
             </div>

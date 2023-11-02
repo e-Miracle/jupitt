@@ -307,14 +307,14 @@ export type IFiatAum = {
 export type IAML = {
   withdrawal_limit: number;
   country_id: number;
-  level: number;
+  level: number | string;
 };
 
 export type IVCAML = {
-  withdrawal_limit: number;
+  withdrawal_limit?: number;
   country_id: number;
   level: number;
-  deposit_limit: number;
+  deposit_limit?: number;
 };
 
 type IAuthorizer = {
@@ -427,4 +427,26 @@ export type IVcRate = {
   fund?: number;
   withdraw?: number;
   spend?: number;
+};
+
+export type ITransactions = {
+  id: string;
+  reference: string;
+  user_id: string;
+  asset: string;
+  date: string;
+  activity: string;
+  from: null | string;
+  to: null | string;
+  amount: string;
+  market_price: string;
+  usd_value: string;
+  rate: string;
+  fiat_value: string;
+  fiat_currency: string;
+  status: number;
+  transaction_type: string;
+  bank: string;
+  account_name: string;
+  account_number: string;
 };

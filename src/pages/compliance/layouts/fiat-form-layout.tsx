@@ -1,25 +1,25 @@
 import React from "react";
-import { ICountries } from "../../../utils";
+import { INewCountries } from "../../../utils";
 import { getCountryFlag } from "../../../utils";
 import Form from "../forms/fiat-form";
 
 type Layout = {
-  country: string;
   tier: "tier 1" | "tier 2" | "tier 3" | "ordinary";
+  id: number;
 };
-const FiatFormLayout: React.FC<Layout> = ({ country, tier }) => {
+const FiatFormLayout: React.FC<Layout> = ({ id, tier }) => {
   return (
     <div>
       <h3 className="mt-3 text-base lg:text-lg font-inter capitalize text-[#333333]">
         {tier} User
       </h3>
-      <Form type="deposit" tier={tier} country={country} />
-      <Form type="withdrawal" tier={tier} country={country} />
+      <Form type="deposit" tier={tier} id={id} />
+      <Form type="withdrawal" tier={tier} id={id} />
     </div>
   );
 };
 
-const Main: React.FC<ICountries> = ({ country }) => {
+const Main: React.FC<INewCountries> = ({ country, id }) => {
   const [flag, setFlag] = React.useState("");
   React.useEffect(() => {
     const init = async () => {
@@ -42,10 +42,10 @@ const Main: React.FC<ICountries> = ({ country }) => {
         {country}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[1rem] mt-[1rem]">
-        <FiatFormLayout tier="ordinary" country={country} />
-        <FiatFormLayout tier="tier 1" country={country} />
-        <FiatFormLayout tier="tier 2" country={country} />
-        <FiatFormLayout tier="tier 3" country={country} />
+        <FiatFormLayout tier="ordinary" id={id} />
+        <FiatFormLayout tier="tier 1" id={id} />
+        <FiatFormLayout tier="tier 2" id={id} />
+        <FiatFormLayout tier="tier 3" id={id} />
       </div>
     </div>
   );

@@ -19,6 +19,7 @@ export const setCryptoAml = async (values: IAML) => {
     if (axios.isAxiosError(err) && err.response?.data?.message) {
       toast.error(err.response.data.message);
       err.response.data.message.map((err: string) => toast.error(err));
+      return err.response.data.message;
     }
   }
 };
@@ -39,6 +40,7 @@ export const setVCAml = async (values: IAML) => {
     if (axios.isAxiosError(err) && err.response?.data?.message) {
       toast.error(err.response.data.message);
       err.response.data.message.map((err: string) => toast.error(err));
+      return err.response.data.message;
     }
   }
 };
@@ -59,6 +61,7 @@ export const setFiatAml = async (values: IVCAML) => {
     if (axios.isAxiosError(err) && err.response?.data?.message) {
       toast.error(err.response.data.message);
       err.response.data.message.map((err: string) => toast.error(err));
+      return err.response.data.message;
     }
   }
 };
