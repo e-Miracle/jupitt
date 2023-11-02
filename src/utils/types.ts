@@ -529,6 +529,28 @@ export type ITransactions = {
   bank: string;
   account_name: string;
   account_number: string;
+  created_at: string;
+};
+
+export type IFiatTransactions = {
+  _id: string;
+  reference: string;
+  user_id: string;
+  activity: string;
+  amount: string;
+  aum_bal_cd: string;
+  aum_bal_db: string;
+  debit: string;
+  credit: string;
+  status: number;
+  from: null | string;
+  to: null | string;
+  fiat_currency: string;
+  bank: string;
+  account_name: string;
+  account_number: string;
+  created_at: string;
+  __v: 0;
 };
 
 export type IActivity = {

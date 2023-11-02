@@ -14,10 +14,7 @@ import EmptyArrayMessage from "../../components/empty";
 import Spinner from "../../components/spinner/Spinner";
 export default function UserPortal() {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(get({}));
-    dispatch(getCount());
-  }, [dispatch]);
+
   const {
     users,
     loading,
@@ -28,6 +25,12 @@ export default function UserPortal() {
     totalUsers,
     this_week,
   } = useAppSelector((state) => state.user);
+  useEffect(() => {
+    if (!users) dispatch(get({}));
+  }, [dispatch, users]);
+  useEffect(() => {
+    dispatch(getCount());
+  }, [dispatch]);
   const [value, setValue] = useState("");
   const [searchResults, setSearchResults] = React.useState<Array<any>>([]);
   const handleToggle = () => {};

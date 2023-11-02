@@ -1,19 +1,52 @@
-import { lazy, useState, useEffect } from "react";
+import { lazy, useState, useEffect, useMemo } from "react";
 import { changeHandler } from "../../../utils";
 import { results } from "../../../constants";
 import Table from "../../../components/table";
 import Tcard from "../../../components/t-card-alt";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { getFiatAum } from "../../../store/reducers/aum";
+import { getFiatAum, getFiatLogs } from "../../../store/reducers/aum";
 import CardLoader from "../../../components/card-loader";
+import LoadingTable from "../../../components/table-loader";
+import EmptyArrayMessage from "../../../components/empty";
 const Filter = lazy(() => import("../../../components/filter"));
 
 const Fiat = () => {
   const dispatch = useAppDispatch();
+   const {
+     fiat_aum,
+     fiat_aum_loading,
+     fiat_logs,
+     fiat_logs_loading,
+     fiat_current_page,
+     fiat_next_page_url,
+     fiat_prev_page_url,
+     fiat_last_page,
+   } = useAppSelector((state) => state.aum);
   useEffect(() => {
     dispatch(getFiatAum());
   }, [dispatch]);
-  const { fiat_aum, fiat_aum_loading } = useAppSelector((state) => state.aum);
+ 
+  useEffect(() => {
+    if (!fiat_logs) dispatch(getFiatLogs({}));
+  }, [dispatch, fiat_logs]);
+
+   const options = useMemo(
+     () =>
+       fiat_logs &&
+       fiat_logs.length &&
+       fiat_logs.map((item) => ({
+         id: item._id,
+         activity: item.activity,
+         credit: item.credit,
+         transaction_id: item.reference,
+         user_id: item.user_id,
+         aum: `${item.aum_bal_cd}/${item.aum_bal_db}`,
+         amount: item.amount,
+         debit: item.debit,
+         time: item.created_at,
+       })),
+     [fiat_logs]
+   );
   const [value, setValue] = useState("");
   const [searchResults, setSearchResults] = useState<Array<unknown>>([]);
   const handleToggle = () => {};
@@ -45,30 +78,9 @@ const Fiat = () => {
     { key: "debit", label: "Credit" },
   ];
 
-  const data = [
-    {
-      id: 1,
-      activity: "Buy",
-      credit: "1,000.00",
-      transaction_id: "123456789012",
-      user_id: "J394300",
-      aum: "27,000.30",
-      amount: "0.004959",
-      debit: "1,000.00",
-      time: "2023-10-15 03:28 AM",
-    },
-    {
-      id: 2,
-      activity: "Buy",
-      credit: "1,000.00",
-      transaction_id: "123456789012",
-      user_id: "J394300",
-      aum: "27,000.30",
-      amount: "0.004959",
-      debit: "1,000.00",
-      time: "2023-10-15 03:28 AM",
-    },
-  ];
+  const change = (page: number) => {
+    dispatch(getFiatLogs({ page: String(page) }));
+  };
   return (
     <div>
       {" "}
@@ -114,7 +126,29 @@ const Fiat = () => {
           /> */}
         </div>
       )}
-      <Table headers={headers} data={data} />
+      {fiat_logs_loading && (
+        <LoadingTable
+          rows={15}
+          columns={[{ width: 100 }, { width: 150 }, { width: 80 }]}
+        />
+      )}
+      {!fiat_logs_loading && options && options.length > 0 ? (
+        <Table
+          headers={headers}
+          data={options}
+          total={fiat_last_page}
+          currentPage={fiat_current_page}
+          next_page_url={fiat_next_page_url}
+          prev_page_url={fiat_prev_page_url}
+          change={change}
+        />
+      ) : (
+        <EmptyArrayMessage
+          array={fiat_logs}
+          message="No logs"
+          imageAlt="http://via.placeholder.com/500x5000"
+        />
+      )}
     </div>
   );
 };
