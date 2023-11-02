@@ -5,7 +5,7 @@ import { Suspense } from "react";
 type Props = {
   image: string;
   coinName: string;
-  balance: number;
+  balance: string;
   amount: string;
   type: string
   onOpenCredit: () => void;

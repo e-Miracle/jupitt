@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import LiveSearch from "../../components/LiveSearch/LiveSearch";
-import { results, userDashboard } from "../../constants";
+import { assetImages, results } from "../../constants";
 import { faLockOpen, faShield } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserCard from "../../components/user-card";
@@ -31,6 +31,7 @@ import {
 import { ISubmitCrypto } from "./crypto-form";
 import { ISubmitFiat } from "./fiat-form";
 import { useAppSelector } from "../../store/hooks";
+import { ICryptoWallet } from "../../utils/types.ts";
 
 const crpytoExchange = async (values: ISubmitCrypto) => {
   const { action, ...rest } = values;
@@ -145,24 +146,26 @@ const CryptoWallet = () => {
             }}
             gridGap="1rem"
           >
-            {userDashboard.map((item) => (
-              <UserCard
-                key={`index-${item.coinName}`}
-                type={item.type}
-                image={item.image}
-                coinName={item.coinName}
-                balance={item.balance}
-                amount={Number(item.amount).toLocaleString()}
-                onOpenCredit={() => {
-                  setType(item.type);
-                  onModal1Open();
-                }}
-                onOpenDebit={() => {
-                  setType(item.type);
-                  onModal2Open();
-                }}
-              />
-            ))}
+            {user &&
+              user?.crypto_wallet?.length > 0 &&
+              user?.crypto_wallet.map((item: ICryptoWallet) => (
+                <UserCard
+                  key={`index-${item.id}`}
+                  type={item.asset === "USDT" ? "fiat" : "crypto"}
+                  image={assetImages[item.asset.toLowerCase()]}
+                  coinName={item.asset}
+                  balance={item.value}
+                  amount={Number(3000000).toLocaleString()}
+                  onOpenCredit={() => {
+                    setType(item.asset === "USDT" ? "fiat" : "crypto");
+                    onModal1Open();
+                  }}
+                  onOpenDebit={() => {
+                    setType(item.asset === "USDT" ? "fiat" : "crypto");
+                    onModal2Open();
+                  }}
+                />
+              ))}
           </Grid>
           <div className="grid grid-cols-1 lg:grid-cols-8 gap-[1rem] mt-[1rem]">
             <div className="col-span-8 lg:col-span-5  grid grid-cols-1 lg:grid-cols-2 gap-[1rem] font-poppins">
