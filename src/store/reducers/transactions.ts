@@ -87,13 +87,13 @@ export const getCountFiat = createAsyncThunk("transactions/getCountFiat", async 
   }
 });
 
-export const getCountPm = createAsyncThunk(
-  "transactions/getCountPm",
+export const getCountPerfectMoney = createAsyncThunk(
+  "transactions/getCountPerfectMoney",
   async () => {
     try {
       const res = await axios.get(`${baseUrl}/transactions/count-pm`);
       toast.success(res.data.message);
-      return res.data.data.data;
+      return res.data.data;
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.log(err.message);
@@ -177,28 +177,28 @@ const Slice = createSlice({
          }
        }
     );
-    // builder.addCase(getCountPm.pending, (state) => {
-    //   state.countPmLoading = true;
-    // });
-    // builder.addCase(
-    //   getCountPm.fulfilled,
-    //   (state, action: PayloadAction<Array<ICountPm>>) => {
-    //     state.countPmLoading = false;
-    //     state.countPm = action.payload;
-    //   }
-    // );
-    // builder.addCase(
-    //   getCountPm.rejected,
-    //   (state, action: PayloadAction<unknown>) => {
-    //     state.countPmLoading = false;
-    //     if (action?.payload) {
-    //       const error = action.payload as { message?: string[] | undefined };
-    //       state.error = error.message || ["Something went wrong"];
-    //     } else {
-    //       state.error = ["Something went wrong"];
-    //     }
-    //   }
-    // );
+    builder.addCase(getCountPerfectMoney.pending, (state) => {
+      state.countPmLoading = true;
+    });
+    builder.addCase(
+      getCountPerfectMoney.fulfilled,
+      (state, action: PayloadAction<Array<ICountPm>>) => {
+        state.countPmLoading = false;
+        state.countPm = action.payload;
+      }
+    );
+    builder.addCase(
+      getCountPerfectMoney.rejected,
+      (state, action: PayloadAction<unknown>) => {
+        state.countPmLoading = false;
+        if (action?.payload) {
+          const error = action.payload as { message?: string[] | undefined };
+          state.error = error.message || ["Something went wrong"];
+        } else {
+          state.error = ["Something went wrong"];
+        }
+      }
+    );
   },
 });
 export default Slice.reducer;
