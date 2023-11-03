@@ -586,3 +586,27 @@ export interface IUserVc {
   balance: number;
   masked_card_number: string;
 }
+
+export interface ICountFiat {
+  _id: {
+    currency: string;
+    activity: string;
+  };
+  count: number;
+}
+
+
+export interface ICountCrypto {
+  _id: {
+    asset: string;
+    activity: string;
+  };
+  count: number;
+}
+
+export interface ICountPm {
+  _id: {
+    activity: string;
+  };
+  count: number;
+}
