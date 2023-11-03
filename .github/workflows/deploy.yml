@@ -1,0 +1,55 @@
+name: Deploy Frontend to Droplet
+
+on:
+  push:
+    branches: [main]
+  # pull_request:
+  #   branches: [main]
+  # workflow_dispatch:
+  #   branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: setup git config
+        run: |
+          git config user.name "Github Actions Bot"
+          git config user.email "<>"
+
+      - name: Install Dependencies
+        run: npm install --force
+
+      - name: Log in to Docker Hub
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+      - name: Build Docker Image
+        run: docker build --tag jupit-admin-app .
+
+      - name: Tag image
+        run:  docker tag jupit-admin-app ${{ secrets.DOCKERHUB_USERNAME }}/jupit-admin-app:latest
+
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/jupit-admin-app:latest
+
+      - name: SSH to Droplet and Update Container
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          port: 22
+          script: |
+            docker stop jupit-admin-app || true
+            docker rm jupit-admin-app || true
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/jupit-admin-app:latest
+            docker run -d --name jupit-admin-app -p 3000:80 ${{ secrets.DOCKERHUB_USERNAME }}/jupit-admin-app:latest

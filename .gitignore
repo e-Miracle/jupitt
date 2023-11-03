@@ -22,7 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-.github/workflows/deploy.yml
-docker-compose.yml
-Dockerfile
-deploy.env
