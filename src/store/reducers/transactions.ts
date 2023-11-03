@@ -58,7 +58,7 @@ export const getCountCrypto = createAsyncThunk(
     try {
       const res = await axios.get(`${baseUrl}/transactions/count-crypto`);
       toast.success(res.data.message);
-      return res.data.data.data;
+      return res.data.data;
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.log(err.message);
@@ -75,7 +75,7 @@ export const getCountFiat = createAsyncThunk("transactions/getCountFiat", async 
   try {
     const res = await axios.get(`${baseUrl}/transactions/count-fiat`);
     toast.success(res.data.message);
-    return res.data.data.data;
+    return res.data.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
       console.log(err.message);
@@ -88,7 +88,7 @@ export const getCountFiat = createAsyncThunk("transactions/getCountFiat", async 
 });
 
 export const getCountPm = createAsyncThunk(
-  "transactions/getCountFiat",
+  "transactions/getCountPm",
   async () => {
     try {
       const res = await axios.get(`${baseUrl}/transactions/count-pm`);
@@ -177,28 +177,28 @@ const Slice = createSlice({
          }
        }
     );
-    builder.addCase(getCountPm.pending, (state) => {
-      state.countPmLoading = true;
-    });
-    builder.addCase(
-      getCountPm.fulfilled,
-      (state, action: PayloadAction<Array<ICountPm>>) => {
-        state.countPmLoading = false;
-        state.countPm = action.payload;
-      }
-    );
-    builder.addCase(
-      getCountPm.rejected,
-      (state, action: PayloadAction<unknown>) => {
-        state.countPmLoading = false;
-        if (action?.payload) {
-          const error = action.payload as { message?: string[] | undefined };
-          state.error = error.message || ["Something went wrong"];
-        } else {
-          state.error = ["Something went wrong"];
-        }
-      }
-    );
+    // builder.addCase(getCountPm.pending, (state) => {
+    //   state.countPmLoading = true;
+    // });
+    // builder.addCase(
+    //   getCountPm.fulfilled,
+    //   (state, action: PayloadAction<Array<ICountPm>>) => {
+    //     state.countPmLoading = false;
+    //     state.countPm = action.payload;
+    //   }
+    // );
+    // builder.addCase(
+    //   getCountPm.rejected,
+    //   (state, action: PayloadAction<unknown>) => {
+    //     state.countPmLoading = false;
+    //     if (action?.payload) {
+    //       const error = action.payload as { message?: string[] | undefined };
+    //       state.error = error.message || ["Something went wrong"];
+    //     } else {
+    //       state.error = ["Something went wrong"];
+    //     }
+    //   }
+    // );
   },
 });
 export default Slice.reducer;

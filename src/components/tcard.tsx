@@ -2,7 +2,7 @@ import React from "react";
 
 type Props = {
   coinName: string;
-  type?: "deposit" | "withdraw" | "buy" | "sell" | "swap" | "funding" |"spending";
+  type?: "deposit" | "withdraw" | "buy" | "sell" | "swap" | "funding" |"spending" | string;
   value: string;
   img?: string;
   optionalString?: string

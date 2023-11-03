@@ -1,56 +1,40 @@
-import React from 'react'
-import Tcard from '../../../components/tcard';
-import { Btc } from '../../../assets';
-import { currentCoins } from "../../../constants/index";
-type Props = {
-  coinName: string
-}
-const Layout: React.FC<Props> = ({ coinName }) => {
-    
+import React from "react";
+import Tcard from "../../../components/tcard";
+import { assetImages } from "../../../constants/index";
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import { getCountCrypto } from "../../../store/reducers/transactions";
+import { Spinner } from "@chakra-ui/react";
+const Crypto = () => {
+  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    dispatch(getCountCrypto());
+  }, [dispatch]);
+  const { countCrypto, countCryptoLoading } = useAppSelector(
+    (state) => state.transactions
+  );
+
+  const data = React.useMemo(
+    () => countCrypto && countCrypto.length > 0 && countCrypto,
+    [countCrypto]
+  );
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-[1rem] mb-[2rem]">
-      <Tcard
-        type="deposit"
-        coinName={coinName}
-        value={Number(10405).toLocaleString()}
-        img={Btc}
-      />
-      <Tcard
-        type="withdraw"
-        coinName={coinName}
-        value={Number(10405).toLocaleString()}
-        img={Btc}
-      />
-      <Tcard
-        type="buy"
-        coinName={coinName}
-        value={Number(10405).toLocaleString()}
-        img={Btc}
-      />
-      <Tcard
-        type="sell"
-        coinName={coinName}
-        value={Number(10405).toLocaleString()}
-        img={Btc}
-      />
-      <Tcard
-        type="swap"
-        coinName={coinName}
-        value={Number(10405).toLocaleString()}
-        img={Btc}
-      />
+      {countCryptoLoading && <Spinner />}
+
+      {!countCryptoLoading &&
+        data &&
+        data.length > 0 &&
+        data.map((item, index) => (
+          <Tcard
+            key={index}
+            type={item._id.activity}
+            coinName={item._id.asset}
+            value={Number(item.count).toLocaleString()}
+            img={assetImages[item._id.asset.toLowerCase()]}
+          />
+        ))}
     </div>
   );
 };
-const Crypto = () => {
-  const countries = React.useMemo(() => currentCoins, []);
-  return (
-    <div>
-      {countries.map((item, index) => (
-        <Layout coinName={item} key={index} />
-      ))}
-    </div>
-  );
-}
 
 export default Crypto;
