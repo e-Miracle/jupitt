@@ -626,3 +626,40 @@ export interface ICountPm {
   };
   count: number;
 }
+
+export interface IStaff {
+  id: number;
+  identifier: string;
+  designation: null | string;
+  country_id: number;
+  reports_to: null | string;
+  department_id: null | string;
+  gender: string;
+  name: string;
+  email: string;
+  email_verified_at: null | string;
+  phone: string;
+  phone_verified_at: null | string;
+  status: number;
+  twofa_enabled: boolean;
+  google2fa_secret: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: null | string;
+  roles: [
+    {
+      id: number;
+      name: string;
+      guard_name: string;
+      description: null;
+      created_at: string;
+      updated_at: string;
+      pivot: {
+        model_id: number;
+        role_id: number;
+        model_type: string;
+      };
+      permissions: [];
+    }
+  ];
+}
