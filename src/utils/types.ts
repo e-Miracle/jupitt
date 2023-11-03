@@ -552,6 +552,22 @@ export type IFiatTransactions = {
   __v: 0;
 };
 
+export type IPmTransactions = {
+  _id: string;
+  reference: string;
+  user_id: string;
+  from: string;
+  to: string;
+  activity: string;
+  amount: string;
+  rate: string;
+  fiat_value: string;
+  fiat_currency: string;
+  status:number;
+  created_at: string;
+  __v: number;
+};
+
 export type IActivity = {
   id: number;
   event: string;
