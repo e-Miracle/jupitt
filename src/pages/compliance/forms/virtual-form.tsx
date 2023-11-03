@@ -37,7 +37,7 @@ const VirtualForm: React.FC<Props> = ({ type, id, className }) => {
     const res = await setVCAml({
       withdrawal_limit: data.limit,
       country_id: id,
-      level: type === "ordinary" ? 4 : parseInt(type.split(" ")[1]),
+      level: type === "ordinary" ? 0 : parseInt(type.split(" ")[1]),
     });
     if (res) reset({ limit: 0 });
     return;

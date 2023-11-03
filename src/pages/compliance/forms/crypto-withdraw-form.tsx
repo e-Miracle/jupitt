@@ -64,7 +64,7 @@ const CryptoWithdrawForm: React.FC<Props> = ({ type, id, className }) => {
       const res = await setCryptoAml({
         withdrawal_limit: data.limit,
         country_id: id,
-        level: 4,
+        level: 0,
       });
       if (res) reset({ limit: 0 });
       return;

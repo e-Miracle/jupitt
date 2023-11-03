@@ -41,7 +41,7 @@ const FiatForm: React.FC<Props> = ({ type, tier, id, className }) => {
     } = {
       withdrawal_limit: data.limit,
       country_id: id,
-      level: tier === "ordinary" ? 4 : parseInt(tier.split(" ")[1]),
+      level: tier === "ordinary" ? 0 : parseInt(tier.split(" ")[1]),
       deposit_limit: data.limit,
     };
     if (type === "deposit") delete packet.withdrawal_limit;
