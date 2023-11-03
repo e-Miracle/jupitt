@@ -552,6 +552,22 @@ export type IFiatTransactions = {
   __v: 0;
 };
 
+export type IPmTransactions = {
+  _id: string;
+  reference: string;
+  user_id: string;
+  from: string;
+  to: string;
+  activity: string;
+  amount: string;
+  rate: string;
+  fiat_value: string;
+  fiat_currency: string;
+  status:number;
+  created_at: string;
+  __v: number;
+};
+
 export type IActivity = {
   id: number;
   event: string;
@@ -585,4 +601,65 @@ export type IActivity = {
 export interface IUserVc {
   balance: number;
   masked_card_number: string;
+}
+
+export interface ICountFiat {
+  _id: {
+    currency: string;
+    activity: string;
+  };
+  count: number;
+}
+
+
+export interface ICountCrypto {
+  _id: {
+    asset: string;
+    activity: string;
+  };
+  count: number;
+}
+
+export interface ICountPm {
+  _id: {
+    activity: string;
+  };
+  count: number;
+}
+
+export interface IStaff {
+  id: number;
+  identifier: string;
+  designation: null | string;
+  country_id: number;
+  reports_to: null | string;
+  department_id: null | string;
+  gender: string;
+  name: string;
+  email: string;
+  email_verified_at: null | string;
+  phone: string;
+  phone_verified_at: null | string;
+  status: number;
+  twofa_enabled: boolean;
+  google2fa_secret: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: null | string;
+  roles: [
+    {
+      id: number;
+      name: string;
+      guard_name: string;
+      description: null;
+      created_at: string;
+      updated_at: string;
+      pivot: {
+        model_id: number;
+        role_id: number;
+        model_type: string;
+      };
+      permissions: [];
+    }
+  ];
 }

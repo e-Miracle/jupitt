@@ -101,10 +101,13 @@ const AuthSlice = createSlice({
     builder.addCase(
       login.fulfilled,
       (state, action: PayloadAction<LoginResponse>) => {
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${action.payload.token}`;
         Cookies.set(USER_TOKEN, action.payload.token, cookieConfig);
+        state.token = action.payload.token;
         state.loading = false;
         state.isAuthenticated = true;
-        state.token = action.payload.token;
         state.user = action.payload.admin;
       }
     );

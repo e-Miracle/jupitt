@@ -348,7 +348,7 @@ const Tables: React.FC<Props> = ({
           </button>
         )}
         <div className="font-inter text-xs">
-          Page {currentPage} of {total}
+          Page {currentPage} of {total ? total : currentPage}
         </div>
         {next_page_url && (
           <button

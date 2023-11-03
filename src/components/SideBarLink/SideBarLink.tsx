@@ -50,21 +50,82 @@ Props) {
     <Suspense>
       {subLinks && subLinks.length > 0 ? (
         <div
-          onClick={toggleSublinks}
           className={
             location.pathname === path ||
             subLinks.map((item) => item.path).includes(location.pathname)
               ? isIconMode
-                ? "bg-hoverLink relative w-full  text-secondary   my-1  flex justify-center items-center  p-2"
-                : "my-1 py-3 px-5 w-full text-secondary bg-hoverLink  hover:bg-background hover:text-activeLink  flex items-center  justify-between "
+                ? "w-full"
+                : "w-full  px-2 flex relative justify-between items-center"
               : isIconMode
-              ? " my-1   w-full text-link  hover:bg-background hover:text-activeLink  flex justify-center items-center   p-2"
-              : " my-1 py-3 px-5 w-full text-link  hover:bg-background hover:text-activeLink  flex items-center justify-between "
+              ? ""
+              : "w-full px-2 flex relative justify-between items-center hover:bg-background hover:text-activeLink"
+          }
+          onClick={toggleSublinks}
+        >
+          <div
+            className={
+              location.pathname === path ||
+              subLinks.map((item) => item.path).includes(location.pathname)
+                ? isIconMode
+                  ? "bg-hoverLink relative w-full  text-secondary   my-1  flex justify-center items-center  p-2"
+                  : "my-1 py-3 px-3  w-[95%] text-secondary bg-hoverLink rounded-lg  hover:bg-background hover:text-activeLink  flex items-center  justify-between "
+                : isIconMode
+                ? " my-1   w-full text-link  hover:bg-background hover:text-activeLink  flex justify-center items-center   p-2"
+                : " my-1 py-3 px-3 w-[95%] text-link     flex items-center justify-between "
+            }
+          >
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? (isIconMode ? "" : " ") : isIconMode ? " " : " "
+              }
+              to={path}
+              data-tooltip-target="tooltip-hover"
+              data-tooltip-trigger="hover"
+            >
+              {body}
+            </NavLink>
+            {!isIconMode && (
+              <FontAwesomeIcon
+                className="text-base inline ml-5"
+                icon={subLinksState ? faChevronDown : faChevronRight}
+              />
+            )}
+          </div>
+          <div
+            className={
+              location.pathname === path ||
+              subLinks.map((item) => item.path).includes(location.pathname)
+                ? isIconMode
+                  ? "hidden"
+                  : " absolute right-0 border-l-[4px] border-secondary h-[calc(100%-0.5rem)] rounded-l-[10px]"
+                : isIconMode
+                ? "hidden"
+                : ""
+            }
+          ></div>
+        </div>
+      ) : (
+        <div
+          className={
+            location.pathname === path
+              ? isIconMode
+                ? "w-full"
+                : "w-full  px-2 flex relative justify-between items-center"
+              : isIconMode
+              ? ""
+              : "w-full"
           }
         >
           <NavLink
-            className={({ isActive }) =>
-              isActive ? (isIconMode ? "" : " ") : isIconMode ? " " : " "
+            onClick={handleMobileNav}
+            className={
+              location.pathname === path
+                ? isIconMode
+                  ? "text-secondary relative w-full    my-1 flex justify-center items-center  p-2 "
+                  : "my-1  py-3  w-[95%] text-secondary rounded-lg pl-3 bg-hoverLink   hover:bg-background hover:text-activeLink  flex items-center "
+                : isIconMode
+                ? " my-1   w-full text-link  hover:bg-background hover:text-activeLink  flex justify-center items-center  p-2"
+                : "my-1 py-3 px-5 w-full text-link  hover:bg-background hover:text-activeLink  flex items-center"
             }
             to={path}
             data-tooltip-target="tooltip-hover"
@@ -72,31 +133,18 @@ Props) {
           >
             {body}
           </NavLink>
-          {!isIconMode && (
-            <FontAwesomeIcon
-              className="text-base inline ml-5"
-              icon={subLinksState ? faChevronDown : faChevronRight}
-            />
-          )}
+          <div
+            className={
+              location.pathname === path
+                ? isIconMode
+                  ? "hidden"
+                  : " absolute right-0 border-l-[4px] border-secondary h-[calc(100%-0.5rem)] rounded-l-[10px]"
+                : isIconMode
+                ? "hidden"
+                : ""
+            }
+          ></div>
         </div>
-      ) : (
-        <NavLink
-          onClick={handleMobileNav}
-          className={
-            location.pathname === path
-              ? isIconMode
-                ? "text-secondary relative w-full    my-1 flex justify-center items-center  p-2 "
-                : "my-1  py-3 px-5 w-full text-secondary bg-hoverLink  hover:bg-background hover:text-activeLink  flex items-center "
-              : isIconMode
-              ? " my-1   w-full text-link  hover:bg-background hover:text-activeLink  flex justify-center items-center  p-2"
-              : "my-1 py-3 px-5 w-full text-link  hover:bg-background hover:text-activeLink  flex items-center"
-          }
-          to={path}
-          data-tooltip-target="tooltip-hover"
-          data-tooltip-trigger="hover"
-        >
-          {body}
-        </NavLink>
       )}
 
       {subLinksState &&

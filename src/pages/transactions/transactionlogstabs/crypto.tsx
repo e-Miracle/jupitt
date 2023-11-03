@@ -1,9 +1,42 @@
-import { lazy, useState } from "react";
+import { lazy, useState, useEffect, useMemo } from "react";
 import { changeHandler } from "../../../utils";
 import { results } from "../../../constants";
 import Table from "../../../components/table";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { getCryptoLogs } from "../../../store/reducers/aum";
+import LoadingTable from "../../../components/table-loader";
+import EmptyArrayMessage from "../../../components/empty";
 const Filter = lazy(() => import("../../../components/filter"));
 const Crypto = () => {
+  const {
+    crypto_logs,
+    crypto_logs_loading,
+    crypto_current_page,
+    crypto_next_page_url,
+    crypto_prev_page_url,
+    crypto_last_page,
+  } = useAppSelector((state) => state.aum);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (!crypto_logs) dispatch(getCryptoLogs({}));
+  }, [dispatch, crypto_logs]);
+
+  const options = useMemo(
+    () =>
+      crypto_logs &&
+      crypto_logs.length &&
+      crypto_logs.map((item) => ({
+        id: item.id,
+        activity: item.activity,
+        asset: item.asset.toLowerCase(),
+        transaction_id: item.reference,
+        user_id: item.user_id,
+        time: item.created_at,
+        from: item.from ? item.from : "",
+        to: item.to ? item.to : "",
+      })),
+    [crypto_logs]
+  );
   const [value, setValue] = useState("");
   const [searchResults, setSearchResults] = useState<Array<unknown>>([]);
   const handleToggle = () => {};
@@ -34,28 +67,9 @@ const Crypto = () => {
     { key: "to", label: "To" },
   ];
 
-  const data = [
-    {
-      id: 1,
-      activity: "Buy",
-      asset: "btc",
-      transaction_id: "123456789012",
-      user_id: "J394300",
-      time: "2023-10-15 03:28 AM",
-      from: "bc1qxy2k........f2493p8",
-      to: "bc1qxy2k........f2493p8",
-    },
-    {
-      id: 2,
-      activity: "Buy",
-      asset: "btc",
-      transaction_id: "123456789012",
-      user_id: "J394300",
-      time: "2023-10-15 03:28 AM",
-      from: "bc1qxy2k........f2493p8",
-      to: "bc1qxy2k........f2493p8",
-    },
-  ];
+  const change = (page: number) => {
+    dispatch(getCryptoLogs({ page: String(page) }));
+  };
   return (
     <div>
       <Filter
@@ -69,7 +83,29 @@ const Crypto = () => {
         handleSelect={(item) => setValue(item)}
         random={false}
       />
-      <Table headers={headers} data={data} />
+      {crypto_logs_loading && (
+        <LoadingTable
+          rows={15}
+          columns={[{ width: 100 }, { width: 150 }, { width: 80 }]}
+        />
+      )}
+      {!crypto_logs_loading && options && options.length > 0 ? (
+        <Table
+          headers={headers}
+          data={options}
+          total={crypto_last_page}
+          currentPage={crypto_current_page}
+          next_page_url={crypto_next_page_url}
+          prev_page_url={crypto_prev_page_url}
+          change={change}
+        />
+      ) : (
+        <EmptyArrayMessage
+          array={crypto_logs}
+          message="No logs"
+          imageAlt="http://via.placeholder.com/500x5000"
+        />
+      )}
     </div>
   );
 };

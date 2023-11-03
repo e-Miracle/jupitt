@@ -5,6 +5,7 @@ import {
   ITransactions,
   IGet,
   IFiatTransactions,
+  IPmTransactions
 } from "../../utils";
 import { baseUrl } from "../../constants";
 import axios from "axios";
@@ -30,6 +31,13 @@ type InitialState = {
   fiat_per_page: number;
   fiat_prev_page_url: null | string;
   fiat_last_page: number;
+  pm_logs: null | Array<IPmTransactions>;
+  pm_logs_loading: boolean;
+  pm_current_page: null | number;
+  pm_next_page_url: null | string;
+  pm_per_page: number;
+  pm_prev_page_url: null | string;
+  pm_last_page: number;
 };
 
 const initialState: InitialState = {
@@ -52,6 +60,13 @@ const initialState: InitialState = {
   fiat_per_page: 15,
   fiat_prev_page_url: null,
   fiat_last_page: 0,
+  pm_logs: null,
+  pm_logs_loading: false,
+  pm_current_page: null,
+  pm_next_page_url: null,
+  pm_per_page: 15,
+  pm_prev_page_url: null,
+  pm_last_page: 0,
 };
 
 type Response = {
@@ -73,6 +88,15 @@ type Response2 = {
   last_page: number;
 };
 
+
+type Response3 = {
+  data: Array<IPmTransactions>;
+  current_page: null | number;
+  next_page_url: null | string;
+  per_page: number;
+  prev_page_url: null | string;
+  last_page: number;
+};
 
 export const getCryptoAum = createAsyncThunk("aum/getCryptoAum", async () => {
   try {
@@ -144,6 +168,32 @@ export const getFiatLogs = createAsyncThunk(
     try {
       const res = await axios.get(
         `${baseUrl}/transactions/fiat?${queryString}`
+      );
+      toast.success(res.data.message);
+      return res.data.data;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      }
+      if (axios.isAxiosError(err) && err.response?.data?.message) {
+        toast.error(err.response.data.message);
+        err.response.data.message.map((err: string) => toast.error(err));
+        return err.response.data.message;
+      }
+    }
+  }
+);
+
+export const getPerfectMoneyLogs = createAsyncThunk(
+  "aum/getPerfectMoneyLogs",
+  async (values: IGet) => {
+    const filter: { [key: string]: string } = {
+      ...values,
+    };
+    const queryString = new URLSearchParams(filter).toString();
+    try {
+      const res = await axios.get(
+        `${baseUrl}/transactions/pm?${queryString}`
       );
       toast.success(res.data.message);
       return res.data.data;
@@ -263,6 +313,33 @@ const AuthSlice = createSlice({
         }
       }
     );
+     builder.addCase(getPerfectMoneyLogs.pending, (state) => {
+       state.pm_logs_loading = true;
+     });
+     builder.addCase(
+       getPerfectMoneyLogs.fulfilled,
+       (state, action: PayloadAction<Response3>) => {
+         state.pm_logs_loading = false;
+         state.pm_logs = action.payload.data;
+         state.pm_current_page = action.payload.current_page;
+         state.pm_next_page_url = action.payload.next_page_url;
+         state.pm_prev_page_url = action.payload.prev_page_url;
+         state.pm_per_page = action.payload.per_page;
+         state.pm_last_page = action.payload.last_page;
+       }
+     );
+     builder.addCase(
+       getPerfectMoneyLogs.rejected,
+       (state, action: PayloadAction<unknown>) => {
+         state.pm_logs_loading = false;
+         if (action?.payload) {
+           const error = action.payload as { message?: string[] | undefined };
+           state.error = error.message || ["Something went wrong"];
+         } else {
+           state.error = ["Something went wrong"];
+         }
+       }
+     );
   },
 });
 export default AuthSlice.reducer;
