@@ -14,6 +14,7 @@ import Ratelogs from "./reducers/ratelogs";
 import CountryReducer from "./reducers/countries";
 import TransactionReducer from "./reducers/transactions"
 import ActivityReducer from "./reducers/activity"
+import StaffReducer from "./reducers/staff"
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -31,6 +32,7 @@ const store = configureStore({
     countries: CountryReducer,
     transactions: TransactionReducer,
     activity: ActivityReducer,
+    staff: StaffReducer,
   },
 });
 

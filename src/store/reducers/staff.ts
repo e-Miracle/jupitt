@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { IStaff } from "../../utils";
+import { IStaff, IGet } from "../../utils";
 import { baseUrl } from "../../constants";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -36,31 +36,38 @@ const initialState: InitialState = {
   staff_prev_page_url: null,
   staff_last_page: 0,
   single_staff: null,
-  staff_staff_loading: false
+  staff_staff_loading: false,
 };
 
-export const getStaffs = createAsyncThunk("staff/getStaffs", async () => {
-  try {
-    const res = await axios.get(`${baseUrl}/get-all-staff`);
-    toast.success(res.data.message);
-    return res.data.data;
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.log(err.message);
-    }
-    if (axios.isAxiosError(err) && err.response?.data?.message) {
-      toast.error(err.response.data.message);
-      err.response.data.message.map((err: string) => toast.error(err));
-      return err.response.data.message;
+export const getStaffs = createAsyncThunk(
+  "staff/getStaffs",
+  async (values: IGet) => {
+    const filter: { [key: string]: string } = {
+      ...values,
+    };
+    const queryString = new URLSearchParams(filter).toString();
+    try {
+      const res = await axios.get(`${baseUrl}/get-all-staff?${queryString}`);
+      toast.success(res.data.message);
+      return res.data.data;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      }
+      if (axios.isAxiosError(err) && err.response?.data?.message) {
+        toast.error(err.response.data.message);
+        err.response.data.message.map((err: string) => toast.error(err));
+        return err.response.data.message;
+      }
     }
   }
-});
+);
 
 export const getSingleStaff = createAsyncThunk(
   "staff/getSingleStaff",
   async (id: string) => {
     try {
-      const res = await axios.get(`${baseUrl}/get-all-staff?identifier=${id}`);
+      const res = await axios.get(`${baseUrl}/get-a-staff?identifier=${id}`);
       toast.success(res.data.message);
       return res.data.data;
     } catch (err: unknown) {
@@ -107,29 +114,29 @@ const Slice = createSlice({
           state.error = ["Something went wrong"];
         }
       }
-      );
-       builder.addCase(getSingleStaff.pending, (state) => {
-         state.staff_staff_loading = true;
-       });
-       builder.addCase(
-         getSingleStaff.fulfilled,
-         (state, action: PayloadAction<IStaff>) => {
-           state.staff_staff_loading = false;
-           state.single_staff = action.payload;
-         }
-       );
-       builder.addCase(
-         getSingleStaff.rejected,
-         (state, action: PayloadAction<unknown>) => {
-           state.staff_staff_loading = false;
-           if (action?.payload) {
-             const error = action.payload as { message?: string[] | undefined };
-             state.error = error.message || ["Something went wrong"];
-           } else {
-             state.error = ["Something went wrong"];
-           }
-         }
-       );
+    );
+    builder.addCase(getSingleStaff.pending, (state) => {
+      state.staff_staff_loading = true;
+    });
+    builder.addCase(
+      getSingleStaff.fulfilled,
+      (state, action: PayloadAction<IStaff>) => {
+        state.staff_staff_loading = false;
+        state.single_staff = action.payload;
+      }
+    );
+    builder.addCase(
+      getSingleStaff.rejected,
+      (state, action: PayloadAction<unknown>) => {
+        state.staff_staff_loading = false;
+        if (action?.payload) {
+          const error = action.payload as { message?: string[] | undefined };
+          state.error = error.message || ["Something went wrong"];
+        } else {
+          state.error = ["Something went wrong"];
+        }
+      }
+    );
   },
 });
 export default Slice.reducer;
